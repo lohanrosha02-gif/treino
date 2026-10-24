@@ -159,3 +159,17 @@
 .bike-pedal{position:absolute;left:33%;bottom:19%;width:34px;height:34px;border:2px solid rgba(231,246,231,.9);background:rgba(27,72,50,.65);border-radius:50%;display:grid;place-items:center;color:white;font-size:26px;font-weight:700;line-height:1;animation:bicicletaGiro 2.1s linear infinite;transform-origin:center}
 @keyframes bicicletaGiro{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.photo-frame,.bike-pedal{animation:none!important}}
+
+/* Biblioteca de vídeos do Google Drive */
+.drive-library{border:1px solid #dae7d9;background:#fbfcfa;border-radius:12px;margin-top:12px;overflow:hidden}
+.drive-library summary{display:flex;align-items:center;justify-content:space-between;gap:10px;list-style:none;cursor:pointer;padding:13px 15px}
+.drive-library summary::-webkit-details-marker{display:none}
+.drive-library summary strong{font-size:13px;color:#28533a}
+.drive-library summary span{font-size:11px;color:#667b6b}
+.drive-library[open] summary{border-bottom:1px solid #e5eee4}
+.drive-library-body{padding:12px;display:grid;gap:10px}
+.drive-library-body iframe{display:block;width:100%;height:380px;border:0;border-radius:9px;background:#f0f5ee}
+.drive-library-body a{color:#286345;font-size:12px;font-weight:750;text-decoration:underline;text-underline-offset:3px}
+.drive-video{width:100%;padding:0;background:#101a15;overflow:hidden}
+.drive-video iframe{display:block;width:100%;aspect-ratio:16/9;height:auto;border:0;min-height:210px}
+@media(max-width:540px){.drive-library-body iframe{height:300px}.drive-video iframe{min-height:190px}}
