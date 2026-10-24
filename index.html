@@ -211,6 +211,7 @@
     @media(max-width:340px){.fields{grid-template-columns:1fr}.hero-symbol{display:none}.brand-sub{display:none}.top-pill{font-size:9px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
   </style>
+  <link rel="stylesheet" href="./treinos.css">
 </head>
 <body>
 <header class="topbar">
@@ -374,13 +375,14 @@
         <div class="section-head"><h3 id="weeksHeading">Escolha sua semana</h3><span id="navCaption">Semana 1 de 8</span></div>
         <div class="week-list" id="weekList" aria-label="Selecionar semana"></div>
       </section>
-      <section class="panel upcoming" id="upcomingPanel" aria-labelledby="upcomingTitle">
-        <div class="upcoming-icon" aria-hidden="true">↗</div>
-        <div class="eyebrow" id="upcomingEyebrow">Semana 01 de 08</div>
-        <h2 id="upcomingTitle">Treino da semana 1</h2>
-        <p>Os treinos serão organizados nesta área. Os campos de peso, altura e demais medidas estão exclusivamente na aba Avaliação inicial, sem aparecer nos dias de treino.</p>
-        <button class="outline-btn" type="button" id="backInitial">← Ir para avaliação inicial</button>
+      <section class="panel" id="upcomingPanel" aria-labelledby="upcomingTitle" style="margin-bottom:17px;padding:17px 23px;">
+        <div class="form-head" style="margin:0;align-items:center;">
+          <div><div class="eyebrow" id="upcomingEyebrow">Semana 01 de 08</div>
+          <h2 id="upcomingTitle" style="font-size:17px;margin:4px 0 0;">Treino da semana 1</h2></div>
+          <button class="outline-btn" type="button" id="backInitial">← Avaliação inicial</button>
+        </div>
       </section>
+      <div id="trainingMount" aria-label="Plano completo de treino A a D"></div>
       </div>
 
 
@@ -638,6 +640,7 @@
     el('upcomingEyebrow').textContent='Semana '+String(number).padStart(2,'0')+' de 08';
     el('upcomingTitle').textContent='Treino da semana '+number;
     renderWeekNav();persist();
+    if(window.MeuTreinoTreinos)window.MeuTreinoTreinos.render();
   }
   function selectTab(name,save){
     activeTab=name==='training'?'training':'evaluation';
@@ -651,6 +654,7 @@
     el('tabEvaluation').tabIndex=training?-1:0;
     el('tabTraining').tabIndex=training?0:-1;
     if(save!==false)persist();
+    if(training&&window.MeuTreinoTreinos)window.MeuTreinoTreinos.render();
   }
 
   el('tabEvaluation').addEventListener('click',function(){selectTab('evaluation');});
@@ -702,17 +706,19 @@
         if(raw.type!=='meu-treino-medidas'&&raw.type!=='meu-treino-backup')throw new Error('Arquivo incompatível');
         var imported=normalizeData(raw);
         if(!confirm('Importar este backup vai substituir a avaliação atual e os dados já registrados. Deseja continuar?'))return;
-        data=imported;selectTab('evaluation',false);persist();renderAssessment();renderWeekNav();toast('Backup importado com sucesso!');
+        data=imported;selectTab('evaluation',false);persist();renderAssessment();renderWeekNav();if(window.MeuTreinoTreinos)window.MeuTreinoTreinos.render();toast('Backup importado com sucesso!');
       }catch(err){toast('Backup inválido. Escolha um backup exportado do Meu Treino.');}
       finally{event.target.value='';}
     };
     reader.onerror=function(){toast('Não foi possível ler o arquivo.');event.target.value='';};
     reader.readAsText(file);
   });
+  window.MeuTreinoBridge={getData:function(){return data;},getWeek:function(){return activeWeek;},save:persist,toast:toast};
   renderAssessment();selectWeek(activeWeek);selectTab(activeTab,false);
   if(migrated)persist();
   if(loadError)setTimeout(function(){toast('Não foi possível carregar os dados anteriores.');},350);
 })();
 </script>
+<script src="./treinos.js" defer></script>
 </body>
 </html>
