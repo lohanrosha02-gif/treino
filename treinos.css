@@ -144,22 +144,6 @@
 @media(max-width:540px){.train-day-btn{padding:11px 5px}.train-day-btn strong{font-size:20px}.train-day-btn small{font-size:10px}}
 
 
-/* Demonstrações fotográficas: poses início → movimento → retorno */
-.exercise-demo.real-demo{display:flex;justify-content:center;align-items:center;overflow:hidden;background:#f5f8f4;padding:8px}
-.photo-frame{flex:none;width:160px;height:192px;max-width:100%;border-radius:11px;background-image:var(--photo-sheet);background-repeat:no-repeat;background-position:0 var(--frame-y);background-size:480px var(--sheet-height);box-shadow:0 2px 8px rgba(31,58,41,.13);animation:treinoFotos 3.6s step-end infinite}
-.photo-frame.still{animation:none;background-position:0 var(--frame-y)}
-@keyframes treinoFotos{
-  0%,29%{background-position:0 var(--frame-y)}
-  30%,60%{background-position:-160px var(--frame-y)}
-  61%,95%{background-position:-320px var(--frame-y)}
-  96%,100%{background-position:0 var(--frame-y)}
-}
-.bike-demo{background:#f3f6f3;border-radius:14px;padding:7px;min-height:160px}
-.bike-photo{width:min(100%,360px);aspect-ratio: 516 / 282;position:relative;background-image:url('./assets/animacoes/bicicleta-ergometrica.webp');background-size:cover;background-position:center;border-radius:11px;overflow:hidden;box-shadow:0 2px 8px rgba(31,58,41,.15)}
-.bike-pedal{position:absolute;left:33%;bottom:19%;width:34px;height:34px;border:2px solid rgba(231,246,231,.9);background:rgba(27,72,50,.65);border-radius:50%;display:grid;place-items:center;color:white;font-size:26px;font-weight:700;line-height:1;animation:bicicletaGiro 2.1s linear infinite;transform-origin:center}
-@keyframes bicicletaGiro{to{transform:rotate(360deg)}}
-@media(prefers-reduced-motion:reduce){.photo-frame,.bike-pedal{animation:none!important}}
-
 /* Biblioteca de vídeos do Google Drive */
 .drive-video{width:100%;padding:0;background:#101a15;overflow:hidden}
 .drive-video iframe{display:block;width:100%;aspect-ratio:16/9;height:auto;border:0;min-height:210px}
@@ -190,14 +174,6 @@
  .series-input span{font-size:10px}
  .series-done{font-size:9px}
 }
-
-
-/* GIFs individuais dos exercícios (cópia pública no Google Drive) */
-.exercise-demo.gif-demo{position:relative;display:flex;justify-content:center;align-items:center;padding:8px 10px;background:#f4f8f4;min-height:212px}
-.gif-demo img{display:block;max-width:100%;width:160px;height:192px;object-fit:contain;border-radius:10px;background:#edf4ec}
-.gif-drive-link{position:absolute;bottom:10px;right:10px;padding:5px 9px;border-radius:18px;background:#fff;border:1px solid #dce8d9;font-size:11px;font-weight:800;color:#355b43;text-decoration:none}
-.gif-drive-link:hover,.gif-drive-link:focus{background:#e3f1e4}
-.exercise-demo.isometric-demo{min-height:104px;text-align:center;background:#eef5ea;border:1px dashed #b8cebc;border-radius:12px;color:#46644a;font-size:12px;font-weight:700}
 
 
 /* Vídeos curtos de execução, substituindo GIFs e sequências fotográficas */
