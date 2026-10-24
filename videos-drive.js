@@ -1,14 +1,14 @@
 /* Biblioteca de vídeos instrutivos. MP4s de demonstração real do projeto free-exercise-db-with-videos (MIT);
-   vídeos externos YouTube são incorporados, não copiados. Os antigos GIFs não são usados na interface.
+   vídeos MP4 são incorporados pela URL da biblioteca original. Os antigos GIFs não são usados na interface.
    Para vídeos próprios, preencher "videos" com IDs da pasta Google Drive. */
 window.MeuTreinoVideos = Object.freeze({
   pastaId: "1P1cEjL-pOF4l2WX_SFgJHqzoSvN9jQs6",
   pastaUrl: "https://drive.google.com/drive/folders/1P1cEjL-pOF4l2WX_SFgJHqzoSvN9jQs6",
   videos: {},
   clips: {
-    "mA1": {"type":"youtube","videoId":"ATHNEfRZ_GA","name":"Shoulder Rolls (UCSF Sports Medicine, 20 segundos)"},
-    "mD3": {"type":"youtube","videoId":"ATHNEfRZ_GA","name":"Shoulder Rolls (UCSF Sports Medicine, 20 segundos)"},
-    "mC3": {"type":"youtube","videoId":"wjZ7dd4j6EA","name":"Shoulder Blade Squeeze (UCSF Sports Medicine, 29 segundos)"},
+    "mA1": {"type":"mp4","url":"https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/stretching-band-warm-up-shoulder-stretch.mp4","name":"Band Shoulder Warm-Up Stretch"},
+    "mD3": {"type":"mp4","url":"https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/stretching-band-warm-up-shoulder-stretch.mp4","name":"Band Shoulder Warm-Up Stretch"},
+    "mC3": {"type":"mp4","url":"https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/stretching-seated-shoulder-flexor-depresor-retractor.mp4","name":"Seated Shoulder Flexor, Depressor, Retractor Stretch"},
   "a2": {
     "type": "mp4",
     "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/lever-reverse-t-bar-row.mp4",
@@ -119,15 +119,7 @@ window.MeuTreinoVideos = Object.freeze({
     "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/stationary-bike.mp4",
     "name": "Stationary Bike"
   },
-  "a1": {
-    "type": "youtube",
-    "videoId": "6CPnYJonfUo",
-    "name": "How to Use the Chest Press Machine"
-  },
-  "c5": {
-    "type": "youtube",
-    "videoId": "BzeAjF1EeCY",
-    "name": "Face Pulls — QMotion"
-  }
+  "a1": {"type":"mp4","url":"https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/lever-lying-chest-press.mp4","name":"Lever Lying Chest Press"},
+  "c5": {"type":"mp4","url":"https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/cable-rear-delt-row-with-rope.mp4","name":"Cable Rear Delt Row (with rope)"}
 }
 });
