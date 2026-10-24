@@ -144,18 +144,6 @@
     }
     return '<p class="video-unavailable" data-video-unavailable="'+escapeHtml(id)+'">Vídeo específico indisponível. Siga as etapas de execução.</p>';
   }
-  function driveFolderLibrary(){
-    var cfg=window.MeuTreinoVideos||{};
-    var folder=cfg.pastaId;
-    if(typeof folder!=='string'||!/^[a-zA-Z0-9_-]{10,}$/.test(folder))return '';
-    var direct='https://drive.google.com/drive/folders/'+encodeURIComponent(folder);
-    var embed='https://drive.google.com/embeddedfolderview?id='+encodeURIComponent(folder)+'#grid';
-    return '<details class="drive-library">'
-      +'<summary><strong>Vídeos do Drive</strong><span>Ver biblioteca</span></summary>'
-      +'<div class="drive-library-body"><iframe loading="lazy" title="Biblioteca de vídeos Meu Treino no Google Drive" data-folder-src="'+escapeHtml(embed)+'" referrerpolicy="no-referrer"></iframe>'
-      +'<a href="'+direct+'" target="_blank" rel="noopener noreferrer">Abrir pasta no Drive</a></div>'
-      +'</details>';
-  }
   function stepsList(steps){return '<ol>'+steps.map(function(s){return '<li>'+escapeHtml(s)+'</li>';}).join('')+'</ol>';}
   function guideSteps(items){
     return '<div class="train-step-row">'+items.map(function(m,index){
@@ -279,7 +267,7 @@
 
       +'<h4 class="train-section-title">Cardio</h4>'
       +'<details class="train-step"><summary><span class="train-step-index">♥</span><span class="train-step-content"><strong>'+escapeHtml(p.cardio.name)+'</strong><small>'+escapeHtml(p.cardio.dose)+'</small></span></summary><div class="train-step-body"><p>'+escapeHtml(p.cardio.suggestion)+'</p>'+teachingVideo('cardio'+dayChoice)+'</div></details>'
-      +driveFolderLibrary()
+
       +'<details class="train-log"><summary><strong>Registro</strong><span data-exercises-progress>'+completedExercises+'/'+p.exercises.length+' exercícios</span></summary>'
       +'<div class="workout-session-form">'
       +'<div class="workout-field-row">'
@@ -382,13 +370,6 @@
       if(saveAuto()){render();bridge.toast('Registro removido.');}
     }
   });
-  mount.addEventListener('toggle',function(event){
-    var details=event.target;
-    if(details&&details.open&&details.classList&&details.classList.contains('drive-library')){
-      var iframe=details.querySelector('iframe[data-folder-src]');
-      if(iframe&&!iframe.src)iframe.src=iframe.getAttribute('data-folder-src');
-    }
-  },true);
   mount.addEventListener('input',function(event){recordInput(event.target);});
   mount.addEventListener('change',function(event){
     var t=event.target;
