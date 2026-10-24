@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f6f7f3">
   <meta name="description" content="Meu Treino: acompanhe suas medidas antropométricas durante 8 semanas.">
-  <title>Meu Treino | Evolução em 8 semanas</title>
+  <title>Meu Treino | Avaliação e 8 semanas</title>
   <style>
     :root{--bg:#f6f7f3;--surface:#fff;--ink:#17231e;--muted:#77827b;--accent:#376e54;--accent-deep:#184b39;--accent-soft:#eef5ed;--line:#e8ece6;--warm:#e5eecb;--radius:22px;--shadow:0 12px 32px rgba(30,46,33,.045)}
     *{box-sizing:border-box}
@@ -40,6 +40,16 @@
     .side-label{font-size:10px;letter-spacing:.16em;font-weight:800;color:#929b93;text-transform:uppercase;padding:13px 12px}
     .nav-item{display:flex;align-items:center;gap:12px;border-radius:12px;background:var(--accent-soft);color:var(--accent-deep);padding:12px 13px;font-weight:750;font-size:14px}
     .nav-item svg{flex:none}
+    button.nav-item{width:100%;text-align:left;border:1px solid transparent;background:transparent;color:#617166;transition:background .15s,color .15s,border-color .15s}
+    button.nav-item:hover{background:#f2f6ef}
+    button.nav-item.active{background:var(--accent-soft);color:var(--accent-deep);border-color:#e1eadf}
+    .nav-panel{display:flex;flex-direction:column;gap:5px}
+    .tab-content[hidden]{display:none!important}
+    .week-button:not(.active){background:#fafbf9;border-color:var(--line)}
+    .week-button .wk-mark{display:none}
+    @media(max-width:760px){.nav-panel{min-width:0;flex-direction:row;gap:5px}.nav-panel button.nav-item{flex:1;justify-content:center;font-size:11px;padding:10px 7px;gap:6px}.nav-panel button.nav-item svg{width:15px;height:15px}}
+    @media(max-width:540px){.sidebar{flex-direction:column;gap:9px}.nav-panel{width:100%}.side-progress{padding:12px 15px;width:100%}.side-progress .track{display:block;flex:0 0 80px}.side-progress .small-heading{font-size:12px}.side-progress .big-progress{font-size:21px}}
+    
     .side-progress{padding:22px}
     .side-progress .small-heading{font-weight:750;font-size:13px;margin:0 0 13px}
     .side-progress .big-progress{font-size:38px;font-weight:800;letter-spacing:-2px;line-height:1}
@@ -147,54 +157,54 @@
   <div class="page-head">
     <div>
       <div class="eyebrow">Sua jornada, no seu ritmo</div>
-      <h1>Acompanhamento físico</h1>
-      <p class="lead">Preencha suas medidas no primeiro treino. As próximas semanas ficam reservadas para o seu plano personalizado.</p>
+      <h1>Seu plano de treino</h1>
+      <p class="lead">Avaliação inicial e treinos organizados em áreas separadas, para acompanhar suas 8 semanas.</p>
     </div>
     <div class="page-count"><strong>08 <span style="font-size:13px;color:#a0aba2">semanas</span></strong><span>para acompanhar sua jornada</span></div>
   </div>
 
   <div class="layout">
-    <aside class="sidebar" aria-label="Navegação">
-      <div class="nav-panel">
-        <div class="side-label">Acompanhamento</div>
-        <div class="nav-item" aria-current="page">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21V7l9-4 9 4v14H3Z"/><path d="M8 12v5m4-8v8m4-5v5"/></svg>
-          Medidas corporais
-        </div>
-      </div>
+    <aside class="sidebar" aria-label="Menu de acompanhamento">
+      <nav class="nav-panel" role="tablist" aria-label="Áreas do site">
+        <div class="side-label">Menu principal</div>
+        <button type="button" class="nav-item active" id="tabEvaluation" role="tab" aria-controls="evaluationTab" aria-selected="true" tabindex="0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3.5h6M9 10h6M9 14h6"/></svg>
+          Avaliação inicial
+        </button>
+        <button type="button" class="nav-item" id="tabTraining" role="tab" aria-controls="trainingTab" aria-selected="false" tabindex="-1">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18"/></svg>
+          Treinos · 8 semanas
+        </button>
+      </nav>
       <div class="side-progress">
         <div>
-          <div class="small-heading">Medidas iniciais</div>
+          <div class="small-heading">Avaliação inicial</div>
           <div class="big-progress"><span id="weeksCompleted">0</span><span> / 11</span></div>
-          <p>Campos da avaliação inicial preenchidos.</p>
+          <p>Medidas preenchidas na ficha inicial.</p>
         </div>
-        <div class="track" role="progressbar" aria-label="Medidas iniciais preenchidas" aria-valuemin="0" aria-valuemax="11" aria-valuenow="0" id="overallProgress"><div id="overallBar"></div></div>
+        <div class="track" role="progressbar" aria-label="Medidas da avaliação preenchidas" aria-valuemin="0" aria-valuemax="11" aria-valuenow="0" id="overallProgress"><div id="overallBar"></div></div>
       </div>
-      <div class="side-tip"><strong>Uma única avaliação inicial</strong> As medidas antropométricas são preenchidas só no primeiro treino e podem ser corrigidas depois.</div>
+      <div class="side-tip"><strong>Uma avaliação, 8 semanas</strong> Registre as medidas em Avaliação inicial. Os treinos ficam em uma aba independente.</div>
     </aside>
 
     <main class="main">
       <section class="hero" aria-labelledby="heroHeading">
         <div>
-          <div class="hero-label">Registro antropométrico</div>
-          <h2 id="heroHeading">Sua evolução começa aqui.</h2>
-          <p>Registre suas medidas uma única vez, no primeiro treino.</p>
+          <div class="hero-label">Meu plano personalizado</div>
+          <h2 id="heroHeading">Tudo no seu lugar.</h2>
+          <p>Suas medidas iniciais ficam separadas dos treinos das 8 semanas.</p>
         </div>
         <div class="hero-symbol" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none"><path d="M14 65h17l11-25 14 33 12-20h18" stroke="#D6F0C9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="44" stroke="#B5D6B5" stroke-width="1.5"/></svg></div>
       </section>
 
-      <section class="week-panel" aria-labelledby="weeksHeading">
-        <div class="section-head"><h3 id="weeksHeading">Plano de 8 semanas</h3><span id="navCaption">Treino 1 de 8</span></div>
-        <div class="week-list" id="weekList" aria-label="Selecionar semana"></div>
-      </section>
-
+      <div class="tab-content" id="evaluationTab" role="tabpanel" aria-labelledby="tabEvaluation">
       <section class="panel" id="initialPanel" aria-labelledby="formHeading">
         <div class="form-head">
-          <div><div class="eyebrow">Primeiro treino · avaliação inicial</div><h2 id="formHeading">Suas medidas iniciais</h2><p>Preencha apenas uma vez, no primeiro treino.</p></div>
-          <span class="step-tag" id="stepTag">01 / 08</span>
+          <div><div class="eyebrow">Seus dados · avaliação inicial</div><h2 id="formHeading">Suas medidas iniciais</h2><p>Registre suas medidas aqui, independentemente dos dias de treino.</p></div>
+          <span class="step-tag" id="stepTag">FICHA INICIAL</span>
         </div>
         <div class="info-strip">
-          <div><div class="info-main">Medidas do primeiro treino</div><div class="info-sub" id="filledLabel">0 de 11 campos preenchidos</div></div>
+          <div><div class="info-main">Avaliação antropométrica</div><div class="info-sub" id="filledLabel">0 de 11 campos preenchidos</div></div>
           <div class="week-complete"><span class="mini-circle" id="filledCircle">0/11</span></div>
         </div>
         <form id="measureForm" novalidate>
@@ -208,7 +218,7 @@
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
               Salvar medidas
             </button>
-            <button type="button" class="outline-btn" id="nextWeek">Próxima semana <span aria-hidden="true">→</span></button>
+            <button type="button" class="outline-btn" id="nextWeek">Ver treinos <span aria-hidden="true">→</span></button>
             <button type="button" class="plain-btn" id="clearWeek">Limpar avaliação inicial</button>
           </div>
         </form>
@@ -217,14 +227,21 @@
           <span id="saveStatusText">Os dados são salvos neste navegador.</span>
         </div>
       </section>
+      </div>
 
+      <div class="tab-content" id="trainingTab" role="tabpanel" aria-labelledby="tabTraining" hidden>
+      <section class="week-panel" aria-labelledby="weeksHeading">
+        <div class="section-head"><h3 id="weeksHeading">Escolha sua semana</h3><span id="navCaption">Treino 1 de 8</span></div>
+        <div class="week-list" id="weekList" aria-label="Selecionar semana"></div>
+      </section>
       <section class="panel upcoming" id="upcomingPanel" aria-labelledby="upcomingTitle" hidden>
         <div class="upcoming-icon" aria-hidden="true">↗</div>
-        <div class="eyebrow" id="upcomingEyebrow">Semana 02 de 08</div>
-        <h2 id="upcomingTitle">Treino da semana 2</h2>
-        <p>A avaliação antropométrica é feita somente no primeiro treino. Nesta semana, você não precisa preencher peso, altura ou medidas corporais. Este espaço fica reservado para os próximos detalhes do seu treino personalizado.</p>
-        <button class="outline-btn" type="button" id="backInitial">← Ver avaliação inicial</button>
+        <div class="eyebrow" id="upcomingEyebrow">Semana 01 de 08</div>
+        <h2 id="upcomingTitle">Treino da semana 1</h2>
+        <p>Os treinos serão organizados nesta área. Os campos de peso, altura e demais medidas estão exclusivamente na aba Avaliação inicial, sem aparecer nos dias de treino.</p>
+        <button class="outline-btn" type="button" id="backInitial">← Ir para avaliação inicial</button>
       </section>
+      </div>
 
       <section class="backup-panel" aria-label="Backup das medidas">
         <div><strong>Guarde uma cópia das suas medidas</strong><p>O registro fica salvo neste navegador. Use o backup para levar os dados a outro aparelho ou evitar perdas.</p></div>
@@ -244,184 +261,189 @@
 (function(){
   'use strict';
 
-  var storageKey = 'meu-treino-antropometria-v1';
-  var selectedKey = 'meu-treino-semana-selecionada-v1';
-  var groups = [
-    {name:'Informações básicas', icon:'◌', items:[['peso','Peso','kg'],['altura','Altura','cm']]},
-    {name:'Tronco', icon:'▣', items:[['cintura','Cintura','cm'],['abdomen','Abdômen','cm'],['quadril','Quadril','cm'],['busto','Busto','cm'],['torax','Tórax','cm']]},
-    {name:'Braços', icon:'⌁', items:[['bracoRelaxado','Braço relaxado','cm'],['bracoIsometria','Braço em isometria','cm']]},
-    {name:'Pernas', icon:'◇', items:[['coxa','Coxa','cm'],['panturrilha','Panturrilha','cm']]}
+  // A avaliação é independente dos treinos. A chave antiga permanece intacta.
+  var storageKey='meu-treino-v2';
+  var oldStorageKey='meu-treino-antropometria-v1';
+  var selectedKey='meu-treino-semana-selecionada-v1';
+  var activeTabKey='meu-treino-aba-v2';
+  var groups=[
+    {name:'Informações básicas',icon:'◌',items:[['peso','Peso','kg'],['altura','Altura','cm']]},
+    {name:'Tronco',icon:'▣',items:[['cintura','Cintura','cm'],['abdomen','Abdômen','cm'],['quadril','Quadril','cm'],['busto','Busto','cm'],['torax','Tórax','cm']]},
+    {name:'Braços',icon:'⌁',items:[['bracoRelaxado','Braço relaxado','cm'],['bracoIsometria','Braço em isometria','cm']]},
+    {name:'Pernas',icon:'◇',items:[['coxa','Coxa','cm'],['panturrilha','Panturrilha','cm']]}
   ];
-  var allIds = groups.flatMap(function(group){ return group.items.map(function(item){return item[0];}); });
-  var emptyWeek = function(){return {date:'',values:{}};};
-  var emptyData = function(){return {version:1,weeks:Array.from({length:8},emptyWeek)};};
-  var el = function(id){return document.getElementById(id);};
+  var allIds=groups.flatMap(function(group){return group.items.map(function(item){return item[0];});});
+  var el=function(id){return document.getElementById(id);};
+  var emptyAssessment=function(){return {date:'',values:{}};};
+  var emptyData=function(){return {version:2,evaluation:emptyAssessment(),weeks:Array.from({length:8},function(){return {}; }),legacyWeeklyMeasures:[]};};
   var toastTimer;
   function toast(message){
     var node=el('toast');node.textContent=message;node.classList.add('visible');
     clearTimeout(toastTimer);toastTimer=setTimeout(function(){node.classList.remove('visible');},3000);
   }
+  function isValidEntry(str){return str===''||(/^\d{1,4}([.,]\d{0,2})?$/.test(str)&&Number(str.replace(',','.'))>=0);}
+  function hasValue(str){return typeof str==='string'&&str.trim()!==''&&Number.isFinite(Number(str.replace(',','.')))&&Number(str.replace(',','.'))>0;}
+  function normalizeAssessment(item){
+    var values={};
+    allIds.forEach(function(id){
+      var val=item&&item.values&&item.values[id];
+      if(typeof val==='string'||typeof val==='number'){
+        var str=String(val).trim();
+        if(isValidEntry(str))values[id]=str;
+      }
+    });
+    var date=(item&&typeof item.date==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(item.date))?item.date:'';
+    return {date:date,values:values};
+  }
   function normalizeData(raw){
-    if(!raw || !Array.isArray(raw.weeks) || raw.weeks.length!==8) throw new Error('Estrutura inválida');
-    return {version:1,weeks:raw.weeks.map(function(week){
-      var values={};
-      allIds.forEach(function(id){
-        var value=week && week.values && week.values[id];
-        if(typeof value==='string' || typeof value==='number'){
-          var val=String(value).trim();
-          if(isValidEntry(val)) values[id]=val;
-        }
-      });
-      var date=(week && typeof week.date==='string' && /^\d{4}-\d{2}-\d{2}$/.test(week.date))?week.date:'';
-      return {date:date,values:values};
-    })};
+    if(!raw||typeof raw!=='object')throw new Error('Backup não reconhecido');
+    if(raw.version===2&&raw.evaluation&&Array.isArray(raw.weeks)&&raw.weeks.length===8){
+      // Mantém dados futuros de treinos e eventuais históricos importados.
+      return {version:2,evaluation:normalizeAssessment(raw.evaluation),
+        weeks:raw.weeks.map(function(week){return week&&typeof week==='object'&&!Array.isArray(week)?week:{};}),
+        legacyWeeklyMeasures:Array.isArray(raw.legacyWeeklyMeasures)?raw.legacyWeeklyMeasures.slice(0,7).map(normalizeAssessment):[]};
+    }
+    if(Array.isArray(raw.weeks)&&raw.weeks.length===8){
+      // Formato anterior: move medidas da semana 1 para Avaliação inicial.
+      // Preserva registros antigos das semanas 2 a 8 no backup, sem exibi-los nos treinos.
+      return {version:2,evaluation:normalizeAssessment(raw.weeks[0]),
+        weeks:Array.from({length:8},function(){return {};}),
+        legacyWeeklyMeasures:raw.weeks.slice(1).map(normalizeAssessment)};
+    }
+    throw new Error('Estrutura inválida');
   }
-  function isValidEntry(str){
-    return str==='' || (/^\d{1,4}([.,]\d{0,2})?$/.test(str) && Number(str.replace(',','.'))>=0);
-  }
-  function hasValue(str){
-    return typeof str==='string' && str.trim()!=='' && Number.isFinite(Number(str.replace(',','.'))) && Number(str.replace(',','.'))>0;
-  }
-  var data;
-  try {
-    var saved=localStorage.getItem(storageKey);
-    data=saved?normalizeData(JSON.parse(saved)):emptyData();
-  } catch(e){
-    data=emptyData();
-    setTimeout(function(){toast('Não foi possível carregar o registro anterior.');},400);
-  }
-  var activeWeek=Number(localStorage.getItem(selectedKey))||1;
-  if(!Number.isInteger(activeWeek)||activeWeek<1||activeWeek>8)activeWeek=1;
+  function escapeHtml(str){return String(str).replace(/[&<>"']/g,function(char){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char];});}
+  function countFields(item){return allIds.filter(function(id){return hasValue(item.values[id]);}).length;}
 
+  var data=emptyData(), migrated=false, loadError=false;
+  var activeWeek=1, activeTab='evaluation';
+  try{
+    var saved=localStorage.getItem(storageKey), old=localStorage.getItem(oldStorageKey);
+    if(saved)data=normalizeData(JSON.parse(saved));
+    else if(old){data=normalizeData(JSON.parse(old));migrated=true;}
+    activeWeek=Number(localStorage.getItem(selectedKey))||1;
+    if(!Number.isInteger(activeWeek)||activeWeek<1||activeWeek>8)activeWeek=1;
+    activeTab=localStorage.getItem(activeTabKey)==='training'?'training':'evaluation';
+  }catch(err){loadError=true;data=emptyData();}
   function persist(){
-    try{localStorage.setItem(storageKey,JSON.stringify(data));localStorage.setItem(selectedKey,String(activeWeek));return true;}
-    catch(e){el('saveStatusText').textContent='Não foi possível salvar. Exporte um backup.';toast('Armazenamento indisponível neste navegador.');return false;}
+    try{
+      localStorage.setItem(storageKey,JSON.stringify(data));
+      localStorage.setItem(selectedKey,String(activeWeek));
+      localStorage.setItem(activeTabKey,activeTab);
+      return true;
+    }catch(err){el('saveStatusText').textContent='Falha ao salvar. Exporte um backup.';toast('Armazenamento indisponível neste navegador.');return false;}
   }
-  function countFields(week){return allIds.filter(function(id){return hasValue(week.values[id]);}).length;}
-  function escapeHtml(s){return String(s).replace(/[&<>"']/g,function(char){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char];});}
-
   function renderWeekNav(){
     var html='';
-    data.weeks.forEach(function(week,index){
-      var number=index+1, isFirst=number===1;
-      var filled=isFirst?countFields(week):0;
-      var firstLabel='Treino 1: avaliação inicial, '+filled+' de '+allIds.length+' medidas preenchidas';
-      var laterLabel='Treino '+number+': sem medidas antropométricas para preencher';
-      html+='<button type="button" class="week-button'+(number===activeWeek?' active':'')+(isFirst && filled===allIds.length?' complete':'')+(isFirst && filled>0?' has-data':'')+'" data-week="'+number+'" aria-label="'+(isFirst?firstLabel:laterLabel)+'" aria-pressed="'+(number===activeWeek)+'"><small>'+(isFirst?'INÍCIO':'SEM')+'</small><b>'+String(number).padStart(2,'0')+'</b><span class="wk-mark"></span></button>';
-    });
-    el('weekList').innerHTML=html;
-    el('navCaption').textContent='Treino '+activeWeek+' de 8';
-  }
-
-  function renderFields(){
-    var isFirst=activeWeek===1;
-    el('initialPanel').hidden=!isFirst;
-    el('upcomingPanel').hidden=isFirst;
-    if(!isFirst){
-      el('upcomingEyebrow').textContent='Semana '+String(activeWeek).padStart(2,'0')+' de 08';
-      el('upcomingTitle').textContent='Treino da semana '+activeWeek;
-      return;
+    for(var index=0;index<8;index++){
+      var number=index+1;
+      html+='<button type="button" class="week-button'+(number===activeWeek?' active':'')+'" data-week="'+number+'" aria-label="Semana '+number+'" aria-pressed="'+(number===activeWeek)+'"><small>SEM</small><b>'+String(number).padStart(2,'0')+'</b><span class="wk-mark"></span></button>';
     }
-    var week=data.weeks[0];
-    el('measureDate').value=week.date;
+    el('weekList').innerHTML=html;
+    el('navCaption').textContent='Semana '+activeWeek+' de 8';
+  }
+  function renderAssessment(){
+    el('measureDate').value=data.evaluation.date;
     var html='';
     groups.forEach(function(group){
       html+='<section class="form-group" aria-label="'+escapeHtml(group.name)+'"><h3 class="group-title"><span class="group-icon" aria-hidden="true">'+group.icon+'</span>'+escapeHtml(group.name)+'</h3><div class="fields">';
       group.items.forEach(function(item){
-        var id=item[0], label=item[1], unit=item[2];
-        var val=week.values[id]||'';
+        var id=item[0],label=item[1],unit=item[2],val=data.evaluation.values[id]||'';
         html+='<div class="field"><label for="f_'+id+'">'+escapeHtml(label)+'</label><div class="entry"><input id="f_'+id+'" data-id="'+id+'" type="text" inputmode="decimal" autocomplete="off" placeholder="0,0" value="'+escapeHtml(val)+'" maxlength="7" aria-label="'+escapeHtml(label)+' em '+unit+'"><span class="unit">'+unit+'</span></div></div>';
       });
       html+='</div></section>';
     });
     el('measureFields').innerHTML=html;
     el('saveStatusText').textContent='Os dados são salvos automaticamente neste navegador.';
+    updateProgress();
   }
-
   function updateProgress(){
-    var filled=countFields(data.weeks[0]);
+    var filled=countFields(data.evaluation);
     el('filledLabel').textContent=filled+' de '+allIds.length+' campos preenchidos';
     el('filledCircle').textContent=filled+'/'+allIds.length;
     el('weeksCompleted').textContent=String(filled);
     el('overallBar').style.width=(filled/allIds.length*100)+'%';
     el('overallProgress').setAttribute('aria-valuenow',String(filled));
-    renderWeekNav();
+  }
+  function selectWeek(number){
+    if(!Number.isInteger(number)||number<1||number>8)return;
+    activeWeek=number;
+    el('upcomingEyebrow').textContent='Semana '+String(number).padStart(2,'0')+' de 08';
+    el('upcomingTitle').textContent='Treino da semana '+number;
+    renderWeekNav();persist();
+  }
+  function selectTab(name,save){
+    activeTab=name==='training'?'training':'evaluation';
+    var training=activeTab==='training';
+    el('evaluationTab').hidden=training;
+    el('trainingTab').hidden=!training;
+    el('tabEvaluation').classList.toggle('active',!training);
+    el('tabTraining').classList.toggle('active',training);
+    el('tabEvaluation').setAttribute('aria-selected',String(!training));
+    el('tabTraining').setAttribute('aria-selected',String(training));
+    el('tabEvaluation').tabIndex=training?-1:0;
+    el('tabTraining').tabIndex=training?0:-1;
+    if(save!==false)persist();
   }
 
-  function selectWeek(n){
-    if(n<1||n>8)return;
-    activeWeek=n;
-    renderFields();
-    updateProgress();
-    try{localStorage.setItem(selectedKey,String(activeWeek));}catch(e){}
-  }
-
+  el('tabEvaluation').addEventListener('click',function(){selectTab('evaluation');});
+  el('tabTraining').addEventListener('click',function(){selectTab('training');});
   el('weekList').addEventListener('click',function(event){
     var button=event.target.closest('[data-week]');
     if(button)selectWeek(Number(button.dataset.week));
   });
   el('measureFields').addEventListener('input',function(event){
-    var input=event.target.closest('[data-id]');
-    if(!input || activeWeek!==1)return;
+    var input=event.target.closest('[data-id]');if(!input)return;
     var value=input.value.trim().replace(/\s+/g,'');
-    if(!isValidEntry(value)){
-      input.value=data.weeks[activeWeek-1].values[input.dataset.id]||'';
-      return;
-    }
-    data.weeks[activeWeek-1].values[input.dataset.id]=value;
-    if(persist()) el('saveStatusText').textContent='Alterações salvas automaticamente.';
+    if(!isValidEntry(value)){input.value=data.evaluation.values[input.dataset.id]||'';return;}
+    data.evaluation.values[input.dataset.id]=value;
+    if(persist())el('saveStatusText').textContent='Alterações salvas automaticamente.';
     updateProgress();
   });
-  el('measureDate').addEventListener('change',function(e){
-    if(activeWeek!==1)return;
-    data.weeks[0].date=e.target.value;
+  el('measureDate').addEventListener('change',function(event){
+    data.evaluation.date=event.target.value;
     if(persist())el('saveStatusText').textContent='Data salva automaticamente.';
   });
-  el('measureForm').addEventListener('submit',function(e){
-    e.preventDefault();
-    if(activeWeek!==1)return;
+  el('measureForm').addEventListener('submit',function(event){
+    event.preventDefault();
     if(persist()){el('saveStatusText').textContent='Medidas salvas com sucesso.';toast('Avaliação inicial salva!');}
   });
-  el('nextWeek').addEventListener('click',function(){
-    if(activeWeek<8){selectWeek(activeWeek+1);el('weekList').querySelector('.active').scrollIntoView({block:'nearest',inline:'nearest',behavior:'smooth'});window.scrollTo({top:el('weekList').getBoundingClientRect().top+window.scrollY-90,behavior:'smooth'});}
-  });
-  el('backInitial').addEventListener('click',function(){selectWeek(1);});
+  el('nextWeek').addEventListener('click',function(){selectTab('training');});
+  el('backInitial').addEventListener('click',function(){selectTab('evaluation');});
   el('clearWeek').addEventListener('click',function(){
-    if(activeWeek!==1)return;
-    if(countFields(data.weeks[0])===0 && !data.weeks[0].date){toast('A avaliação inicial já está vazia.');return;}
-    if(!confirm('Limpar todas as medidas e a data do primeiro treino? Esta ação não pode ser desfeita.'))return;
-    data.weeks[0]=emptyWeek();
-    persist();renderFields();updateProgress();toast('Avaliação inicial limpa.');
+    if(countFields(data.evaluation)===0&&!data.evaluation.date){toast('A avaliação inicial já está vazia.');return;}
+    if(!confirm('Limpar todas as medidas e a data da avaliação inicial? Esta ação não pode ser desfeita.'))return;
+    data.evaluation=emptyAssessment();persist();renderAssessment();toast('Avaliação inicial limpa.');
   });
   el('exportBtn').addEventListener('click',function(){
-    var out={type:'meu-treino-medidas',exportedAt:new Date().toISOString(),version:1,weeks:data.weeks};
-    var blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
-    var url=URL.createObjectURL(blob),a=document.createElement('a');
-    a.href=url;a.download='meu-treino-avaliacao-inicial.json';document.body.appendChild(a);a.click();a.remove();
+    var output=Object.assign({type:'meu-treino-backup',exportedAt:new Date().toISOString()},data);
+    var blob=new Blob([JSON.stringify(output,null,2)],{type:'application/json'});
+    var url=URL.createObjectURL(blob),link=document.createElement('a');
+    link.href=url;link.download='meu-treino-backup.json';document.body.appendChild(link);link.click();link.remove();
     setTimeout(function(){URL.revokeObjectURL(url);},500);
-    toast('Backup exportado com sucesso!');
+    toast('Backup exportado!');
   });
   el('importBtn').addEventListener('click',function(){el('importFile').click();});
   el('importFile').addEventListener('change',function(event){
-    var file=event.target.files&&event.target.files[0];
-    if(!file)return;
-    if(file.size>1024*1024){toast('O arquivo é grande demais para um backup de medidas.');event.target.value='';return;}
+    var file=event.target.files&&event.target.files[0];if(!file)return;
+    if(file.size>1024*1024){toast('O arquivo é grande demais para um backup.');event.target.value='';return;}
     var reader=new FileReader();
     reader.onload=function(){
       try{
-        var obj=JSON.parse(String(reader.result));
-        if(obj.type!=='meu-treino-medidas')throw new Error('Tipo inválido');
-        var imported=normalizeData(obj);
-        if(!confirm('Importar o backup vai substituir todas as medidas atuais das 8 semanas. Deseja continuar?'))return;
-        data=imported;selectWeek(1);persist();renderFields();updateProgress();toast('Avaliação inicial importada com sucesso!');
-      }catch(e){toast('Backup inválido. Escolha um arquivo exportado deste site.');}
+        var raw=JSON.parse(String(reader.result));
+        if(raw.type!=='meu-treino-medidas'&&raw.type!=='meu-treino-backup')throw new Error('Arquivo incompatível');
+        var imported=normalizeData(raw);
+        if(!confirm('Importar este backup vai substituir a avaliação atual e os dados já registrados. Deseja continuar?'))return;
+        data=imported;selectTab('evaluation',false);persist();renderAssessment();renderWeekNav();toast('Backup importado com sucesso!');
+      }catch(err){toast('Backup inválido. Escolha um backup exportado do Meu Treino.');}
       finally{event.target.value='';}
     };
     reader.onerror=function(){toast('Não foi possível ler o arquivo.');event.target.value='';};
     reader.readAsText(file);
   });
-
-  renderFields();updateProgress();
+  renderAssessment();selectWeek(activeWeek);selectTab(activeTab,false);
+  if(migrated)persist();
+  if(loadError)setTimeout(function(){toast('Não foi possível carregar os dados anteriores.');},350);
 })();
 </script>
 </body>
