@@ -115,6 +115,23 @@
       .compare-table tbody td:last-child{grid-column:1/-1;font-size:11px;margin-top:4px}
       .measurement-tip{grid-template-columns:1fr}
     }
+
+    .bodies-panel{margin-top:18px;padding:26px 29px}
+    .bodies-heading{font-size:22px;letter-spacing:-.7px;margin:7px 0}
+    .bodies-description{font-size:13px;color:var(--muted);margin-bottom:18px}
+    .bodies-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+    .body-figure-card{min-width:0;padding:14px 8px 13px;text-align:center;background:#f8faf7;border:1.5px solid var(--line);border-radius:17px}
+    .body-figure-card.is-active{background:#eef6ee;border-color:var(--accent);box-shadow:0 0 0 2px rgba(55,110,84,.08)}
+    .body-figure-card svg{display:block;margin:0 auto 9px;max-width:125px;width:100%;height:160px;color:#b3c0b5}
+    .body-figure-card.is-active svg{color:#669b7b}
+    .body-figure-card strong{display:block;font-size:12px;line-height:1.3}
+    .body-figure-card small{display:block;margin-top:4px;font-size:10px;color:#7b887c}
+    .body-figure-card .body-current{display:none;font-size:10px;margin-top:9px;font-weight:800;color:#24653f}
+    .body-figure-card.is-active .body-current{display:block}
+    .bodies-result{margin-top:13px;background:#f2f7ef;border:1px solid #dfe9dc;padding:12px 15px;border-radius:12px;color:#315d42;font-size:12px;font-weight:750}
+    .bodies-note{color:#758378;font-size:11px;line-height:1.6;margin:12px 0 0}
+    @media(max-width:760px){.bodies-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:540px){.bodies-panel{padding:21px 17px}.bodies-heading{font-size:20px}.body-figure-card{padding:10px 6px 12px}.body-figure-card svg{height:130px}}
     [hidden]{display:none!important}
     .upcoming{padding:35px 30px;min-height:275px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
     .upcoming .upcoming-icon{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-deep);margin-bottom:19px;font-size:25px}
@@ -316,6 +333,14 @@
         </div>
         <p class="indicator-disclaimer">Estes indicadores são ferramentas de triagem, não diagnósticos. O IMC, em especial, não distingue gordura de massa muscular e sua interpretação varia conforme o contexto individual.</p>
       </section>
+      <section class="panel bodies-panel" aria-labelledby="bodiesHeading">
+        <div class="eyebrow">Representação visual</div>
+        <h2 class="bodies-heading" id="bodiesHeading">Faixas de IMC ilustradas</h2>
+        <p class="bodies-description">Compare as classificações de IMC com silhuetas esquemáticas. A faixa correspondente aos dados do aluno será destacada automaticamente.</p>
+        <div class="bodies-grid" id="bodiesGrid" aria-label="Representações de quatro faixas do IMC"></div>
+        <div class="bodies-result" id="bodiesResult" role="status" aria-live="polite">Preencha o peso e a altura para destacar a faixa de IMC.</div>
+        <p class="bodies-note"><strong>Importante:</strong> estas figuras são apenas ilustrações conceituais, não uma previsão da aparência do aluno. O IMC não distingue massa muscular de gordura corporal e não determina o formato real de uma pessoa.</p>
+      </section>
       <section class="panel comparison-panel" aria-labelledby="comparisonHeading">
         <div class="eyebrow">Resumo da avaliação</div>
         <h2 id="comparisonHeading" style="margin:6px 0 8px;font-size:22px;letter-spacing:-.6px">Medidas atuais × referências</h2>
@@ -494,6 +519,47 @@
     el('indicatorBmiStatus').innerHTML=statusMarkup(classifyBmi(bmi));
     el('indicatorWaistHeightStatus').innerHTML=statusMarkup(classifyWaistHeight(waistHeight));
     el('indicatorWaistHipStatus').innerHTML=statusMarkup(waistHip===null?status('A medir','neutral'):status('Acompanhar','neutral'));
+    renderBodyFigures(bmi);
+  }
+
+  function silhouetteSvg(category){
+    // Ilustração genérica e esquemática, independente das medidas individuais.
+    var widths=[
+      {shoulder:22,waist:15,hip:18,arm:10,leg:13},
+      {shoulder:25,waist:19,hip:22,arm:12,leg:15},
+      {shoulder:29,waist:26,hip:29,arm:15,leg:18},
+      {shoulder:35,waist:34,hip:36,arm:18,leg:21}
+    ];
+    var p=widths[category],left=70-p.shoulder,right=70+p.shoulder;
+    var trunk='M '+left+' 65 Q 70 56 '+right+' 65 L '+(70+p.waist)+' 112 Q '+(72+p.hip)+' 127 '+(70+p.hip)+' 143 L '+(70-p.hip)+' 143 Q '+(68-p.hip)+' 127 '+(70-p.waist)+' 112 Z';
+    return '<svg viewBox="0 0 140 215" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Silhueta humana esquemática para faixa '+(category+1)+'">'
+      +'<ellipse cx="70" cy="210" rx="38" ry="4" fill="#dce8de" />'
+      +'<path d="M '+(70-p.hip/2)+' 139 Q 59 167 56 198 M '+(70+p.hip/2)+' 139 Q 81 167 84 198" fill="none" stroke="currentColor" stroke-width="'+p.leg+'" stroke-linecap="round" />'
+      +'<path d="M '+(left+4)+' 71 Q '+(left-13)+' 99 '+(left-14)+' 149 M '+(right-4)+' 71 Q '+(right+13)+' 99 '+(right+14)+' 149" fill="none" stroke="currentColor" stroke-width="'+p.arm+'" stroke-linecap="round" />'
+      +'<path d="'+trunk+'" fill="currentColor" />'
+      +'<rect x="63.5" y="42" width="13" height="23" rx="5" fill="currentColor" />'
+      +'<circle cx="70" cy="29" r="16" fill="currentColor" />'
+      +'</svg>';
+  }
+  function renderBodyFigures(bmi){
+    var profiles=[
+      {label:'Abaixo do peso',range:'IMC menor que 18,5'},
+      {label:'Faixa de referência',range:'IMC 18,5 a 24,9'},
+      {label:'Sobrepeso',range:'IMC 25 a 29,9'},
+      {label:'Obesidade',range:'IMC de 30 ou mais'}
+    ];
+    var selected=bmi===null||!Number.isFinite(bmi)||bmi<=0?-1:bmi<18.5?0:bmi<25?1:bmi<30?2:3;
+    el('bodiesGrid').innerHTML=profiles.map(function(profile,index){
+      var chosen=index===selected;
+      return '<article class="body-figure-card'+(chosen?' is-active':'')+'"'+(chosen?' aria-current="true"':'')+'>'
+        +silhouetteSvg(index)
+        +'<strong>'+escapeHtml(profile.label)+'</strong>'
+        +'<small>'+escapeHtml(profile.range)+'</small>'
+        +'<span class="body-current">Faixa calculada ✓</span></article>';
+    }).join('');
+    el('bodiesResult').textContent=selected<0
+      ?'Informe peso e altura na avaliação inicial para identificar a faixa do IMC.'
+      :'IMC de '+ptNumber(bmi,1)+' kg/m²: '+profiles[selected].label+'. Este resultado não define a aparência física.';
   }
   function status(label,tone){return {label:label,tone:tone};}
   function classifyBmi(value){
