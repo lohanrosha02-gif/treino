@@ -1,23 +1,23 @@
 # Fontes dos vídeos do Meu Treino
 
-## Demonstrações em MP4
+## Vídeos de biblioteca externa
 
-- Biblioteca pública: https://github.com/buzops9/exercisedb
-- Arquivo de exercícios: https://github.com/buzops9/exercisedb/blob/main/data/exercises.json
-- Os **28 vínculos de exercícios** com vídeos do acervo são carregados diretamente do CDN da biblioteca. Alguns exercícios usam o mesmo vídeo por serem equivalentes.
-- No site os vídeos iniciam automaticamente, em loop, silenciosos e sem controles. A reprodução pode depender das restrições do navegador.
+- Projeto ExerciseDB: https://github.com/buzops9/exercisedb
+- Os 30 vínculos a demonstrações anatômicas usam MP4 do CDN informado pelo projeto e podem representar o mesmo movimento em sessões diferentes.
+- Conteúdo citado e licença disponíveis abaixo.
 
-## Vídeos instrutivos próprios
+## Novos vídeos 3D criados para o Meu Treino
 
-- Foram preparados **8 MP4 curtos e esquemáticos**, usados em 13 atividades de mobilidade e isometria.
-- Arquivos: `assets/videos/*.mp4` neste repositório.
-- Cópias em `Google Drive / Meutreino / Videos`.
-- Esses 8 vídeos usam representações simplificadas do movimento e **não são filmagens nem animações anatômicas 3D**.
-- Não representam limites seguros de amplitude para um aluno específico.
+- Foram criados **7 MP4 3D originais de um manequim articulado**, reutilizados em 11 atividades: rotação torácica, deslizamento de braços na parede, mobilidade de quadril sentado, extensão torácica, contração isométrica de glúteos, isometria de quadríceps e mobilização confortável do joelho.
+- Arquivos novos: `assets/videos/3d_*.mp4`.
+- Cópias: `Google Drive / Meutreino / Videos / 3d_*.mp4`.
+- **Importante:** são animações 3D produzidas por computador, com anatomia estilizada. Não são filmagens humanas nem reproduzem a textura muscular detalhada das animações externas.
+- São demonstrações visuais gerais. Não definem amplitudes seguras individuais, especialmente com dor articular.
 
-## Segurança
+## Reprodução e dados
 
-Vídeos não substituem avaliação e supervisão individual, especialmente para dor crônica nos dois joelhos e limitação de flexão/extensão. Interromper um exercício que piore os sintomas.
+- O site carrega MP4 silenciosos em loop e sem controles ao abrir cada exercício.
+- Registros de carga e repetição por série continuam salvos no navegador.
 
 ## Licença MIT original do ExerciseDB
 
