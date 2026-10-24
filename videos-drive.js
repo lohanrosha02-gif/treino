@@ -6,6 +6,9 @@ window.MeuTreinoVideos = Object.freeze({
   pastaUrl: "https://drive.google.com/drive/folders/1P1cEjL-pOF4l2WX_SFgJHqzoSvN9jQs6",
   videos: {},
   clips: {
+    "mA1": {"type":"youtube","videoId":"ATHNEfRZ_GA","name":"Shoulder Rolls (UCSF Sports Medicine, 20 segundos)"},
+    "mD3": {"type":"youtube","videoId":"ATHNEfRZ_GA","name":"Shoulder Rolls (UCSF Sports Medicine, 20 segundos)"},
+    "mC3": {"type":"youtube","videoId":"wjZ7dd4j6EA","name":"Shoulder Blade Squeeze (UCSF Sports Medicine, 29 segundos)"},
   "a2": {
     "type": "mp4",
     "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/lever-reverse-t-bar-row.mp4",
