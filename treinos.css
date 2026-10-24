@@ -208,3 +208,13 @@
 .gif-drive-link{position:absolute;bottom:10px;right:10px;padding:5px 9px;border-radius:18px;background:#fff;border:1px solid #dce8d9;font-size:11px;font-weight:800;color:#355b43;text-decoration:none}
 .gif-drive-link:hover,.gif-drive-link:focus{background:#e3f1e4}
 .exercise-demo.isometric-demo{min-height:104px;text-align:center;background:#eef5ea;border:1px dashed #b8cebc;border-radius:12px;color:#46644a;font-size:12px;font-weight:700}
+
+
+/* Vídeos curtos de execução, substituindo GIFs e sequências fotográficas */
+.teaching-video{width:100%;max-width:520px;margin:12px auto 14px;border:1px solid #dae6d9;border-radius:13px;background:#0b1611;overflow:hidden}
+.teaching-video video,.teaching-video iframe{display:block;width:100%;aspect-ratio:16/9;height:auto;min-height:205px;border:0;background:#0b1611;object-fit:contain}
+.teaching-video video{cursor:pointer}
+.teaching-video-source{display:block;padding:8px 12px;color:#dceee0;background:#23362b;font-size:11px;text-align:right;text-decoration:underline;text-underline-offset:2px}
+.teaching-video-source:hover,.teaching-video-source:focus{color:#fff}
+.video-unavailable{margin:11px 0;padding:12px 14px;border:1px dashed #cfded0;border-radius:11px;background:#f8faf7;color:#65766a;font-size:11px;line-height:1.5}
+@media(max-width:540px){.teaching-video video,.teaching-video iframe{min-height:180px}}
