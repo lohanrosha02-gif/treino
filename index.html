@@ -74,6 +74,37 @@
     @media(max-width:760px){.indicator-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.indicator-card:last-child{grid-column:1/-1}}
     @media(max-width:540px){.indicators-panel{padding:21px 17px}.indicator-grid{grid-template-columns:1fr}.indicator-card:last-child{grid-column:auto}.indicator-title{min-height:0}.indicator-value{font-size:29px;margin-top:10px}.indicator-card p{min-height:0}}
 
+
+    .comparison-panel{margin-top:18px;padding:26px 29px}
+    .comparison-intro{font-size:13px;color:var(--muted);margin:0 0 18px;max-width:680px}
+    .comparison-meta{display:inline-flex;align-items:center;gap:7px;color:#43634d;background:var(--accent-soft);border:1px solid #e0eadd;border-radius:40px;padding:7px 10px;font-size:11px;font-weight:750;margin-bottom:16px}
+    .compare-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:15px}
+    .compare-table{border-collapse:collapse;width:100%;font-size:12px;text-align:left}
+    .compare-table th,.compare-table td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+    .compare-table thead th{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#627369;background:#f4f7f2;font-weight:800}
+    .compare-table tbody th{font-weight:750;color:#243c2d;min-width:155px}
+    .compare-table tbody td:last-child{color:#617368;line-height:1.5}
+    .compare-table tbody tr:last-child th,.compare-table tbody tr:last-child td{border-bottom:none}
+    .compare-table .compare-current{font-variant-numeric:tabular-nums;color:#184b39;font-weight:850;white-space:nowrap}
+    .compare-table .not-measured{font-weight:550;color:#a0aaa2}
+    .compare-table .calculated-row{background:#f7faf5}
+    .comparison-tip{font-size:11px;color:#738276;line-height:1.7;margin:15px 0 0}
+    .measurement-tip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+    .measurement-tip div{border:1px solid #e2eadf;background:#f8faf7;border-radius:13px;padding:13px 15px;font-size:11px;color:#6b786e}
+    .measurement-tip b{display:block;font-size:12px;color:#375943;margin-bottom:5px}
+    @media(max-width:640px){
+      .comparison-panel{padding:21px 17px}
+      .compare-table-wrap{overflow:visible}
+      .compare-table,.compare-table tbody{display:block}
+      .compare-table thead{display:none}
+      .compare-table tbody tr{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:2px 10px;padding:12px 13px;border-bottom:1px solid var(--line)}
+      .compare-table tbody tr:last-child{border-bottom:0}
+      .compare-table tbody th,.compare-table tbody td{padding:0;border:0;min-width:0}
+      .compare-table tbody th{font-size:12px}
+      .compare-table tbody td:nth-child(2){text-align:right;font-size:14px}
+      .compare-table tbody td:last-child{grid-column:1/-1;font-size:11px;margin-top:3px}
+      .measurement-tip{grid-template-columns:1fr}
+    }
     [hidden]{display:none!important}
     .upcoming{padding:35px 30px;min-height:275px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
     .upcoming .upcoming-icon{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-deep);margin-bottom:19px;font-size:25px}
@@ -193,10 +224,10 @@
       <div class="side-progress">
         <div>
           <div class="small-heading">Avaliação inicial</div>
-          <div class="big-progress"><span id="weeksCompleted">0</span><span> / 11</span></div>
+          <div class="big-progress"><span id="weeksCompleted">0</span><span> / 12</span></div>
           <p>Medidas preenchidas na ficha inicial.</p>
         </div>
-        <div class="track" role="progressbar" aria-label="Medidas da avaliação preenchidas" aria-valuemin="0" aria-valuemax="11" aria-valuenow="0" id="overallProgress"><div id="overallBar"></div></div>
+        <div class="track" role="progressbar" aria-label="Medidas da avaliação preenchidas" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0" id="overallProgress"><div id="overallBar"></div></div>
       </div>
       <div class="side-tip"><strong>Uma avaliação, 8 semanas</strong> Registre as medidas em Avaliação inicial. Os treinos ficam em uma aba independente.</div>
     </aside>
@@ -218,14 +249,15 @@
           <span class="step-tag" id="stepTag">FICHA INICIAL</span>
         </div>
         <div class="info-strip">
-          <div><div class="info-main">Avaliação antropométrica</div><div class="info-sub" id="filledLabel">0 de 11 campos preenchidos</div></div>
-          <div class="week-complete"><span class="mini-circle" id="filledCircle">0/11</span></div>
+          <div><div class="info-main">Avaliação antropométrica</div><div class="info-sub" id="filledLabel">0 de 12 campos preenchidos</div></div>
+          <div class="week-complete"><span class="mini-circle" id="filledCircle">0/12</span></div>
         </div>
         <form id="measureForm" novalidate>
           <div class="date-row">
             <label for="measureDate">Data da avaliação <span style="color:#a4aea5;font-weight:500">(opcional)</span></label>
             <input type="date" id="measureDate" name="date">
           </div>
+          <p class="comparison-intro" style="margin:0 0 8px">Dados informados na anamnese: <strong>52 anos, 80 kg e 172 cm</strong>. Confirme-os durante a avaliação. As outras circunferências ainda precisam ser medidas.</p>
           <div id="measureFields"></div>
           <div class="actions">
             <button class="primary-btn" type="submit" id="saveButton">
@@ -271,6 +303,23 @@
         </div>
         <p class="indicator-disclaimer">Estes indicadores são ferramentas de triagem, não diagnósticos. O IMC, em especial, não distingue gordura de massa muscular e sua interpretação varia conforme o contexto individual.</p>
       </section>
+      <section class="panel comparison-panel" aria-labelledby="comparisonHeading">
+        <div class="eyebrow">Resumo da avaliação</div>
+        <h2 id="comparisonHeading" style="margin:6px 0 8px;font-size:22px;letter-spacing:-.6px">Medidas atuais × referências</h2>
+        <p class="comparison-intro">A coluna <strong>Atual</strong> acompanha os dados preenchidos na avaliação inicial. Onde não existe um valor ideal universal, considere a evolução individual.</p>
+        <div class="comparison-meta" id="comparisonDate">Avaliação inicial · sem data</div>
+        <div class="compare-table-wrap">
+          <table class="compare-table">
+            <thead><tr><th scope="col">Medida</th><th scope="col">Atual</th><th scope="col">Referência / objetivo</th></tr></thead>
+            <tbody id="comparisonRows"></tbody>
+          </table>
+        </div>
+        <div class="measurement-tip">
+          <div><b>Como medir a cintura</b>Fita horizontal no ponto médio entre a última costela e a parte superior do osso do quadril, no final de uma expiração normal.</div>
+          <div><b>Abdômen e membros</b>Registre o ponto anatômico escolhido. Não aperte a fita e repita o mesmo protocolo nas próximas avaliações.</div>
+        </div>
+        <p class="comparison-tip">Referências de triagem, não diagnósticos ou metas obrigatórias. O IMC não distingue gordura e músculo, e as circunferências não medem percentual de gordura. O critério cintura/altura abaixo de 0,50 segue a diretriz NICE NG246.</p>
+      </section>
       <section class="backup-panel" aria-label="Backup das medidas">
         <div><strong>Guarde uma cópia das suas medidas</strong><p>O registro fica salvo neste navegador. Use o backup para levar os dados a outro aparelho ou evitar perdas.</p></div>
         <div class="backup-actions">
@@ -312,7 +361,7 @@
   var selectedKey='meu-treino-semana-selecionada-v1';
   var activeTabKey='meu-treino-aba-v2';
   var groups=[
-    {name:'Informações básicas',icon:'◌',items:[['peso','Peso','kg'],['altura','Altura','cm']]},
+    {name:'Informações básicas',icon:'◌',items:[['idade','Idade','anos'],['peso','Peso','kg'],['altura','Altura','cm']]},
     {name:'Tronco',icon:'▣',items:[['cintura','Cintura','cm'],['abdomen','Abdômen','cm'],['quadril','Quadril','cm'],['busto','Busto','cm'],['torax','Tórax','cm']]},
     {name:'Braços',icon:'⌁',items:[['bracoRelaxado','Braço relaxado','cm'],['bracoIsometria','Braço em isometria','cm']]},
     {name:'Pernas',icon:'◇',items:[['coxa','Coxa','cm'],['panturrilha','Panturrilha','cm']]}
@@ -366,6 +415,7 @@
     var saved=localStorage.getItem(storageKey), old=localStorage.getItem(oldStorageKey);
     if(saved)data=normalizeData(JSON.parse(saved));
     else if(old){data=normalizeData(JSON.parse(old));migrated=true;}
+    else{data.evaluation.values={idade:'52',peso:'80',altura:'172'};migrated=true;}
     activeWeek=Number(localStorage.getItem(selectedKey))||1;
     if(!Number.isInteger(activeWeek)||activeWeek<1||activeWeek>8)activeWeek=1;
     activeTab=localStorage.getItem(activeTabKey)==='training'?'training':'evaluation';
@@ -428,6 +478,39 @@
     resultNumber('indicatorWaistHeight','indicatorWaistHeightHelp',waistHeight,2,'Informe cintura e altura.');
     resultNumber('indicatorWaistHip','indicatorWaistHipHelp',waistHip,2,'Informe cintura e quadril.');
   }
+  function ptNumber(value,decimals){return value.toLocaleString('pt-BR',{minimumFractionDigits:decimals,maximumFractionDigits:decimals});}
+  function updateComparison(){
+    var height=measurement('altura'),weight=measurement('peso');
+    var waist=measurement('cintura'),hip=measurement('quadril');
+    var refs={
+      idade:'Informação de contexto, sem meta antropométrica',
+      peso:'Meta individual conforme composição corporal e evolução',
+      altura:'Dado de referência, sem meta de alteração',
+      cintura:height!==null?'Triagem: abaixo de '+ptNumber(height/2,1)+' cm (menos da metade da altura)':'Triagem: cintura menor que metade da altura',
+      abdomen:'Acompanhar evolução; sem valor ideal universal',
+      quadril:'Acompanhar evolução; sem valor ideal universal',
+      busto:'Acompanhar evolução; sem valor ideal universal',
+      torax:'Acompanhar evolução; sem valor ideal universal',
+      bracoRelaxado:'Acompanhar evolução; sem valor ideal universal',
+      bracoIsometria:'Acompanhar evolução; sem valor ideal universal',
+      coxa:'Acompanhar evolução; sem valor ideal universal',
+      panturrilha:'Acompanhar evolução; sem valor ideal universal'
+    };
+    var rows=groups.flatMap(function(group){return group.items;}).map(function(item){
+      var value=measurement(item[0]);
+      return {name:item[1],current:value===null?'A medir':ptNumber(value,item[0]==='idade'?0:1)+' '+item[2],reference:refs[item[0]]||'Avaliar individualmente'};
+    });
+    rows=rows.concat([
+      {name:'IMC',current:weight!==null&&height!==null?ptNumber(weight/Math.pow(height/100,2),1)+' kg/m²':'A calcular',reference:'18,5–24,9 kg/m² (referência para adultos; não é meta isolada)'},
+      {name:'Cintura / altura',current:waist!==null&&height!==null?ptNumber(waist/height,2):'A calcular',reference:'Abaixo de 0,50 (triagem)'},
+      {name:'Cintura / quadril',current:waist!==null&&hip!==null?ptNumber(waist/hip,2):'A calcular',reference:'Interpretação individualizada; sem meta única aqui'}
+    ]);
+    el('comparisonRows').innerHTML=rows.map(function(row,index){
+      var missing=row.current==='A medir'||row.current==='A calcular';
+      return '<tr'+(index>=allIds.length?' class="calculated-row"':'')+'><th scope="row">'+escapeHtml(row.name)+'</th><td class="compare-current'+(missing?' not-measured':'')+'">'+escapeHtml(row.current)+'</td><td>'+escapeHtml(row.reference)+'</td></tr>';
+    }).join('');
+    el('comparisonDate').textContent=data.evaluation.date?'Avaliação inicial · '+data.evaluation.date.split('-').reverse().join('/'):'Avaliação inicial · sem data';
+  }
   function updateProgress(){
     var filled=countFields(data.evaluation);
     el('filledLabel').textContent=filled+' de '+allIds.length+' campos preenchidos';
@@ -436,6 +519,7 @@
     el('overallBar').style.width=(filled/allIds.length*100)+'%';
     el('overallProgress').setAttribute('aria-valuenow',String(filled));
     updateIndicators();
+    updateComparison();
   }
   function selectWeek(number){
     if(!Number.isInteger(number)||number<1||number>8)return;
@@ -475,6 +559,7 @@
   el('measureDate').addEventListener('change',function(event){
     data.evaluation.date=event.target.value;
     if(persist())el('saveStatusText').textContent='Data salva automaticamente.';
+    updateComparison();
   });
   el('measureForm').addEventListener('submit',function(event){
     event.preventDefault();
