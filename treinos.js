@@ -154,7 +154,7 @@
       return '<details class="train-step"><summary><span class="train-step-index">'+(index+1)+'</span>'
         +'<span class="train-step-content"><strong>'+escapeHtml(m.name)+'</strong><small>'+escapeHtml(m.dose)+'</small></span></summary>'
         +'<div class="train-step-body">'+stepsList(m.steps)
-        +'<div class="exercise-demo">'+movementSvg(m.kind)+'<p>Ilustração do movimento. Siga as etapas acima.</p></div></div></details>';
+        +'<div class="exercise-demo">'+movementSvg(m.kind)+'</div></div></details>';
     }).join('')+'</div>';
   }
   function renderExercise(x,index,location,entry){
@@ -166,25 +166,17 @@
       +'<div class="exercise-description">'+escapeHtml(x.dose)+' · '+escapeHtml(x.muscle)+'</div>'
       +'</span><span class="exercise-caret" aria-hidden="true">⌄</span></summary>'
       +'<div class="train-exercise-body">'
-      +'<div class="exercise-meta"><span>'+escapeHtml(x.dose)+'</span><span>Descanso: '+escapeHtml(x.rest)+'</span><span>'+escapeHtml(x.muscle)+'</span>'
+      +'<div class="exercise-meta"><span>Descanso: '+escapeHtml(x.rest)+'</span>'
       +(x.caution?'<span class="safety">Sem dor</span>':'')+'</div>'
-      +'<div class="exercise-demo">'+movementSvg(x.kind)+'<p>Guia ilustrativo. Confira a técnica com o personal.</p></div>'
-      +'<h4>Como executar</h4>'+stepsList(x.steps)
+      +'<div class="exercise-demo">'+movementSvg(x.kind)+'</div>'
+      +stepsList(x.steps)
       +(disp?'<p class="exercise-note">'+escapeHtml(disp)+'</p>':'')
       +(x.cue?'<p class="exercise-note caution">'+escapeHtml(x.cue)+'</p>':'')
       +'<div class="workout-field-row">'
       +'<div class="workout-field"><label for="load-'+x.id+'">Carga usada (kg, opcional)</label><input id="load-'+x.id+'" data-exercise="'+x.id+'" data-exfield="load" inputmode="decimal" placeholder="Ex.: 5" value="'+escapeHtml(entry.load||'')+'"></div>'
       +'<div class="workout-field"><label for="reps-'+x.id+'">Repetições realizadas</label><input id="reps-'+x.id+'" data-exercise="'+x.id+'" data-exfield="reps" placeholder="Ex.: 12/12" maxlength="40" value="'+escapeHtml(entry.reps||'')+'"></div>'
-      +'</div><label class="workout-check" style="margin-top:10px"><input type="checkbox" data-exercise="'+x.id+'" data-exfield="done" '+(entry.done?'checked':'')+'>Exercício realizado com conforto</label>'
+      +'</div><label class="workout-check" style="margin-top:10px"><input type="checkbox" data-exercise="'+x.id+'" data-exfield="done" '+(entry.done?'checked':'')+'>Concluído</label>'
       +'</div></details>';
-  }
-  function maybeOptionals(items){
-    if(!items||!items.length)return '';
-    return '<h4 class="train-section-title">Opções futuras (após avaliação)</h4>'
-      +'<p class="train-hint">Não executar sem avaliação e liberação.</p>'
-      +'<div class="train-step-row">'+items.map(function(item){
-        return '<div class="train-warning"><b>'+escapeHtml(item.name)+'</b>'+escapeHtml(item.note)+'</div>';
-      }).join('')+'</div>';
   }
   function field(label,id,type,value,extra){
     extra=extra||'';
@@ -196,49 +188,39 @@
     var week=bridge.getWeek(),p=plans[dayChoice],r=safeRecord(),location=r.location==='hotel'?'hotel':'condominio';
     var completed=['A','B','C','D'].filter(function(key){return getDayRecord(key).complete===true;}).length;
     var completedExercises=p.exercises.filter(function(x){return r.exercises[x.id]&&r.exercises[x.id].done;}).length;
-    var rows=progression.map(function(x){return '<div class="train-roadmap-cell"><strong>'+escapeHtml(x.range)+'</strong><p>'+escapeHtml(x.text)+'</p></div>';}).join('');
+
     mount.innerHTML='<div class="training-guide">'
-      +'<section class="training-intro"><div class="eyebrow">8 semanas</div><h2>Treinos A, B, C e D</h2>'
-      +'<p>Seg A · Ter B · Qui C · Sáb D</p>'
-      +'<div class="training-summary"><span class="training-stat">Semana '+week+' de 8</span><span class="training-stat">'+completed+' de 4 sessões concluídas</span>'
-      +'</div></section>'
-      +'<div class="train-warning"><b>Cuidados com os joelhos</b>Evite dor, travamento ou inchaço. Avaliação com ortopedista/fisioterapeuta antes de cargas nos joelhos. Confirmar histórico da cirurgia abdominal.</div>'
+      +'<div class="train-safety-short" role="note">Joelhos: sem dor ou travamento. Avaliação clínica antes de aumentar cargas.</div>'
       +'<nav class="train-day-nav" aria-label="Escolha a sessão">'+['A','B','C','D'].map(function(key){
         var done=getDayRecord(key).complete===true,day=plans[key];
         return '<button type="button" class="train-day-btn'+(dayChoice===key?' active':'')+'" data-day="'+key+'" aria-pressed="'+(dayChoice===key)+'"><strong>Treino '+key+'</strong><small>'+escapeHtml(day.title)+'</small><span class="train-done">'+(done?'✓ Concluído':'')+'</span></button>';
       }).join('')+'</nav>'
-      +'<section class="panel train-panel" aria-labelledby="trainingDetailTitle"><div class="train-panel-head"><div><div class="eyebrow">'+escapeHtml(p.interval)+' · Semana '+week+'</div>'
-      +'<h3 id="trainingDetailTitle">Treino '+dayChoice+' · '+escapeHtml(p.title)+'</h3><p class="subline">'+escapeHtml(p.subtitle)+'</p></div>'
-      +'<div class="training-summary"><span class="training-stat">'+escapeHtml(p.duration)+'</span><span class="training-stat">'+escapeHtml(p.recover)+'</span></div></div>'
-      +'<div class="train-equipment"><label for="trainingLocation">Onde será feito?</label><select id="trainingLocation" aria-label="Local do treinamento"><option value="condominio"'+(location==='condominio'?' selected':'')+'>Academia do condomínio</option><option value="hotel"'+(location==='hotel'?' selected':'')+'>Academia de hotel / viagem</option></select></div>'
-      +'<h4 class="train-section-title">1. Mobilidade · 6–8 min</h4><p class="train-hint">Movimentos leves, sem forçar.</p>'
+      +'<section class="panel train-panel" aria-labelledby="trainingDetailTitle"><div class="train-panel-head"><div>'
+      +'<h3 id="trainingDetailTitle">'+dayChoice+' · '+escapeHtml(p.title)+'</h3></div>'
+      +'<div class="training-summary"><span class="training-stat">'+escapeHtml(p.duration)+'</span></div></div>'
+      +'<div class="train-equipment"><label for="trainingLocation">Local</label><select id="trainingLocation" aria-label="Local do treinamento"><option value="condominio"'+(location==='condominio'?' selected':'')+'>Condomínio</option><option value="hotel"'+(location==='hotel'?' selected':'')+'>Hotel</option></select></div>'
+      +'<h4 class="train-section-title">Mobilidade · 6–8 min</h4>'
       +guideSteps(p.mobility)
-      +'<h4 class="train-section-title">2. Musculação</h4>'
-      +'<p class="train-hint">Deixe cerca de 3 repetições de reserva nos superiores. Abra um exercício para ver como fazer.</p>'
+      +'<h4 class="train-section-title">Musculação</h4>'
       +'<div class="train-exercises">'+p.exercises.map(function(x,index){return renderExercise(x,index,location,r.exercises[x.id]);}).join('')+'</div>'
-      +maybeOptionals(p.optional)
-      +'<h4 class="train-section-title">3. Cardio</h4>'
-      +'<div class="train-warning"><b>'+escapeHtml(p.cardio.name)+' · '+escapeHtml(p.cardio.dose)+'</b>'+escapeHtml(p.cardio.suggestion)+' Ritmo leve, sem piorar a dor.</div>'
-      +'<div class="exercise-demo" style="margin-top:12px">'+movementSvg('cardio')+'<p>Comece devagar, mantenha ritmo confortável e reduza no final. Pare se houver dor crescente.</p></div>'
-      +'<h4 class="train-section-title">4. Registro da sessão</h4>'
-      +'<p class="train-hint">'+completedExercises+' de '+p.exercises.length+' exercícios marcados.</p>'
+
+      +'<h4 class="train-section-title">Cardio</h4>'
+      +'<details class="train-step"><summary><span class="train-step-index">♥</span><span class="train-step-content"><strong>'+escapeHtml(p.cardio.name)+'</strong><small>'+escapeHtml(p.cardio.dose)+'</small></span></summary><div class="train-step-body"><p>'+escapeHtml(p.cardio.suggestion)+'</p><div class="exercise-demo">'+movementSvg('cardio')+'</div></div></details>'
+      +'<h4 class="train-section-title">Registro · '+completedExercises+'/'+p.exercises.length+'</h4>'
       +'<div class="workout-session-form">'
       +'<div class="workout-field-row">'
-      +field('Dor nos joelhos antes (0–10)','painBefore','number',r.painBefore===undefined?'':r.painBefore,'min="0" max="10" step="1"')
-      +field('Dor nos joelhos depois (0–10)','painAfter','number',r.painAfter===undefined?'':r.painAfter,'min="0" max="10" step="1"')
+      +field('Dor antes (0–10)','painBefore','number',r.painBefore===undefined?'':r.painBefore,'min="0" max="10" step="1"')
+      +field('Dor depois (0–10)','painAfter','number',r.painAfter===undefined?'':r.painAfter,'min="0" max="10" step="1"')
       +'</div><div class="workout-field-row">'
-      +field('Esforço da sessão (0–10)','effort','number',r.effort===undefined?'':r.effort,'min="0" max="10" step="1"')
-      +field('Cardio concluído (minutos)','cardioMinutes','number',r.cardioMinutes===undefined?'':r.cardioMinutes,'min="0" max="180" step="1"')
-      +'</div>'+field('Observações do aluno e equipamentos disponíveis','notes','textarea',r.notes||'','rows="3"')
-      +'<label class="workout-check"><input type="checkbox" data-field="mobilityDone" '+(r.mobilityDone?'checked':'')+'>Realizei a mobilidade inicial</label>'
-      +'<div class="workout-actions"><button class="save" type="button" data-action="save">Salvar registro</button>'
+      +field('Esforço (0–10)','effort','number',r.effort===undefined?'':r.effort,'min="0" max="10" step="1"')
+      +field('Cardio (min)','cardioMinutes','number',r.cardioMinutes===undefined?'':r.cardioMinutes,'min="0" max="180" step="1"')
+      +'</div>'+field('Observações','notes','textarea',r.notes||'','rows="3"')
+      +'<label class="workout-check"><input type="checkbox" data-field="mobilityDone" '+(r.mobilityDone?'checked':'')+'>Mobilidade feita</label>'
+      +'<div class="workout-actions"><button class="save" type="button" data-action="save">Salvar</button>'
       +'<button class="finish" type="button" data-action="finish">'+(r.complete?'✓ Sessão concluída':'Concluir sessão')+'</button>'
-      +'<button class="clear" type="button" data-action="clear">Limpar este treino</button></div>'
-      +'<p class="workout-last">Salvo neste navegador. Sem sincronização entre aparelhos.</p>'
+      +'<button class="clear" type="button" data-action="clear">Limpar</button></div>'
+      +'<p class="workout-last">Dados salvos neste aparelho.</p>'
       +'</div></section>'
-      +'<details class="panel train-panel train-roadmap-details"><summary><strong>Evolução nas 8 semanas</strong><span>Ver plano</span></summary>'
-      +'<div class="train-week-roadmap">'+rows+'</div>'
-      +'<p class="train-footer-note">Avance somente com boa recuperação. Teste de VO₂ na esteira após avaliação clínica e articular.</p></details>'
       +'</div>';
   }
   function saveAuto(){
