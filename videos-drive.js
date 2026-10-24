@@ -1,8 +1,45 @@
-/* Biblioteca pública de vídeos do Meu Treino. IDs vindos da pasta do usuário.
-   Quando houver vídeos, preencher cada exercício com o ID real do arquivo do Google Drive.
-   Exemplo: a1: "ID_DO_VIDEO_DE_CHEST_PRESS" */
+/* GIFs dos treinos: espelhados no repositório para reprodução rápida.
+   Os IDs abaixo apontam para as cópias na pasta Meutreino/GIFs do Google Drive.
+   Vídeos reais enviados futuramente podem ser associados pelo objeto videos. */
 window.MeuTreinoVideos = Object.freeze({
   pastaId: "1P1cEjL-pOF4l2WX_SFgJHqzoSvN9jQs6",
   pastaUrl: "https://drive.google.com/drive/folders/1P1cEjL-pOF4l2WX_SFgJHqzoSvN9jQs6",
+  gifs: {
+  "mA1": "1D_htQ2JmdxLzXq2DoYS4eQNYgvKAbtyp",
+  "mA2": "1gScHTmwDPxND6fYaCogv0bsiLw2viVPu",
+  "mA3": "1169SEpZCgaJUV8gi6KGv4pO4CkFos3J4",
+  "a1": "1i4hupsRxR56QRPIfquDCJG3ZdrMg4GSd",
+  "a2": "1fvso8_JMKz-ivjIB8yKkpmg9gtxARc6Z",
+  "a3": "1vzTzxlcr4jtzsbqTtNCdh5e2daNP5tfP",
+  "a4": "1a_DA3Y33oE2oOkgJwJ6qMOrBQ93rJVGi",
+  "a5": "1MQPxFiZA90hKSfz_RBbz2tJCOkpvVqQm",
+  "a6": "1hdmzUNe6bmrbpJObL7P9dXRbw9OmtFoc",
+  "a7": "15iFtIL3ZBo_56LXTXgG_Hr-lFG7_IH2i",
+  "mB1": "12O-5z_KRdvmRP185ZpKLkgXl6mJqDnWd",
+  "mB2": "1M2QLZgeljpfbAnHbkIXz2WfVoY5L3obw",
+  "mB3": "15K_rAW10BfpoRInGhvzqaKa3IJ1k3awq",
+  "b1": "17gnRTRkfjoz2ZyLk7KTFDGvBssXBiC9k",
+  "b2": "1HZ2VySwmSAP6ZH0b_R5EnZ6wdHqfY720",
+  "b3": "1YQ9NHU45IF0zOUMNeU8xbp9x8ySpmMyB",
+  "b5": "13LJXeLZic9k1OmaSG9OBH82pr1lg-9i2",
+  "b6": "1PhmEeBD60KVORY-swuHCZ_dO0sGvjwZM",
+  "mC1": "1gTz4i_u3rAjDwlQA3523EDUjdvuZgP_-",
+  "mC2": "1OEX5YzmVIpXkQSEDmi-CmbQ7bujJUqsx",
+  "mC3": "1puIAtsnn1qFmnO_bcMq002HiopZbvH3R",
+  "c1": "1Hc5waAmtWypEJ41EXu5Dxqfvd_xc1aL0",
+  "c2": "1M7XFmOtfll_w2PUuSOUlIlCTaVepoXtw",
+  "c3": "1I_8NUulRBjua8wqu5tQ9mlCDDxwq54YM",
+  "c4": "1q7NYOGOP7mNQd3STvtAkohLGLgBBSl5u",
+  "c5": "1zpnyMu13glhmF5bftp4dhPdfDGhspkjL",
+  "c6": "1ATAKo2WvyaabiqQthyKYl5YFzyA_jcQD",
+  "c7": "1TRlxHqGer9S6S8VKIdiKmqujXhDFurky",
+  "mD1": "1z0B9t4d_bXGglCo2BNFWZj-zrTAYDfRz",
+  "mD2": "14NVOwOGS5t32ybD-viDMxQTo0gYVNYrY",
+  "mD3": "136cSktvoU-fj7SB_VHrsOHr0NQtdI5Hf",
+  "d1": "1xLEG-k-VZvbvOVGxsgezQrVXbs1wzS9r",
+  "d2": "18-bH9gCqK5vYOc1c_4zHpFCkcAX7Cjji",
+  "d3": "1H8TpUA_hqPxJWp4tN0xXiVg2zzGW93qK",
+  "d5": "1mIm4jfNbvLte4FFl7BOpoRG8r507HXa_"
+},
   videos: {}
 });
