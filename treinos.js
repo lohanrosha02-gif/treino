@@ -23,7 +23,7 @@
         {id:'a6',name:'Tríceps na polia com corda',dose:'2 × 10–15',rest:'60 s',muscle:'Tríceps',kind:'press',hotel:'Extensão de tríceps com halter leve apoiado, se houver segurança.',steps:['Mantenha os cotovelos próximos ao tronco.','Estenda os cotovelos para empurrar a corda para baixo.','Retorne controladamente sem abrir os cotovelos.']},
         {id:'a7',name:'Rosca bíceps sentada',dose:'2 × 10–15',rest:'60 s',muscle:'Bíceps',kind:'curl',hotel:'Rosca sentada com halteres.',steps:['Sente-se com a coluna apoiada e braços ao lado do corpo.','Flexione os cotovelos sem impulsionar com o tronco.','Desça lentamente, mantendo os punhos neutros.']}
       ],
-      cardio:{name:'Cardio leve complementar',dose:'5–8 minutos, se confortável',suggestion:'Ergômetro de braços; caminhada plana ou bicicleta apenas se os joelhos tolerarem.',kind:'cardio'}
+      cardio:{name:'Bicicleta ergométrica',dose:'5–8 min · leve',suggestion:'Ajuste o selim e pedale com resistência leve, somente se os joelhos tolerarem. Pare se houver dor crescente.',kind:'cardio'}
     },
     B:{
       title:'Inferiores adaptados + cardio',
@@ -46,7 +46,7 @@
         {name:'Leg press com amplitude adaptada',note:'Somente após avaliação funcional e liberação para carga; definir amplitude e carga individualmente.'},
         {name:'Cadeira flexora e extensora',note:'Somente após esclarecimento da dor e limitação dos joelhos e definição profissional de amplitude, carga e progressão.'}
       ],
-      cardio:{name:'Cardio adaptado',dose:'8–12 minutos iniciais',suggestion:'Priorizar ergômetro de braços; bicicleta reclinada ou caminhada plana apenas se confortáveis e seguras.',kind:'cardio'}
+      cardio:{name:'Bicicleta ergométrica',dose:'8–12 min · leve',suggestion:'Prefira bicicleta reclinada se mais confortável. Ajuste o banco e não force os joelhos. Pare se houver dor ou bloqueio.',kind:'cardio'}
     },
     C:{
       title:'Costas + peito + braços',
@@ -66,7 +66,7 @@
         {id:'c6',name:'Rosca bíceps na polia',dose:'2 × 10–15',rest:'60 s',muscle:'Bíceps',kind:'curl',hotel:'Rosca com halteres sentado.',steps:['Fique estável, preferencialmente sentado se necessário.','Flexione os cotovelos sem balançar o tronco.','Retorne lentamente.']},
         {id:'c7',name:'Tríceps na polia com corda',dose:'2 × 10–15',rest:'60 s',muscle:'Tríceps',kind:'press',hotel:'Extensão de tríceps com halter leve e apoio adequado.',steps:['Mantenha os cotovelos ao lado do tronco.','Estenda os cotovelos para abaixar a corda.','Retorne lentamente sem movimentar os ombros.']}
       ],
-      cardio:{name:'Cardio leve pós-musculação',dose:'5–8 minutos, conforme disposição',suggestion:'Ergômetro de braços ou caminhada plana/bicicleta, apenas se a articulação tolerar.',kind:'cardio'}
+      cardio:{name:'Bicicleta ergométrica',dose:'5–8 min · leve',suggestion:'Selim ajustado e pedalada suave. Use apenas se não agravar o joelho.',kind:'cardio'}
     },
     D:{
       title:'Quadril + mobilidade + cardio',
@@ -88,7 +88,7 @@
         {name:'Leg press ou sentar-levantar de banco alto',note:'Incluir apenas após avaliação da condição articular, com amplitude e carga individualizadas.'},
         {name:'Ponte de glúteos',note:'Considerar somente após esclarecer a cirurgia abdominal, verificar posicionamento confortável dos joelhos e confirmar que não há restrições.'}
       ],
-      cardio:{name:'Condicionamento de baixo impacto',dose:'10–15 minutos iniciais',suggestion:'Ergômetro de braços como primeira opção. Caminhada em plano e bicicleta reclinada apenas se toleradas, sem agravar sintomas.',kind:'cardio'}
+      cardio:{name:'Bicicleta ergométrica',dose:'10–15 min · leve',suggestion:'Bicicleta confortável com selim ajustado. Progrida tempo antes da carga, sem dor crescente.',kind:'cardio'}
     }
   };
   var progression=[
@@ -148,13 +148,35 @@
       +'<text x="113" y="100" text-anchor="middle" fill="#526b58" font-size="11" font-weight="700">'+escapeHtml(v[2])+'</text>'
       +'</svg>';
   }
+
+  // Sequência fotográfica de três poses: material ilustrativo, não filmagem.
+  var photoIndexes={
+    mA1:['a',0],mA2:['a',1],mA3:['a',2],a1:['a',3],a2:['a',4],a3:['a',5],a4:['a',6],a5:['a',7],a6:['a',8],a7:['a',9],
+    mB1:['b',0],mB2:['b',1,true],mB3:['b',2],b1:['b',3],b2:['b',4],b3:['b',5],b4:['b',7,true],b5:['b',7,true],b6:['b',8],
+    mC1:['c',0],mC2:['c',1],mC3:['c',2],c1:['c',3],c2:['c',4],c3:['c',5],c4:['c',6],c5:['c',7],c6:['c',8],c7:['c',9],
+    mD1:['d',0],mD2:['d',1],mD3:['d',2],d1:['d',3],d2:['d',4],d3:['d',5],d4:['d',7,true],d5:['d',7]
+  };
+  var photoStripRows={a:11,b:10,c:11,d:9};
+  function exercisePhoto(id,kind){
+    var item=photoIndexes[id];
+    if(!item)return '<div class="exercise-demo">'+movementSvg(kind)+'</div>';
+    var letter=item[0],row=item[1],still=!!item[2];
+    return '<div class="exercise-demo real-demo">'
+      +'<div class="photo-frame'+(still?' still':'')+'"'
+      +' style="--photo-sheet:url(./assets/animacoes/treino-'+letter+'-quadros.webp);--sheet-height:'+(photoStripRows[letter]*192)+'px;--frame-y:-'+(row*192)+'px"'
+      +' role="img" aria-label="'+(still?'Posição inicial ilustrativa':'Sequência ilustrativa de três poses')+'"></div></div>';
+  }
+  function bicyclePhoto(){
+    return '<div class="exercise-demo bike-demo"><div class="bike-photo" role="img" aria-label="Exemplo de bicicleta ergométrica">'
+      +'<span class="bike-pedal" aria-hidden="true">↻</span></div></div>';
+  }
   function stepsList(steps){return '<ol>'+steps.map(function(s){return '<li>'+escapeHtml(s)+'</li>';}).join('')+'</ol>';}
   function guideSteps(items){
     return '<div class="train-step-row">'+items.map(function(m,index){
       return '<details class="train-step"><summary><span class="train-step-index">'+(index+1)+'</span>'
         +'<span class="train-step-content"><strong>'+escapeHtml(m.name)+'</strong><small>'+escapeHtml(m.dose)+'</small></span></summary>'
         +'<div class="train-step-body">'+stepsList(m.steps)
-        +'<div class="exercise-demo">'+movementSvg(m.kind)+'</div></div></details>';
+        +exercisePhoto(m.id,m.kind)+'</div></details>';
     }).join('')+'</div>';
   }
   function renderExercise(x,index,location,entry){
@@ -168,7 +190,7 @@
       +'<div class="train-exercise-body">'
       +'<div class="exercise-meta"><span>'+escapeHtml(x.muscle)+'</span>'
       +(x.caution?'<span class="safety">Sem dor</span>':'')+'</div>'
-      +'<div class="exercise-demo">'+movementSvg(x.kind)+'</div>'
+      +exercisePhoto(x.id,x.kind)
       +stepsList(x.steps)
       +(disp?'<p class="exercise-note">'+escapeHtml(disp)+'</p>':'')
       +(x.cue?'<p class="exercise-note caution">'+escapeHtml(x.cue)+'</p>':'')
@@ -206,7 +228,7 @@
       +'<div class="train-exercises">'+p.exercises.map(function(x,index){return renderExercise(x,index,location,r.exercises[x.id]);}).join('')+'</div>'
 
       +'<h4 class="train-section-title">Cardio</h4>'
-      +'<details class="train-step"><summary><span class="train-step-index">♥</span><span class="train-step-content"><strong>'+escapeHtml(p.cardio.name)+'</strong><small>'+escapeHtml(p.cardio.dose)+'</small></span></summary><div class="train-step-body"><p>'+escapeHtml(p.cardio.suggestion)+'</p><div class="exercise-demo">'+movementSvg('cardio')+'</div></div></details>'
+      +'<details class="train-step"><summary><span class="train-step-index">♥</span><span class="train-step-content"><strong>'+escapeHtml(p.cardio.name)+'</strong><small>'+escapeHtml(p.cardio.dose)+'</small></span></summary><div class="train-step-body"><p>'+escapeHtml(p.cardio.suggestion)+'</p>'+bicyclePhoto()+'</div></details>'
       +'<details class="train-log"><summary><strong>Registro</strong><span>'+completedExercises+'/'+p.exercises.length+' exercícios</span></summary>'
       +'<div class="workout-session-form">'
       +'<div class="workout-field-row">'
