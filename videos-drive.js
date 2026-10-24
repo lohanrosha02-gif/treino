@@ -1,6 +1,5 @@
-/* Meu Treino: 30 animações anatômicas externas + 11 demonstrações 3D produzidas para este projeto.
-   Arquivos 3D do próprio repositório também copiados para Drive/Meutreino/Videos.
-   Vídeos iniciam em loop, silenciosos e sem controles. */
+/* Meu Treino: vídeos instrutivos para treinos A-D. MP4 externos do ExerciseDB,
+   e animações 3D ilustrativas locais. Ver FONTES_VIDEOS.md. */
 window.MeuTreinoVideos=Object.freeze({
   "pastaId": "1P1cEjL-pOF4l2WX_SFgJHqzoSvN9jQs6",
   "pastaUrl": "https://drive.google.com/drive/folders/1P1cEjL-pOF4l2WX_SFgJHqzoSvN9jQs6",
@@ -46,30 +45,30 @@ window.MeuTreinoVideos=Object.freeze({
       "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/lever-seated-hip-abduction.mp4",
       "name": "Lever Seated Hip Abduction"
     },
-    "b2": {
-      "type": "mp4",
-      "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/lever-standing-hip-extension.mp4",
-      "name": "Lever Standing Hip Extension"
-    },
-    "b3": {
-      "type": "mp4",
-      "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/dumbbell-seated-calf-raise.mp4",
-      "name": "Dumbbell Seated Calf Raise"
-    },
-    "b4": {
+    "b10": {
       "type": "local",
-      "url": "./assets/videos/3d_gluteiso.mp4",
-      "name": "Isometria de glúteos (animação 3D)"
+      "url": "./assets/videos/B_kneeankle.mp4",
+      "name": "Extensão de joelho com apoio e caneleira (3D instrutivo)"
     },
-    "b5": {
-      "type": "local",
-      "url": "./assets/videos/3d_quadiso.mp4",
-      "name": "Isometria de quadríceps (animação 3D)"
-    },
-    "b6": {
+    "b11": {
       "type": "mp4",
-      "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/lever-seated-hip-adduction.mp4",
-      "name": "Lever Seated Hip Adduction"
+      "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/lever-seated-calf-raise.mp4",
+      "name": "Lever Seated Calf Raise"
+    },
+    "b7": {
+      "type": "local",
+      "url": "./assets/videos/B_legpressiso.mp4",
+      "name": "Isometria do quadríceps no leg press (3D instrutivo)"
+    },
+    "b8": {
+      "type": "mp4",
+      "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/lever-lying-leg-curl.mp4",
+      "name": "Lever Lying Leg Curl"
+    },
+    "b9": {
+      "type": "local",
+      "url": "./assets/videos/B_gluteunilateral.mp4",
+      "name": "Isometria unilateral de glúteos (3D instrutivo)"
     },
     "c1": {
       "type": "mp4",
@@ -171,15 +170,15 @@ window.MeuTreinoVideos=Object.freeze({
       "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/stretching-feet-and-ankles-stretch.mp4",
       "name": "Feet and Ankles Stretch"
     },
-    "mB2": {
-      "type": "local",
-      "url": "./assets/videos/3d_hipseat.mp4",
-      "name": "Mobilidade de quadril sentado (animação 3D)"
+    "mB4": {
+      "type": "mp4",
+      "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/stretching-seated-calf-stretch.mp4",
+      "name": "Seated Calf Stretch"
     },
-    "mB3": {
-      "type": "local",
-      "url": "./assets/videos/3d_thorax.mp4",
-      "name": "Extensão torácica sentado (animação 3D)"
+    "mB5": {
+      "type": "mp4",
+      "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/stretching-hamstring-stretch.mp4",
+      "name": "Standing Hamstring Stretch"
     },
     "mC1": {
       "type": "local",
