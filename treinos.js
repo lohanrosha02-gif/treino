@@ -170,13 +170,34 @@
     return '<div class="exercise-demo bike-demo"><div class="bike-photo" role="img" aria-label="Exemplo de bicicleta ergométrica">'
       +'<span class="bike-pedal" aria-hidden="true">↻</span></div></div>';
   }
+  function driveVideoFor(id,fallback){
+    var library=window.MeuTreinoVideos||{};
+    var mapped=library.videos&&library.videos[id];
+    if(typeof mapped!=='string'||!/^[a-zA-Z0-9_-]{10,}$/.test(mapped))return fallback;
+    var url='https://drive.google.com/file/d/'+encodeURIComponent(mapped)+'/preview';
+    return '<div class="exercise-demo drive-video" data-drive-video="'+escapeHtml(id)+'">'
+      +'<iframe loading="lazy" src="'+url+'" title="Vídeo do exercício no Google Drive" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen" allowfullscreen></iframe>'
+      +'</div>';
+  }
+  function driveFolderLibrary(){
+    var cfg=window.MeuTreinoVideos||{};
+    var folder=cfg.pastaId;
+    if(typeof folder!=='string'||!/^[a-zA-Z0-9_-]{10,}$/.test(folder))return '';
+    var direct='https://drive.google.com/drive/folders/'+encodeURIComponent(folder);
+    var embed='https://drive.google.com/embeddedfolderview?id='+encodeURIComponent(folder)+'#grid';
+    return '<details class="drive-library">'
+      +'<summary><strong>Vídeos do Drive</strong><span>Ver biblioteca</span></summary>'
+      +'<div class="drive-library-body"><iframe loading="lazy" title="Biblioteca de vídeos Meu Treino no Google Drive" data-folder-src="'+escapeHtml(embed)+'" referrerpolicy="no-referrer"></iframe>'
+      +'<a href="'+direct+'" target="_blank" rel="noopener noreferrer">Abrir pasta no Drive</a></div>'
+      +'</details>';
+  }
   function stepsList(steps){return '<ol>'+steps.map(function(s){return '<li>'+escapeHtml(s)+'</li>';}).join('')+'</ol>';}
   function guideSteps(items){
     return '<div class="train-step-row">'+items.map(function(m,index){
       return '<details class="train-step"><summary><span class="train-step-index">'+(index+1)+'</span>'
         +'<span class="train-step-content"><strong>'+escapeHtml(m.name)+'</strong><small>'+escapeHtml(m.dose)+'</small></span></summary>'
         +'<div class="train-step-body">'+stepsList(m.steps)
-        +exercisePhoto(m.id,m.kind)+'</div></details>';
+        +driveVideoFor(m.id,exercisePhoto(m.id,m.kind))+'</div></details>';
     }).join('')+'</div>';
   }
   function renderExercise(x,index,location,entry){
@@ -190,7 +211,7 @@
       +'<div class="train-exercise-body">'
       +'<div class="exercise-meta"><span>'+escapeHtml(x.muscle)+'</span>'
       +(x.caution?'<span class="safety">Sem dor</span>':'')+'</div>'
-      +exercisePhoto(x.id,x.kind)
+      +driveVideoFor(x.id,exercisePhoto(x.id,x.kind))
       +stepsList(x.steps)
       +(disp?'<p class="exercise-note">'+escapeHtml(disp)+'</p>':'')
       +(x.cue?'<p class="exercise-note caution">'+escapeHtml(x.cue)+'</p>':'')
@@ -228,7 +249,8 @@
       +'<div class="train-exercises">'+p.exercises.map(function(x,index){return renderExercise(x,index,location,r.exercises[x.id]);}).join('')+'</div>'
 
       +'<h4 class="train-section-title">Cardio</h4>'
-      +'<details class="train-step"><summary><span class="train-step-index">♥</span><span class="train-step-content"><strong>'+escapeHtml(p.cardio.name)+'</strong><small>'+escapeHtml(p.cardio.dose)+'</small></span></summary><div class="train-step-body"><p>'+escapeHtml(p.cardio.suggestion)+'</p>'+bicyclePhoto()+'</div></details>'
+      +'<details class="train-step"><summary><span class="train-step-index">♥</span><span class="train-step-content"><strong>'+escapeHtml(p.cardio.name)+'</strong><small>'+escapeHtml(p.cardio.dose)+'</small></span></summary><div class="train-step-body"><p>'+escapeHtml(p.cardio.suggestion)+'</p>'+driveVideoFor('cardio'+dayChoice,bicyclePhoto())+'</div></details>'
+      +driveFolderLibrary()
       +'<details class="train-log"><summary><strong>Registro</strong><span>'+completedExercises+'/'+p.exercises.length+' exercícios</span></summary>'
       +'<div class="workout-session-form">'
       +'<div class="workout-field-row">'
@@ -307,6 +329,13 @@
       if(saveAuto()){render();bridge.toast('Registro removido.');}
     }
   });
+  mount.addEventListener('toggle',function(event){
+    var details=event.target;
+    if(details&&details.open&&details.classList&&details.classList.contains('drive-library')){
+      var iframe=details.querySelector('iframe[data-folder-src]');
+      if(iframe&&!iframe.src)iframe.src=iframe.getAttribute('data-folder-src');
+    }
+  },true);
   mount.addEventListener('input',function(event){recordInput(event.target);});
   mount.addEventListener('change',function(event){
     var t=event.target;
