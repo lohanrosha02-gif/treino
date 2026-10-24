@@ -117,82 +117,32 @@
     var w=data.weeks[week-1]||{};
     return w.training&&w.training[day]||{};
   }
-  function movementSvg(kind){
-    var vectors={
-      press:[22,0,'Empurrar'],
-      row:[-20,0,'Puxar'],
-      pull:[0,20,'Puxar'],
-      fly:[-13,0,'Aproximar'],
-      raise:[0,-22,'Elevar'],
-      curl:[0,-16,'Flexionar'],
-      hip:[-14,0,'Mover'],
-      ankle:[0,-11,'Elevar'],
-      knee:[0,-12,'Movimentar'],
-      rotate:[14,0,'Girar'],
-      mobility:[0,-10,'Mobilizar'],
-      isometric:[0,0,'Contrair'],
-      cardio:[18,0,'Ritmo leve']
-    };
-    var v=vectors[kind]||vectors.mobility;
-    var arrow=kind==='pull'||kind==='raise'||kind==='curl'||kind==='knee'||kind==='ankle'
-      ?'<path d="M 116 75 L 116 42 M 109 49 L 116 42 L 123 49" stroke="#47775b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>'
-      :'<path d="M 102 67 L 134 67 M 126 60 L 134 67 L 126 74" stroke="#47775b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>';
-    return '<svg viewBox="0 0 160 126" role="img" aria-label="Guia ilustrativo animado: '+escapeHtml(v[2])+'; não representa a execução técnica exata" xmlns="http://www.w3.org/2000/svg">'
-      +'<rect x="2" y="2" width="156" height="122" rx="14" fill="#edf4ec"/>'
-      +'<circle cx="52" cy="25" r="13" fill="#83a58c"/>'
-      +'<path d="M 52 41 L 52 81 M 52 51 L 28 74 M 52 51 L 77 74 M 52 81 L 33 109 M 52 81 L 71 109" fill="none" stroke="#648d70" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>'
-      +'<g class="demo-motion" style="--dx:'+v[0]+'px;--dy:'+v[1]+'px">'
-      +'<circle cx="82" cy="70" r="8" fill="#275f42" opacity=".94"/>'
-      +'<path d="M 77 67 L 87 73" stroke="#d7ebd7" stroke-width="2" stroke-linecap="round"/>'
-      +'</g>'+arrow
-      +'<text x="113" y="100" text-anchor="middle" fill="#526b58" font-size="11" font-weight="700">'+escapeHtml(v[2])+'</text>'
-      +'</svg>';
-  }
-
-  // Sequência fotográfica de três poses: material ilustrativo, não filmagem.
-  var photoIndexes={
-    mA1:['a',0],mA2:['a',1],mA3:['a',2],a1:['a',3],a2:['a',4],a3:['a',5],a4:['a',6],a5:['a',7],a6:['a',8],a7:['a',9],
-    mB1:['b',0],mB2:['b',1,true],mB3:['b',2],b1:['b',3],b2:['b',4],b3:['b',5],b4:['b',7,true],b5:['b',7,true],b6:['b',8],
-    mC1:['c',0],mC2:['c',1],mC3:['c',2],c1:['c',3],c2:['c',4],c3:['c',5],c4:['c',6],c5:['c',7],c6:['c',8],c7:['c',9],
-    mD1:['d',0],mD2:['d',1],mD3:['d',2],d1:['d',3],d2:['d',4],d3:['d',5],d4:['d',7,true],d5:['d',7]
-  };
-  var photoStripRows={a:11,b:10,c:11,d:9};
-  function exercisePhoto(id,kind){
-    // GIFs renderizados localmente para carregamento estável;
-    // o Google Drive guarda uma cópia de cada GIF e permite abri-la por link.
-    var cfg=window.MeuTreinoVideos||{};
-    var gifId=cfg.gifs&&cfg.gifs[id];
-    if(id==='b4'||id==='d4'||id==='b5'){
-      return '<div class="exercise-demo isometric-demo" role="note"><span>Isometria · contração sem deslocamento</span></div>';
-    }
-    if(typeof gifId==='string'&&/^[a-zA-Z0-9_-]{10,}$/.test(gifId)&&/^[a-zA-Z][a-zA-Z0-9]{1,4}$/.test(id)){
-      var source='./assets/gifs/'+encodeURIComponent(id)+'.gif';
-      var drive='https://drive.google.com/file/d/'+encodeURIComponent(gifId)+'/view';
-      return '<div class="exercise-demo gif-demo">'
-        +'<img src="'+source+'" alt="Sequência de posições ilustrativas do exercício" width="160" height="192" loading="lazy" decoding="async">'
-        +'<a class="gif-drive-link" href="'+drive+'" target="_blank" rel="noopener noreferrer" aria-label="Ver GIF no Google Drive">Drive</a>'
+  function teachingVideo(id){
+    var library=window.MeuTreinoVideos||{};
+    var driveId=library.videos&&library.videos[id];
+    if(typeof driveId==='string'&&/^[a-zA-Z0-9_-]{10,}$/.test(driveId)){
+      var drive='https://drive.google.com/file/d/'+encodeURIComponent(driveId)+'/preview';
+      return '<div class="teaching-video drive-video" data-video-exercise="'+escapeHtml(id)+'">'
+        +'<iframe loading="lazy" src="'+drive+'" title="Vídeo de execução do exercício" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen" allowfullscreen></iframe>'
         +'</div>';
     }
-    var item=photoIndexes[id];
-    if(!item)return '<div class="exercise-demo">'+movementSvg(kind)+'</div>';
-    var letter=item[0],row=item[1],still=!!item[2];
-    return '<div class="exercise-demo real-demo">'
-      +'<div class="photo-frame'+(still?' still':'')+'"'
-      +' style="--photo-sheet:url(./assets/animacoes/treino-'+letter+'-quadros.webp);--sheet-height:'+(photoStripRows[letter]*192)+'px;--frame-y:-'+(row*192)+'px"'
-      +' role="img" aria-label="'+(still?'Posição ilustrativa':'Sequência ilustrativa de três poses')+'"></div></div>';
-  }
-  function bicyclePhoto(){
-    return '<div class="exercise-demo bike-demo"><div class="bike-photo" role="img" aria-label="Exemplo de bicicleta ergométrica">'
-      +'<span class="bike-pedal" aria-hidden="true">↻</span></div></div>';
-  }
-  function driveVideoFor(id,fallback){
-    var library=window.MeuTreinoVideos||{};
-    var mapped=library.videos&&library.videos[id];
-    if(typeof mapped!=='string'||!/^[a-zA-Z0-9_-]{10,}$/.test(mapped))return fallback;
-    var url='https://drive.google.com/file/d/'+encodeURIComponent(mapped)+'/preview';
-    return '<div class="exercise-demo drive-video" data-drive-video="'+escapeHtml(id)+'">'
-      +'<iframe loading="lazy" src="'+url+'" title="Vídeo do exercício no Google Drive" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen" allowfullscreen></iframe>'
-      +'</div>';
+    var clip=library.clips&&library.clips[id];
+    if(clip&&clip.type==='mp4'&&typeof clip.url==='string'
+       &&/^https:\/\/pub-585d42eb1aa64a67aedf483ec328d3fe\.r2\.dev\/exercise-videos\/male\/[a-z0-9-]+\.mp4$/.test(clip.url)){
+      return '<div class="teaching-video" data-video-exercise="'+escapeHtml(id)+'">'
+        +'<video controls playsinline preload="metadata" loop aria-label="Vídeo demonstrativo da execução de '+escapeHtml(clip.name||'exercício')+'">'
+        +'<source src="'+escapeHtml(clip.url)+'" type="video/mp4">'
+        +'Seu navegador não suporta o vídeo. <a href="'+escapeHtml(clip.url)+'" target="_blank" rel="noopener noreferrer">Abrir MP4</a>'
+        +'</video>'
+        +'<a class="teaching-video-source" href="'+escapeHtml(clip.url)+'" target="_blank" rel="noopener noreferrer">Abrir vídeo</a></div>';
+    }
+    if(clip&&clip.type==='youtube'&&typeof clip.videoId==='string'&&/^[a-zA-Z0-9_-]{11}$/.test(clip.videoId)){
+      var url='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(clip.videoId)+'?rel=0';
+      return '<div class="teaching-video" data-video-exercise="'+escapeHtml(id)+'">'
+        +'<iframe loading="lazy" title="Vídeo demonstrativo: '+escapeHtml(clip.name||'exercício')+'" src="'+url+'" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
+        +'<a class="teaching-video-source" href="https://www.youtube.com/watch?v='+encodeURIComponent(clip.videoId)+'" target="_blank" rel="noopener noreferrer">Abrir vídeo</a></div>';
+    }
+    return '<p class="video-unavailable" data-video-unavailable="'+escapeHtml(id)+'">Vídeo específico indisponível. Siga as etapas de execução.</p>';
   }
   function driveFolderLibrary(){
     var cfg=window.MeuTreinoVideos||{};
@@ -212,7 +162,7 @@
       return '<details class="train-step"><summary><span class="train-step-index">'+(index+1)+'</span>'
         +'<span class="train-step-content"><strong>'+escapeHtml(m.name)+'</strong><small>'+escapeHtml(m.dose)+'</small></span></summary>'
         +'<div class="train-step-body">'+stepsList(m.steps)
-        +driveVideoFor(m.id,exercisePhoto(m.id,m.kind))+'</div></details>';
+        +teachingVideo(m.id)+'</div></details>';
     }).join('')+'</div>';
   }
 
@@ -293,7 +243,7 @@
       +'<div class="train-exercise-body">'
       +'<div class="exercise-meta"><span>'+escapeHtml(x.muscle)+'</span>'
       +(x.caution?'<span class="safety">Sem dor</span>':'')+'</div>'
-      +driveVideoFor(x.id,exercisePhoto(x.id,x.kind))
+      +teachingVideo(x.id)
       +stepsList(x.steps)
       +(disp?'<p class="exercise-note">'+escapeHtml(disp)+'</p>':'')
       +(x.cue?'<p class="exercise-note caution">'+escapeHtml(x.cue)+'</p>':'')
@@ -328,7 +278,7 @@
       +'<div class="train-exercises">'+p.exercises.map(function(x,index){return renderExercise(x,index,location,r.exercises[x.id]);}).join('')+'</div>'
 
       +'<h4 class="train-section-title">Cardio</h4>'
-      +'<details class="train-step"><summary><span class="train-step-index">♥</span><span class="train-step-content"><strong>'+escapeHtml(p.cardio.name)+'</strong><small>'+escapeHtml(p.cardio.dose)+'</small></span></summary><div class="train-step-body"><p>'+escapeHtml(p.cardio.suggestion)+'</p>'+driveVideoFor('cardio'+dayChoice,bicyclePhoto())+'</div></details>'
+      +'<details class="train-step"><summary><span class="train-step-index">♥</span><span class="train-step-content"><strong>'+escapeHtml(p.cardio.name)+'</strong><small>'+escapeHtml(p.cardio.dose)+'</small></span></summary><div class="train-step-body"><p>'+escapeHtml(p.cardio.suggestion)+'</p>'+teachingVideo('cardio'+dayChoice)+'</div></details>'
       +driveFolderLibrary()
       +'<details class="train-log"><summary><strong>Registro</strong><span data-exercises-progress>'+completedExercises+'/'+p.exercises.length+' exercícios</span></summary>'
       +'<div class="workout-session-form">'
