@@ -119,11 +119,11 @@
     .bodies-panel{margin-top:18px;padding:26px 29px}
     .bodies-heading{font-size:22px;letter-spacing:-.7px;margin:7px 0}
     .bodies-description{font-size:13px;color:var(--muted);margin-bottom:18px}
-    .bodies-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+    .bodies-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
     .body-figure-card{min-width:0;padding:14px 8px 13px;text-align:center;background:#f8faf7;border:1.5px solid var(--line);border-radius:17px}
     .body-figure-card.is-active{background:#eef6ee;border-color:var(--accent);box-shadow:0 0 0 2px rgba(55,110,84,.08)}
-    .body-figure-card svg{display:block;margin:0 auto 9px;max-width:125px;width:100%;height:160px;color:#b3c0b5}
-    .body-figure-card.is-active svg{color:#669b7b}
+    .body-figure-card svg{display:block;margin:0 auto 9px;max-width:145px;width:100%;height:190px}
+    .body-figure-card.is-active svg{filter:drop-shadow(0 4px 8px rgba(55,110,84,.17))}
     .body-figure-card strong{display:block;font-size:12px;line-height:1.3}
     .body-figure-card small{display:block;margin-top:4px;font-size:10px;color:#7b887c}
     .body-figure-card .body-current{display:none;font-size:10px;margin-top:9px;font-weight:800;color:#24653f}
@@ -336,8 +336,8 @@
       <section class="panel bodies-panel" aria-labelledby="bodiesHeading">
         <div class="eyebrow">Representação visual</div>
         <h2 class="bodies-heading" id="bodiesHeading">Faixas de IMC ilustradas</h2>
-        <p class="bodies-description">Compare as classificações de IMC com silhuetas esquemáticas. A faixa correspondente aos dados do aluno será destacada automaticamente.</p>
-        <div class="bodies-grid" id="bodiesGrid" aria-label="Representações de quatro faixas do IMC"></div>
+        <p class="bodies-description">Figuras padronizadas, com mesma altura, ângulo frontal e estilo visual. A faixa de IMC calculada para o aluno aparece destacada automaticamente.</p>
+        <div class="bodies-grid" id="bodiesGrid" aria-label="Representações padronizadas de cinco faixas do IMC"></div>
         <div class="bodies-result" id="bodiesResult" role="status" aria-live="polite">Preencha o peso e a altura para destacar a faixa de IMC.</div>
         <p class="bodies-note"><strong>Importante:</strong> estas figuras são apenas ilustrações conceituais, não uma previsão da aparência do aluno. O IMC não distingue massa muscular de gordura corporal e não determina o formato real de uma pessoa.</p>
       </section>
@@ -523,32 +523,43 @@
   }
 
   function silhouetteSvg(category){
-    // Ilustração genérica e esquemática, independente das medidas individuais.
-    var widths=[
-      {shoulder:22,waist:15,hip:18,arm:10,leg:13},
-      {shoulder:25,waist:19,hip:22,arm:12,leg:15},
-      {shoulder:29,waist:26,hip:29,arm:15,leg:18},
-      {shoulder:35,waist:34,hip:36,arm:18,leg:21}
+    // Ilustrações padronizadas: mesma pose, rosto, escala, tom e roupa. Não são retratos.
+    var builds=[
+      {chest:23,waist:17,hip:21,arm:10,leg:13},
+      {chest:25,waist:20,hip:24,arm:11,leg:15},
+      {chest:27,waist:26,hip:29,arm:13,leg:17},
+      {chest:31,waist:34,hip:36,arm:16,leg:20},
+      {chest:35,waist:42,hip:43,arm:19,leg:22}
     ];
-    var p=widths[category],left=70-p.shoulder,right=70+p.shoulder;
-    var trunk='M '+left+' 65 Q 70 56 '+right+' 65 L '+(70+p.waist)+' 112 Q '+(72+p.hip)+' 127 '+(70+p.hip)+' 143 L '+(70-p.hip)+' 143 Q '+(68-p.hip)+' 127 '+(70-p.waist)+' 112 Z';
-    return '<svg viewBox="0 0 140 215" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Silhueta humana esquemática para faixa '+(category+1)+'">'
-      +'<ellipse cx="70" cy="210" rx="38" ry="4" fill="#dce8de" />'
-      +'<path d="M '+(70-p.hip/2)+' 139 Q 59 167 56 198 M '+(70+p.hip/2)+' 139 Q 81 167 84 198" fill="none" stroke="currentColor" stroke-width="'+p.leg+'" stroke-linecap="round" />'
-      +'<path d="M '+(left+4)+' 71 Q '+(left-13)+' 99 '+(left-14)+' 149 M '+(right-4)+' 71 Q '+(right+13)+' 99 '+(right+14)+' 149" fill="none" stroke="currentColor" stroke-width="'+p.arm+'" stroke-linecap="round" />'
-      +'<path d="'+trunk+'" fill="currentColor" />'
-      +'<rect x="63.5" y="42" width="13" height="23" rx="5" fill="currentColor" />'
-      +'<circle cx="70" cy="29" r="16" fill="currentColor" />'
+    var p=builds[category],left=70-p.chest,right=70+p.chest;
+    var torso='M 58 60 Q '+(left-8)+' 60 '+left+' 80 Q '+(70-p.waist)+' 113 '+(70-p.waist)+' 131 Q '+(70-p.hip)+' 145 '+(70-p.hip)+' 155 L '+(70+p.hip)+' 155 Q '+(70+p.hip)+' 145 '+(70+p.waist)+' 131 Q '+(70+p.waist)+' 113 '+right+' 80 Q '+(right+8)+' 60 82 60 Z';
+    var shorts='M '+(70-p.hip)+' 140 Q 70 145 '+(70+p.hip)+' 140 L '+(70+p.hip-3)+' 169 L 73 169 L 70 157 L 67 169 L '+(70-p.hip+3)+' 169 Z';
+    return '<svg viewBox="0 0 140 245" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustração padronizada de corpo adulto na faixa de IMC '+(category+1)+'">'
+      +'<defs><linearGradient id="skin'+category+'" x1="0" x2="1"><stop offset="0" stop-color="#cf926b"/><stop offset=".45" stop-color="#efbb93"/><stop offset="1" stop-color="#e3a881"/></linearGradient></defs>'
+      +'<ellipse cx="70" cy="239" rx="36" ry="3" fill="#dae5dc"/>'
+      +'<path d="M '+(70-p.hip/2)+' 156 Q '+(62-p.leg/5)+' 197 56 229 M '+(70+p.hip/2)+' 156 Q '+(78+p.leg/5)+' 197 84 229" fill="none" stroke="#d9a17d" stroke-width="'+p.leg+'" stroke-linecap="round"/>'
+      +'<path d="M '+(left+1)+' 74 Q 29 99 31 124 L 28 160 M '+(right-1)+' 74 Q 111 99 109 124 L 112 160" fill="none" stroke="#d9a17d" stroke-width="'+p.arm+'" stroke-linecap="round"/>'
+      +'<path d="'+torso+'" fill="url(#skin'+category+')" stroke="#c68f70" stroke-width=".7"/>'
+      +'<path d="M 70 63 L 70 142 M '+(70-p.chest/2)+' 91 Q 59 99 69 99 M '+(70+p.chest/2)+' 91 Q 81 99 71 99" stroke="#b67a5d" stroke-width=".8" fill="none" opacity=".2"/>'
+      +'<circle cx="70" cy="129" r="1.6" fill="#ba8868" opacity=".65"/>'
+      +'<rect x="64" y="45" width="12" height="21" rx="5" fill="#e6ad86"/>'
+      +'<ellipse cx="70" cy="32" rx="17" ry="21" fill="#e6b28d" stroke="#c18b6d" stroke-width=".7"/>'
+      +'<path d="M 53 30 Q 51 11 65 11 Q 83 6 87 22 L 86 29 Q 78 19 70 22 Q 59 23 53 30" fill="#403831"/>'
+      +'<path d="M 60 35 L 64 35 M 76 35 L 80 35 M 67 45 Q 70 47 73 45" stroke="#795542" stroke-width="1.15" stroke-linecap="round" fill="none"/>'
+      +'<path d="'+shorts+'" fill="#344a50" stroke="#273940" stroke-width=".6"/>'
+      +'<path d="M 70 144 L 70 158" stroke="#617276" stroke-width="1" opacity=".6"/>'
+      +'<path d="M 53 230 Q 46 230 43 236 L 58 237 M 87 230 Q 94 230 97 236 L 82 237" fill="none" stroke="#d9a17d" stroke-width="'+Math.max(5,p.leg/2)+'" stroke-linecap="round"/>'
       +'</svg>';
   }
   function renderBodyFigures(bmi){
     var profiles=[
       {label:'Abaixo do peso',range:'IMC menor que 18,5'},
-      {label:'Faixa de referência',range:'IMC 18,5 a 24,9'},
-      {label:'Sobrepeso',range:'IMC 25 a 29,9'},
-      {label:'Obesidade',range:'IMC de 30 ou mais'}
+      {label:'Faixa de referência',range:'IMC de 18,5 a 24,9'},
+      {label:'Sobrepeso',range:'IMC de 25 a 29,9'},
+      {label:'Obesidade grau I',range:'IMC de 30 a 34,9'},
+      {label:'Obesidade grau II/III',range:'IMC a partir de 35'}
     ];
-    var selected=bmi===null||!Number.isFinite(bmi)||bmi<=0?-1:bmi<18.5?0:bmi<25?1:bmi<30?2:3;
+    var selected=bmi===null||!Number.isFinite(bmi)||bmi<=0?-1:bmi<18.5?0:bmi<25?1:bmi<30?2:bmi<35?3:4;
     el('bodiesGrid').innerHTML=profiles.map(function(profile,index){
       var chosen=index===selected;
       return '<article class="body-figure-card'+(chosen?' is-active':'')+'"'+(chosen?' aria-current="true"':'')+'>'
@@ -559,7 +570,7 @@
     }).join('');
     el('bodiesResult').textContent=selected<0
       ?'Informe peso e altura na avaliação inicial para identificar a faixa do IMC.'
-      :'IMC de '+ptNumber(bmi,1)+' kg/m²: '+profiles[selected].label+'. Este resultado não define a aparência física.';
+      :'IMC de '+ptNumber(bmi,1)+' kg/m²: '+profiles[selected].label+'. As figuras não representam a aparência real do aluno.';
   }
   function status(label,tone){return {label:label,tone:tone};}
   function classifyBmi(value){
