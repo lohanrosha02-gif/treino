@@ -1,45 +1,130 @@
-/* GIFs dos treinos: espelhados no repositório para reprodução rápida.
-   Os IDs abaixo apontam para as cópias na pasta Meutreino/GIFs do Google Drive.
-   Vídeos reais enviados futuramente podem ser associados pelo objeto videos. */
+/* Biblioteca de vídeos instrutivos. MP4s de demonstração real do projeto free-exercise-db-with-videos (MIT);
+   vídeos externos YouTube são incorporados, não copiados. Os antigos GIFs não são usados na interface.
+   Para vídeos próprios, preencher "videos" com IDs da pasta Google Drive. */
 window.MeuTreinoVideos = Object.freeze({
   pastaId: "1P1cEjL-pOF4l2WX_SFgJHqzoSvN9jQs6",
   pastaUrl: "https://drive.google.com/drive/folders/1P1cEjL-pOF4l2WX_SFgJHqzoSvN9jQs6",
-  gifs: {
-  "mA1": "1D_htQ2JmdxLzXq2DoYS4eQNYgvKAbtyp",
-  "mA2": "1gScHTmwDPxND6fYaCogv0bsiLw2viVPu",
-  "mA3": "1169SEpZCgaJUV8gi6KGv4pO4CkFos3J4",
-  "a1": "1i4hupsRxR56QRPIfquDCJG3ZdrMg4GSd",
-  "a2": "1fvso8_JMKz-ivjIB8yKkpmg9gtxARc6Z",
-  "a3": "1vzTzxlcr4jtzsbqTtNCdh5e2daNP5tfP",
-  "a4": "1a_DA3Y33oE2oOkgJwJ6qMOrBQ93rJVGi",
-  "a5": "1MQPxFiZA90hKSfz_RBbz2tJCOkpvVqQm",
-  "a6": "1hdmzUNe6bmrbpJObL7P9dXRbw9OmtFoc",
-  "a7": "15iFtIL3ZBo_56LXTXgG_Hr-lFG7_IH2i",
-  "mB1": "12O-5z_KRdvmRP185ZpKLkgXl6mJqDnWd",
-  "mB2": "1M2QLZgeljpfbAnHbkIXz2WfVoY5L3obw",
-  "mB3": "15K_rAW10BfpoRInGhvzqaKa3IJ1k3awq",
-  "b1": "17gnRTRkfjoz2ZyLk7KTFDGvBssXBiC9k",
-  "b2": "1HZ2VySwmSAP6ZH0b_R5EnZ6wdHqfY720",
-  "b3": "1YQ9NHU45IF0zOUMNeU8xbp9x8ySpmMyB",
-  "b5": "13LJXeLZic9k1OmaSG9OBH82pr1lg-9i2",
-  "b6": "1PhmEeBD60KVORY-swuHCZ_dO0sGvjwZM",
-  "mC1": "1gTz4i_u3rAjDwlQA3523EDUjdvuZgP_-",
-  "mC2": "1OEX5YzmVIpXkQSEDmi-CmbQ7bujJUqsx",
-  "mC3": "1puIAtsnn1qFmnO_bcMq002HiopZbvH3R",
-  "c1": "1Hc5waAmtWypEJ41EXu5Dxqfvd_xc1aL0",
-  "c2": "1M7XFmOtfll_w2PUuSOUlIlCTaVepoXtw",
-  "c3": "1I_8NUulRBjua8wqu5tQ9mlCDDxwq54YM",
-  "c4": "1q7NYOGOP7mNQd3STvtAkohLGLgBBSl5u",
-  "c5": "1zpnyMu13glhmF5bftp4dhPdfDGhspkjL",
-  "c6": "1ATAKo2WvyaabiqQthyKYl5YFzyA_jcQD",
-  "c7": "1TRlxHqGer9S6S8VKIdiKmqujXhDFurky",
-  "mD1": "1z0B9t4d_bXGglCo2BNFWZj-zrTAYDfRz",
-  "mD2": "14NVOwOGS5t32ybD-viDMxQTo0gYVNYrY",
-  "mD3": "136cSktvoU-fj7SB_VHrsOHr0NQtdI5Hf",
-  "d1": "1xLEG-k-VZvbvOVGxsgezQrVXbs1wzS9r",
-  "d2": "18-bH9gCqK5vYOc1c_4zHpFCkcAX7Cjji",
-  "d3": "1H8TpUA_hqPxJWp4tN0xXiVg2zzGW93qK",
-  "d5": "1mIm4jfNbvLte4FFl7BOpoRG8r507HXa_"
-},
-  videos: {}
+  videos: {},
+  clips: {
+  "a2": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/lever-reverse-t-bar-row.mp4",
+    "name": "Lever Reverse T-Bar Row"
+  },
+  "a3": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/lever-incline-hammer-chest-press.mp4",
+    "name": "Lever Incline Hammer Chest Press"
+  },
+  "a4": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/cable-bar-lateral-pulldown-wide-shoulder-grip.mp4",
+    "name": "Wide Grip Cable Lat Pulldown"
+  },
+  "a5": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/dumbbell-seated-lateral-raise.mp4",
+    "name": "Dumbbell Seated Lateral Raise"
+  },
+  "a6": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/cable-pushdown-rope-attachment.mp4",
+    "name": "Cable Rope Triceps Pushdown"
+  },
+  "a7": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/dumbbell-alternate-seated-biceps-curl.mp4",
+    "name": "Seated Alternating Dumbbell Curl"
+  },
+  "mB1": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/stretching-feet-and-ankles-stretch.mp4",
+    "name": "Feet and Ankles Stretch"
+  },
+  "b1": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/lever-seated-hip-abduction.mp4",
+    "name": "Lever Seated Hip Abduction"
+  },
+  "b3": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/dumbbell-seated-calf-raise.mp4",
+    "name": "Dumbbell Seated Calf Raise"
+  },
+  "b6": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/lever-seated-hip-adduction.mp4",
+    "name": "Lever Seated Hip Adduction"
+  },
+  "c1": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/lever-incline-hammer-chest-press.mp4",
+    "name": "Lever Incline Hammer Chest Press"
+  },
+  "c2": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/lever-reverse-t-bar-row.mp4",
+    "name": "Lever Reverse T-Bar Row"
+  },
+  "c3": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/lever-pec-deck-fly.mp4",
+    "name": "Pec Deck Fly"
+  },
+  "c4": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/cable-bar-lateral-pulldown-wide-shoulder-grip.mp4",
+    "name": "Wide Grip Cable Lat Pulldown"
+  },
+  "c7": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/cable-pushdown-rope-attachment.mp4",
+    "name": "Cable Rope Triceps Pushdown"
+  },
+  "mD1": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/stretching-feet-and-ankles-rotation-stretch.mp4",
+    "name": "Feet and Ankles Rotation Stretch"
+  },
+  "d1": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/lever-seated-hip-abduction.mp4",
+    "name": "Lever Seated Hip Abduction"
+  },
+  "d3": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/dumbbell-seated-calf-raise.mp4",
+    "name": "Dumbbell Seated Calf Raise"
+  },
+  "cardioA": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/stationary-bike.mp4",
+    "name": "Stationary Bike"
+  },
+  "cardioB": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/stationary-bike.mp4",
+    "name": "Stationary Bike"
+  },
+  "cardioC": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/stationary-bike.mp4",
+    "name": "Stationary Bike"
+  },
+  "cardioD": {
+    "type": "mp4",
+    "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/stationary-bike.mp4",
+    "name": "Stationary Bike"
+  },
+  "a1": {
+    "type": "youtube",
+    "videoId": "6CPnYJonfUo",
+    "name": "How to Use the Chest Press Machine"
+  },
+  "c5": {
+    "type": "youtube",
+    "videoId": "BzeAjF1EeCY",
+    "name": "Face Pulls — QMotion"
+  }
+}
 });
