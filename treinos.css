@@ -142,3 +142,20 @@
 .train-log[open] summary{border-bottom:1px solid #e1ebe0}
 .train-log .workout-session-form{padding:14px 15px}
 @media(max-width:540px){.train-day-btn{padding:11px 5px}.train-day-btn strong{font-size:20px}.train-day-btn small{font-size:10px}}
+
+
+/* Demonstrações fotográficas: poses início → movimento → retorno */
+.exercise-demo.real-demo{display:flex;justify-content:center;align-items:center;overflow:hidden;background:#f5f8f4;padding:8px}
+.photo-frame{flex:none;width:160px;height:192px;max-width:100%;border-radius:11px;background-image:var(--photo-sheet);background-repeat:no-repeat;background-position:0 var(--frame-y);background-size:480px var(--sheet-height);box-shadow:0 2px 8px rgba(31,58,41,.13);animation:treinoFotos 3.6s step-end infinite}
+.photo-frame.still{animation:none;background-position:0 var(--frame-y)}
+@keyframes treinoFotos{
+  0%,29%{background-position:0 var(--frame-y)}
+  30%,60%{background-position:-160px var(--frame-y)}
+  61%,95%{background-position:-320px var(--frame-y)}
+  96%,100%{background-position:0 var(--frame-y)}
+}
+.bike-demo{background:#f3f6f3;border-radius:14px;padding:7px;min-height:160px}
+.bike-photo{width:min(100%,360px);aspect-ratio: 516 / 282;position:relative;background-image:url('./assets/animacoes/bicicleta-ergometrica.webp');background-size:cover;background-position:center;border-radius:11px;overflow:hidden;box-shadow:0 2px 8px rgba(31,58,41,.15)}
+.bike-pedal{position:absolute;left:33%;bottom:19%;width:34px;height:34px;border:2px solid rgba(231,246,231,.9);background:rgba(27,72,50,.65);border-radius:50%;display:grid;place-items:center;color:white;font-size:26px;font-weight:700;line-height:1;animation:bicicletaGiro 2.1s linear infinite;transform-origin:center}
+@keyframes bicicletaGiro{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.photo-frame,.bike-pedal{animation:none!important}}
