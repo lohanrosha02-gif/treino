@@ -7,7 +7,7 @@
   var plans={
     A:{
       title:'Peito + costas + braços',
-      subtitle:'Hipertrofia inicial: ênfase em peito e costas com pares antagonistas.',
+      subtitle:'Força e hipertrofia com exercícios de empurrar e puxar.',
       duration:'60–70 min',interval:'Segunda-feira',recover:'72 h até o próximo superior',
       mobility:[
         {id:'mA1',name:'Circundução dos ombros',dose:'1 × 10 para cada sentido',kind:'mobility',steps:['Em pé ou sentado, relaxe os braços junto ao corpo.','Eleve e gire os ombros para trás em círculos lentos.','Faça o mesmo movimento para a frente, sem dor.']},
@@ -27,7 +27,7 @@
     },
     B:{
       title:'Inferiores adaptados + cardio',
-      subtitle:'Quadril, glúteos e panturrilhas com controle articular e sem forçar a flexão do joelho.',
+      subtitle:'Quadril e pernas com baixa exigência dos joelhos.',
       duration:'45–60 min',interval:'Terça-feira',recover:'Até sábado para a próxima sessão de inferiores',
       mobility:[
         {id:'mB1',name:'Flexão e extensão dos tornozelos sentado',dose:'1 × 12–15 por lado',kind:'ankle',steps:['Sente-se com as pernas em posição confortável.','Aponte os dedos dos pés para a frente e depois leve-os para cima.','Repita sem forçar os joelhos.']},
@@ -50,7 +50,7 @@
     },
     C:{
       title:'Costas + peito + braços',
-      subtitle:'Segundo estímulo da semana para peito e costas, variando ângulos e mantendo recuperação.',
+      subtitle:'Segundo estímulo para peito e costas.',
       duration:'60–70 min',interval:'Quinta-feira',recover:'~72 h depois do treino A',
       mobility:[
         {id:'mC1',name:'Rotação torácica sentado',dose:'1 × 8 por lado',kind:'rotate',steps:['Sente-se e cruze os braços em frente ao peito.','Gire o tronco lentamente para um lado sem deslocar o quadril.','Retorne ao centro e repita para o outro lado.']},
@@ -70,7 +70,7 @@
     },
     D:{
       title:'Quadril + mobilidade + cardio',
-      subtitle:'Segundo dia leve de inferiores, ênfase em mobilidade confortável, resistência inicial e base aeróbica.',
+      subtitle:'Mobilidade, pernas adaptadas e cardio leve.',
       duration:'45–60 min',interval:'Sábado',recover:'~96 h depois do treino B',
       mobility:[
         {id:'mD1',name:'Círculos de tornozelo sentado',dose:'1 × 10 por sentido e lado',kind:'ankle',steps:['Sente-se e mantenha a perna relaxada.','Desenhe círculos pequenos com o pé, sem girar o joelho.','Inverta a direção e repita do outro lado.']},
@@ -92,10 +92,10 @@
     }
   };
   var progression=[
-    {range:'Semanas 1–2',text:'Familiarização, técnica, cargas leves e esforço ~4–6/10. Reduzir séries se necessário.'},
-    {range:'Semanas 3–4',text:'Aumentar repetições dentro da faixa se estiver recuperando e sem piora articular.'},
-    {range:'Semanas 5–6',text:'Pequenos aumentos de carga em superiores após atingir o topo da faixa com boa forma.'},
-    {range:'Semanas 7–8',text:'Consolidar, rever cargas, recuperação, cintura, frequência e cardio. Reavaliar antes de nova progressão.'}
+    {range:'Semanas 1–2',text:'Aprender a execução e usar cargas leves.'},
+    {range:'Semanas 3–4',text:'Progredir repetições se estiver confortável.'},
+    {range:'Semanas 5–6',text:'Progredir cargas aos poucos, com boa técnica.'},
+    {range:'Semanas 7–8',text:'Reavaliar evolução, dor, cargas e cardio.'}
   ];
   function escapeHtml(value){
     return String(value===null||value===undefined?'':value).replace(/[&<>"']/g,function(c){
@@ -154,13 +154,12 @@
       return '<details class="train-step"><summary><span class="train-step-index">'+(index+1)+'</span>'
         +'<span class="train-step-content"><strong>'+escapeHtml(m.name)+'</strong><small>'+escapeHtml(m.dose)+'</small></span></summary>'
         +'<div class="train-step-body">'+stepsList(m.steps)
-        +'<div class="exercise-demo">'+movementSvg(m.kind)+'<p><b>Guia visual em movimento.</b> Ajuste a amplitude ao conforto e siga as instruções. Não force para acompanhar o desenho.</p></div>'
-        +'<p>Posição inicial → movimento suave → retorno.</p></div></details>';
+        +'<div class="exercise-demo">'+movementSvg(m.kind)+'<p>Ilustração do movimento. Siga as etapas acima.</p></div></div></details>';
     }).join('')+'</div>';
   }
   function renderExercise(x,index,location,entry){
     entry=entry&&typeof entry==='object'?entry:{};
-    var disp=location==='hotel'?(x.hotel||'Alternativa não definida; registrar como não realizado.'):'Equipamento da academia do condomínio.';
+    var disp=location==='hotel'?(x.hotel||'Sem alternativa definida.'):'';
     return '<details class="train-exercise" id="exercise-'+escapeHtml(x.id)+'">'
       +'<summary><span class="exercise-ordinal">'+(index+1)+'</span><span>'
       +'<div class="exercise-name">'+escapeHtml(x.name)+'</div>'
@@ -168,10 +167,10 @@
       +'</span><span class="exercise-caret" aria-hidden="true">⌄</span></summary>'
       +'<div class="train-exercise-body">'
       +'<div class="exercise-meta"><span>'+escapeHtml(x.dose)+'</span><span>Descanso: '+escapeHtml(x.rest)+'</span><span>'+escapeHtml(x.muscle)+'</span>'
-      +(x.caution?'<span class="safety">Somente se indolor e confortável</span>':'')+'</div>'
-      +'<div class="exercise-demo">'+movementSvg(x.kind)+'<p><b>Animação esquemática:</b> direção do movimento em loop. Para aprender a técnica, siga as três etapas e peça conferência presencial ao personal.</p></div>'
+      +(x.caution?'<span class="safety">Sem dor</span>':'')+'</div>'
+      +'<div class="exercise-demo">'+movementSvg(x.kind)+'<p>Guia ilustrativo. Confira a técnica com o personal.</p></div>'
       +'<h4>Como executar</h4>'+stepsList(x.steps)
-      +'<p class="exercise-note">'+escapeHtml(disp)+'</p>'
+      +(disp?'<p class="exercise-note">'+escapeHtml(disp)+'</p>':'')
       +(x.cue?'<p class="exercise-note caution">'+escapeHtml(x.cue)+'</p>':'')
       +'<div class="workout-field-row">'
       +'<div class="workout-field"><label for="load-'+x.id+'">Carga usada (kg, opcional)</label><input id="load-'+x.id+'" data-exercise="'+x.id+'" data-exfield="load" inputmode="decimal" placeholder="Ex.: 5" value="'+escapeHtml(entry.load||'')+'"></div>'
@@ -181,8 +180,8 @@
   }
   function maybeOptionals(items){
     if(!items||!items.length)return '';
-    return '<h4 class="train-section-title">Progressões futuras (não liberadas automaticamente)</h4>'
-      +'<p class="train-hint">Apenas depois da avaliação dos joelhos e/ou da cirurgia abdominal. Não fazem parte da sessão atual.</p>'
+    return '<h4 class="train-section-title">Opções futuras (após avaliação)</h4>'
+      +'<p class="train-hint">Não executar sem avaliação e liberação.</p>'
       +'<div class="train-step-row">'+items.map(function(item){
         return '<div class="train-warning"><b>'+escapeHtml(item.name)+'</b>'+escapeHtml(item.note)+'</div>';
       }).join('')+'</div>';
@@ -199,11 +198,11 @@
     var completedExercises=p.exercises.filter(function(x){return r.exercises[x.id]&&r.exercises[x.id].done;}).length;
     var rows=progression.map(function(x){return '<div class="train-roadmap-cell"><strong>'+escapeHtml(x.range)+'</strong><p>'+escapeHtml(x.text)+'</p></div>';}).join('');
     mount.innerHTML='<div class="training-guide">'
-      +'<section class="training-intro"><div class="eyebrow">Treinos personalizados · 8 semanas</div><h2>Seu plano A, B, C e D</h2>'
-      +'<p>Seg: A (superior) · Ter: B (inferiores adaptados) · Qui: C (superior) · Sáb: D (mobilidade, inferiores e cardio). Intervalos ajustáveis conforme viagens e recuperação.</p>'
+      +'<section class="training-intro"><div class="eyebrow">8 semanas</div><h2>Treinos A, B, C e D</h2>'
+      +'<p>Seg A · Ter B · Qui C · Sáb D</p>'
       +'<div class="training-summary"><span class="training-stat">Semana '+week+' de 8</span><span class="training-stat">'+completed+' de 4 sessões concluídas</span>'
-      +'<span class="training-stat">Peito + costas em 2 dias</span><span class="training-stat">Inferiores com cautela</span></div></section>'
-      +'<div class="train-warning"><b>Segurança do aluno</b>52 anos, dor bilateral nos joelhos há anos, estalos dolorosos e restrição de amplitude. Solicitar avaliação de ortopedista/fisioterapeuta antes de exercícios carregados de joelho. Não realizar movimentos dolorosos, com bloqueio, falseio ou inchaço. Esclarecer a cirurgia abdominal. Cardio só em modalidade tolerada. Interromper diante de sintomas novos relevantes.</div>'
+      +'</div></section>'
+      +'<div class="train-warning"><b>Cuidados com os joelhos</b>Evite dor, travamento ou inchaço. Avaliação com ortopedista/fisioterapeuta antes de cargas nos joelhos. Confirmar histórico da cirurgia abdominal.</div>'
       +'<nav class="train-day-nav" aria-label="Escolha a sessão">'+['A','B','C','D'].map(function(key){
         var done=getDayRecord(key).complete===true,day=plans[key];
         return '<button type="button" class="train-day-btn'+(dayChoice===key?' active':'')+'" data-day="'+key+'" aria-pressed="'+(dayChoice===key)+'"><strong>Treino '+key+'</strong><small>'+escapeHtml(day.title)+'</small><span class="train-done">'+(done?'✓ Concluído':'')+'</span></button>';
@@ -212,17 +211,17 @@
       +'<h3 id="trainingDetailTitle">Treino '+dayChoice+' · '+escapeHtml(p.title)+'</h3><p class="subline">'+escapeHtml(p.subtitle)+'</p></div>'
       +'<div class="training-summary"><span class="training-stat">'+escapeHtml(p.duration)+'</span><span class="training-stat">'+escapeHtml(p.recover)+'</span></div></div>'
       +'<div class="train-equipment"><label for="trainingLocation">Onde será feito?</label><select id="trainingLocation" aria-label="Local do treinamento"><option value="condominio"'+(location==='condominio'?' selected':'')+'>Academia do condomínio</option><option value="hotel"'+(location==='hotel'?' selected':'')+'>Academia de hotel / viagem</option></select></div>'
-      +'<h4 class="train-section-title">1. Mobilidade inicial (6–8 min)</h4><p class="train-hint">Inicie com movimentos lentos e confortáveis. São preparatórios, não alongamentos forçados.</p>'
+      +'<h4 class="train-section-title">1. Mobilidade · 6–8 min</h4><p class="train-hint">Movimentos leves, sem forçar.</p>'
       +guideSteps(p.mobility)
-      +'<h4 class="train-section-title">2. Musculação e controle motor</h4>'
-      +'<p class="train-hint">Cargas leves a moderadas nos superiores, aproximadamente 3 repetições em reserva. Nos inferiores, nunca progredir com base apenas no peso da máquina. Abra cada exercício para ver o passo a passo.</p>'
+      +'<h4 class="train-section-title">2. Musculação</h4>'
+      +'<p class="train-hint">Deixe cerca de 3 repetições de reserva nos superiores. Abra um exercício para ver como fazer.</p>'
       +'<div class="train-exercises">'+p.exercises.map(function(x,index){return renderExercise(x,index,location,r.exercises[x.id]);}).join('')+'</div>'
       +maybeOptionals(p.optional)
-      +'<h4 class="train-section-title">3. Cardio / condicionamento</h4>'
-      +'<div class="train-warning"><b>'+escapeHtml(p.cardio.name)+' · '+escapeHtml(p.cardio.dose)+'</b>'+escapeHtml(p.cardio.suggestion)+' Intensidade inicial leve, capaz de conversar. Aumentar a duração gradualmente se não houver piora da dor.</div>'
-      +'<div class="exercise-demo" style="margin-top:12px">'+movementSvg('cardio')+'<p><b>Passo a passo:</b> ajuste o equipamento; comece devagar; mantenha um ritmo em que consiga conversar; reduza a intensidade para finalizar. Interrompa se houver piora dos joelhos ou sintomas incomuns.</p></div>'
+      +'<h4 class="train-section-title">3. Cardio</h4>'
+      +'<div class="train-warning"><b>'+escapeHtml(p.cardio.name)+' · '+escapeHtml(p.cardio.dose)+'</b>'+escapeHtml(p.cardio.suggestion)+' Ritmo leve, sem piorar a dor.</div>'
+      +'<div class="exercise-demo" style="margin-top:12px">'+movementSvg('cardio')+'<p>Comece devagar, mantenha ritmo confortável e reduza no final. Pare se houver dor crescente.</p></div>'
       +'<h4 class="train-section-title">4. Registro da sessão</h4>'
-      +'<p class="train-hint">Exercícios marcados: '+completedExercises+' de '+p.exercises.length+'. Preencha para acompanhar o treinamento presencial e remoto.</p>'
+      +'<p class="train-hint">'+completedExercises+' de '+p.exercises.length+' exercícios marcados.</p>'
       +'<div class="workout-session-form">'
       +'<div class="workout-field-row">'
       +field('Dor nos joelhos antes (0–10)','painBefore','number',r.painBefore===undefined?'':r.painBefore,'min="0" max="10" step="1"')
@@ -235,11 +234,11 @@
       +'<div class="workout-actions"><button class="save" type="button" data-action="save">Salvar registro</button>'
       +'<button class="finish" type="button" data-action="finish">'+(r.complete?'✓ Sessão concluída':'Concluir sessão')+'</button>'
       +'<button class="clear" type="button" data-action="clear">Limpar este treino</button></div>'
-      +'<p class="workout-last">Os registros ficam salvos neste navegador e entram no backup JSON. Eles não são sincronizados automaticamente entre dispositivos.</p>'
+      +'<p class="workout-last">Salvo neste navegador. Sem sincronização entre aparelhos.</p>'
       +'</div></section>'
-      +'<section class="panel train-panel"><div class="eyebrow">Progressão responsável</div><h3>Plano de evolução · 8 semanas</h3>'
+      +'<details class="panel train-panel train-roadmap-details"><summary><strong>Evolução nas 8 semanas</strong><span>Ver plano</span></summary>'
       +'<div class="train-week-roadmap">'+rows+'</div>'
-      +'<p class="train-footer-note">Volume inicial: cerca de 10 séries diretas de peito e 11 de costas por semana. Distribuição A/C com aproximadamente 72 horas de intervalo. B/D são sessões conservadoras até avaliação dos joelhos. Priorize sono, recuperação e tolerância antes de aumentar carga. Futuro teste de VO₂ na esteira deve ser planejado somente após triagem clínica e capacidade articular suficiente; avaliação cardiorrespiratória máxima requer protocolo e supervisão adequados.</p></section>'
+      +'<p class="train-footer-note">Avance somente com boa recuperação. Teste de VO₂ na esteira após avaliação clínica e articular.</p></details>'
       +'</div>';
   }
   function saveAuto(){
