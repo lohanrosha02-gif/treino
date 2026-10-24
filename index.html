@@ -59,7 +59,21 @@
     .track div{height:100%;width:0;background:var(--accent);border-radius:20px;transition:width .2s}
     .side-tip{background:#e9efe4;border:1px solid #dfe8d9;padding:18px;border-radius:18px;font-size:12px;color:#617164;line-height:1.65}
     .side-tip strong{display:block;color:#304a39;font-size:13px;margin-bottom:5px}
-    .main{min-width:0}
+.main{min-width:0}
+    .indicators-panel{margin-top:18px;padding:26px 29px}
+    .indicators-intro{color:var(--muted);font-size:13px;margin:0 0 20px;max-width:610px}
+    .indicator-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .indicator-card{background:#f8faf7;border:1px solid var(--line);border-radius:16px;padding:20px 17px;min-width:0}
+    .indicator-title{display:block;color:#526658;font-size:12px;font-weight:750;min-height:38px;line-height:1.4}
+    .indicator-value{font-size:clamp(23px,2.6vw,30px);font-weight:830;letter-spacing:-1.1px;color:var(--accent-deep);line-height:1.2;margin:12px 0 8px;font-variant-numeric:tabular-nums}
+    .indicator-card p{font-size:11px;color:#7a887f;margin:0;min-height:33px}
+    .indicator-formula{border-top:1px solid #e6ebe3;margin-top:14px;padding-top:11px;font-size:10px;line-height:1.5;color:#758377}
+    .indicator-note{border:1px solid #e0e9d9;background:#f2f6ee;border-radius:14px;padding:16px 18px;margin-top:15px;color:#516551;font-size:12px;line-height:1.65}
+    .indicator-note strong{display:block;color:#334c3b;margin-bottom:4px;font-size:13px}
+    .indicator-disclaimer{color:#8b978e;font-size:11px;line-height:1.6;margin:14px 0 0}
+    @media(max-width:760px){.indicator-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.indicator-card:last-child{grid-column:1/-1}}
+    @media(max-width:540px){.indicators-panel{padding:21px 17px}.indicator-grid{grid-template-columns:1fr}.indicator-card:last-child{grid-column:auto}.indicator-title{min-height:0}.indicator-value{font-size:29px;margin-top:10px}.indicator-card p{min-height:0}}
+
     [hidden]{display:none!important}
     .upcoming{padding:35px 30px;min-height:275px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
     .upcoming .upcoming-icon{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-deep);margin-bottom:19px;font-size:25px}
@@ -227,6 +241,36 @@
           <span id="saveStatusText">Os dados são salvos neste navegador.</span>
         </div>
       </section>
+      <section class="panel indicators-panel" aria-labelledby="indicatorsHeading">
+        <div class="eyebrow">Resultados automáticos</div>
+        <h2 id="indicatorsHeading" style="margin:7px 0 7px;font-size:22px;letter-spacing:-.7px">Indicadores antropométricos</h2>
+        <p class="indicators-intro">Calculados com os dados da sua avaliação inicial, sem preencher nada novamente.</p>
+        <div class="indicator-grid">
+          <article class="indicator-card">
+            <span class="indicator-title">Índice de massa corporal (IMC)</span>
+            <div class="indicator-value" id="indicatorBmi" aria-live="polite">—</div>
+            <p id="indicatorBmiHelp">Informe peso e altura.</p>
+            <div class="indicator-formula">Peso (kg) ÷ altura² (m)<div>Triagem do estado nutricional</div></div>
+          </article>
+          <article class="indicator-card">
+            <span class="indicator-title">Relação cintura / altura</span>
+            <div class="indicator-value" id="indicatorWaistHeight" aria-live="polite">—</div>
+            <p id="indicatorWaistHeightHelp">Informe cintura e altura.</p>
+            <div class="indicator-formula">Cintura (cm) ÷ altura (cm)<div>Triagem de risco cardiometabólico</div></div>
+          </article>
+          <article class="indicator-card">
+            <span class="indicator-title">Relação cintura / quadril</span>
+            <div class="indicator-value" id="indicatorWaistHip" aria-live="polite">—</div>
+            <p id="indicatorWaistHipHelp">Informe cintura e quadril.</p>
+            <div class="indicator-formula">Cintura (cm) ÷ quadril (cm)<div>Distribuição corporal</div></div>
+          </article>
+        </div>
+        <div class="indicator-note">
+          <strong>Variação das circunferências</strong>
+          Esse indicador compara duas avaliações (medida atual − medida anterior). Como as medidas serão preenchidas apenas uma vez, ele ainda não pode ser calculado e não aparece nas semanas de treino.
+        </div>
+        <p class="indicator-disclaimer">Estes indicadores são ferramentas de triagem, não diagnósticos. O IMC, em especial, não distingue gordura de massa muscular e sua interpretação varia conforme o contexto individual.</p>
+      </section>
       <section class="backup-panel" aria-label="Backup das medidas">
         <div><strong>Guarde uma cópia das suas medidas</strong><p>O registro fica salvo neste navegador. Use o backup para levar os dados a outro aparelho ou evitar perdas.</p></div>
         <div class="backup-actions">
@@ -358,6 +402,32 @@
     el('saveStatusText').textContent='Os dados são salvos automaticamente neste navegador.';
     updateProgress();
   }
+  function measurement(id){
+    var raw=data.evaluation.values[id];
+    if(typeof raw!=='string'||!hasValue(raw))return null;
+    var number=Number(raw.replace(',','.'));
+    return Number.isFinite(number)&&number>0?number:null;
+  }
+  function resultNumber(id,helpId,value,decimals,missingHelp){
+    if(value===null||!Number.isFinite(value)||value<=0){
+      el(id).textContent='—';
+      el(helpId).textContent=missingHelp;
+      return;
+    }
+    el(id).textContent=value.toLocaleString('pt-BR',{minimumFractionDigits:decimals,maximumFractionDigits:decimals});
+    el(helpId).textContent='Calculado com suas medidas iniciais';
+  }
+  function updateIndicators(){
+    var weight=measurement('peso'),heightCm=measurement('altura');
+    var waist=measurement('cintura'),hip=measurement('quadril');
+    // Altura é informada em centímetros, e IMC requer metros.
+    var bmi=weight!==null&&heightCm!==null?weight/Math.pow(heightCm/100,2):null;
+    var waistHeight=waist!==null&&heightCm!==null?waist/heightCm:null;
+    var waistHip=waist!==null&&hip!==null?waist/hip:null;
+    resultNumber('indicatorBmi','indicatorBmiHelp',bmi,1,'Informe peso e altura.');
+    resultNumber('indicatorWaistHeight','indicatorWaistHeightHelp',waistHeight,2,'Informe cintura e altura.');
+    resultNumber('indicatorWaistHip','indicatorWaistHipHelp',waistHip,2,'Informe cintura e quadril.');
+  }
   function updateProgress(){
     var filled=countFields(data.evaluation);
     el('filledLabel').textContent=filled+' de '+allIds.length+' campos preenchidos';
@@ -365,6 +435,7 @@
     el('weeksCompleted').textContent=String(filled);
     el('overallBar').style.width=(filled/allIds.length*100)+'%';
     el('overallProgress').setAttribute('aria-valuenow',String(filled));
+    updateIndicators();
   }
   function selectWeek(number){
     if(!Number.isInteger(number)||number<1||number>8)return;
