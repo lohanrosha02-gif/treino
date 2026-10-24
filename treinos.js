@@ -63,7 +63,7 @@
         {id:'c3',name:'Crucifixo no peck deck',dose:'2 × 12–15',rest:'60–90 s',muscle:'Peitoral',kind:'fly',hotel:'Crucifixo com halteres leves e amplitude curta, se orientado.',steps:['Ajuste o banco na altura adequada dos ombros.','Aproxime as alças à frente do peito em movimento controlado.','Abra os braços até uma amplitude confortável.']},
         {id:'c4',name:'Puxada alta na polia',dose:'2 × 10–12',rest:'75–90 s',muscle:'Dorsais · bíceps',kind:'pull',hotel:'Polia alta, se disponível.',steps:['Segure a barra com pegada confortável.','Puxe para a parte superior do peito, sem inclinar excessivamente o tronco.','Devolva a barra de forma lenta.']},
         {id:'c5',name:'Remada para deltoide posterior na polia',dose:'2 × 12–15',rest:'60 s',muscle:'Deltoide posterior · escápulas',kind:'row',hotel:'Remada para deltoide posterior com elástico, se tiver bom controle.',steps:['Prenda a corda numa polia baixa e afaste-se até criar uma leve tensão.','Incline discretamente o tronco com costas alinhadas e puxe a corda em direção ao peito alto, abrindo os cotovelos.','Retorne lentamente, sem arredondar as costas.']},
-        {id:'c6',name:'Rosca bíceps na polia',dose:'2 × 10–15',rest:'60 s',muscle:'Bíceps',kind:'curl',hotel:'Rosca com halteres sentado.',steps:['Fique estável, preferencialmente sentado se necessário.','Flexione os cotovelos sem balançar o tronco.','Retorne lentamente.']},
+        {id:'c6',name:'Rosca bíceps unilateral na polia',dose:'2 × 10–15 por braço',rest:'60 s',muscle:'Bíceps',kind:'curl',hotel:'Rosca unilateral com halter, se a polia não estiver disponível.',steps:['Ajuste a polia baixa e fique em pé de frente para ela, segurando um pegador com a palma voltada para cima.','Mantenha o cotovelo próximo ao tronco e flexione lentamente em direção ao ombro.','Retorne com controle, complete as séries e repita no outro braço.']},
         {id:'c7',name:'Tríceps na polia com corda',dose:'2 × 10–15',rest:'60 s',muscle:'Tríceps',kind:'press',hotel:'Extensão de tríceps com halter leve e apoio adequado.',steps:['Mantenha os cotovelos ao lado do tronco.','Estenda os cotovelos para abaixar a corda.','Retorne lentamente sem movimentar os ombros.']}
       ],
       cardio:{name:'Bicicleta ergométrica',dose:'5–8 min · leve',suggestion:'Selim ajustado e pedalada suave. Use apenas se não agravar o joelho.',kind:'cardio'}
@@ -118,25 +118,43 @@
     return w.training&&w.training[day]||{};
   }
   function teachingVideo(id){
-    var library=window.MeuTreinoVideos||{};
-    var driveId=library.videos&&library.videos[id];
-    if(typeof driveId==='string'&&/^[a-zA-Z0-9_-]{10,}$/.test(driveId)){
-      var drive='https://drive.google.com/file/d/'+encodeURIComponent(driveId)+'/preview';
-      return '<div class="teaching-video drive-video" data-video-exercise="'+escapeHtml(id)+'">'
-        +'<iframe loading="lazy" src="'+drive+'" title="Vídeo de execução do exercício" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen" allowfullscreen></iframe>'
-        +'</div>';
-    }
-    var clip=library.clips&&library.clips[id];
+    // Reprodução automática ao abrir o exercício, sem controles e sem cliques no vídeo.
+    var cfg=window.MeuTreinoVideos||{};
+    var clip=cfg.clips&&cfg.clips[id];
+    var source=null;
     if(clip&&clip.type==='mp4'&&typeof clip.url==='string'
-       &&/^https:\/\/pub-585d42eb1aa64a67aedf483ec328d3fe\.r2\.dev\/exercise-videos\/male\/[a-z0-9-]+\.mp4$/.test(clip.url)){
-      return '<div class="teaching-video" data-video-exercise="'+escapeHtml(id)+'">'
-        +'<video controls playsinline preload="metadata" loop aria-label="Vídeo demonstrativo da execução de '+escapeHtml(clip.name||'exercício')+'">'
-        +'<source src="'+escapeHtml(clip.url)+'" type="video/mp4">'
-        +'Seu navegador não suporta o vídeo. <a href="'+escapeHtml(clip.url)+'" target="_blank" rel="noopener noreferrer">Abrir MP4</a>'
-        +'</video>'
-        +'<a class="teaching-video-source" href="'+escapeHtml(clip.url)+'" target="_blank" rel="noopener noreferrer">Abrir vídeo</a></div>';
+      &&/^https:\/\/pub-585d42eb1aa64a67aedf483ec328d3fe\.r2\.dev\/exercise-videos\/male\/[a-z0-9-]+\.mp4$/.test(clip.url)){
+      source=clip.url;
+    }else if(clip&&clip.type==='local'&&typeof clip.url==='string'
+      &&/^\.\/assets\/videos\/[a-z]+\.mp4$/.test(clip.url)){
+      source=clip.url;
     }
-    return '<p class="video-unavailable" data-video-unavailable="'+escapeHtml(id)+'">Vídeo específico indisponível. Siga as etapas de execução.</p>';
+    if(!source){
+      return '<p class="video-unavailable">Demonstração indisponível.</p>';
+    }
+    var caption=escapeHtml(clip.name||'execução do exercício');
+    return '<div class="teaching-video auto-loop" data-video-exercise="'+escapeHtml(id)+'" role="group" aria-label="Vídeo em loop: '+caption+'">'
+      +'<video class="loop-video" autoplay muted loop playsinline webkit-playsinline preload="none" tabindex="-1" data-src="'+escapeHtml(source)+'" aria-label="Demonstração visual automática"></video>'
+      +'</div>';
+  }
+  function autoLoopIn(details){
+    if(!details||typeof details.querySelectorAll!=='function')return;
+    var videos=details.querySelectorAll('video.loop-video');
+    for(var i=0;i<videos.length;i++){
+      var player=videos[i];
+      if(details.open){
+        if(!player.getAttribute('src')){
+          player.setAttribute('src',player.getAttribute('data-src'));
+          player.load();
+        }
+        player.muted=true;
+        player.defaultMuted=true;
+        var playing=player.play();
+        if(playing&&typeof playing.catch==='function')playing.catch(function(){/* alguns navegadores limitam autoplay */});
+      }else if(typeof player.pause==='function'){
+        player.pause();
+      }
+    }
   }
   function stepsList(steps){return '<ol>'+steps.map(function(s){return '<li>'+escapeHtml(s)+'</li>';}).join('')+'</ol>';}
   function guideSteps(items){
@@ -364,6 +382,11 @@
       if(saveAuto()){render();bridge.toast('Registro removido.');}
     }
   });
+  mount.addEventListener('toggle',function(event){
+    // <details> emite toggle sem bubbling: captura permite iniciar o vídeo sem tocar no player.
+    var details=event.target;
+    if(details&&details.tagName==='DETAILS')autoLoopIn(details);
+  },true);
   mount.addEventListener('input',function(event){recordInput(event.target);});
   mount.addEventListener('change',function(event){
     var t=event.target;
