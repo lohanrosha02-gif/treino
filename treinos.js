@@ -26,27 +26,23 @@
       cardio:{name:'Bicicleta ergométrica',dose:'5–8 min · leve',suggestion:'Ajuste o selim e pedale com resistência leve, somente se os joelhos tolerarem. Pare se houver dor crescente.',kind:'cardio'}
     },
     B:{
-      title:'Inferiores adaptados + cardio',
-      subtitle:'Quadril e pernas com baixa exigência dos joelhos.',
-      duration:'45–60 min',interval:'Terça-feira',recover:'Até sábado para a próxima sessão de inferiores',
+      title:'Inferiores + cardio',
+      subtitle:'Quadríceps, posteriores, glúteos e panturrilhas com controle da dor.',
+      duration:'55–70 min',interval:'Terça-feira',recover:'Até sábado para o próximo treino inferior',
       mobility:[
         {id:'mB1',name:'Flexão e extensão dos tornozelos sentado',dose:'1 × 12–15 por lado',kind:'ankle',steps:['Sente-se com as pernas em posição confortável.','Aponte os dedos dos pés para a frente e depois leve-os para cima.','Repita sem forçar os joelhos.']},
-        {id:'mB2',name:'Movimento leve do quadril sentado',dose:'1 × 8 por lado',kind:'hip',steps:['Sente-se com os pés apoiados e quadril confortável.','Afaste levemente um joelho e volte, sem rotação forçada.','Use amplitude pequena e suspenda se o joelho doer.']},
-        {id:'mB3',name:'Extensão torácica sentado',dose:'1 × 8',kind:'rotate',steps:['Sente-se com os pés apoiados e braços cruzados.','Abra suavemente o peito, movendo principalmente a parte alta das costas.','Retorne à postura neutra, sem hiperestender a lombar.']}
+        {id:'mB4',name:'Alongamento de panturrilha sentado',dose:'1 × 20–30 s por lado',kind:'ankle',steps:['Sente-se e estenda uma perna até onde for confortável, apoiando o calcanhar.','Traga a ponta do pé suavemente na direção do corpo até sentir alongar a panturrilha.','Mantenha sem movimentos bruscos e troque de lado, sem dor no joelho.']},
+        {id:'mB5',name:'Alongamento de posterior de coxa',dose:'1 × 20–30 s por lado',kind:'hip',steps:['Em pé, apoie as mãos numa superfície firme para equilíbrio.','Deixe uma perna à frente com o calcanhar apoiado e incline levemente o quadril para trás.','Mantenha as costas alinhadas e a amplitude confortável; troque de lado.']}
       ],
       exercises:[
         {id:'b1',name:'Abdução de quadril na máquina',dose:'2 × 12–15',rest:'60–90 s',muscle:'Glúteo médio · estabilizadores do quadril',kind:'hip',hotel:'Abdução sentada com miniband, somente se houver e for confortável.',steps:['Ajuste o banco e apoie as costas sem forçar os joelhos.','Afaste as pernas lentamente em amplitude indolor.','Retorne devagar, sem deixar o peso bater.'],cue:'Não utilizar a máquina se a posição sentada ou o apoio nos joelhos causar dor.',caution:true},
-        {id:'b2',name:'Extensão de quadril na máquina com apoio',dose:'2 × 10–12 por lado',rest:'60–90 s',muscle:'Glúteo máximo',kind:'hip',hotel:'Extensão de quadril sem resistência com apoio firme, apenas se indolor.',steps:['Ajuste a máquina de extensão de quadril e segure os apoios, mantendo o tronco alinhado.','Empurre a alavanca suavemente para trás usando o quadril, sem arquear a lombar e sem forçar o joelho de apoio.','Retorne lentamente e alterne o lado; interrompa se houver dor no joelho.'],cue:'Comece sem carga ou com carga mínima; não executar se a posição exigir flexão dolorosa do joelho.',caution:true},
-        {id:'b3',name:'Panturrilha sentado com pouca carga',dose:'2 × 12–15',rest:'60 s',muscle:'Sóleo · panturrilhas',kind:'ankle',hotel:'Elevação de calcanhar sentado em cadeira firme, sem carga.',steps:['Sente-se, mantendo os pés apoiados no chão.','Eleve suavemente os calcanhares sem tirar as pontas dos pés do chão.','Desça controladamente, sem provocar dor no joelho.'],cue:'Preferir sem carga até confirmar conforto na posição.',caution:true},
-        {id:'b4',name:'Contração de glúteos sentado',dose:'2 × 10 · sustentar 4 s',rest:'45–60 s',muscle:'Glúteos · isometria',kind:'isometric',hotel:'Mesmo exercício sentado em cadeira estável.',steps:['Sente-se com os pés apoiados e respiração natural.','Contraia suavemente os glúteos sem mover o tronco.','Mantenha por quatro segundos e relaxe sem prender o ar.']},
-        {id:'b5',name:'Isometria suave de quadríceps',dose:'2 × 8 · sustentar 3–5 s',rest:'45–60 s',muscle:'Quadríceps · ativação leve',kind:'isometric',hotel:'Mesmo exercício com perna em posição apoiada e confortável.',steps:['Sente-se ou deite em posição confortável e mantenha a perna apoiada.','Contraia levemente a parte da frente da coxa sem forçar a extensão do joelho.','Relaxe após três a cinco segundos; não tente destravar a articulação.'],cue:'Se houver dor, travamento ou dificuldade relevante de amplitude, não realizar.',caution:true},
-        {id:'b6',name:'Adução de quadril na máquina (opcional)',dose:'2 × 12 · só se confortável',rest:'60–90 s',muscle:'Adutores do quadril',kind:'hip',hotel:'Sem substituição obrigatória: registrar não realizado se faltar equipamento.',steps:['Ajuste a posição do banco para não forçar joelhos nem quadril.','Aproxime as coxas suavemente, em amplitude curta.','Retorne lentamente e interrompa se houver desconforto articular.'],cue:'Opcional. Se a máquina exigir flexão desconfortável dos joelhos, não executar.',caution:true}
+        {id:'b7',name:'Quadríceps isométrico no leg press',dose:'3 × 8 · sustentar 3–5 s',rest:'75–90 s',muscle:'Quadríceps · isometria no leg press',kind:'isometric',hotel:'Somente realizar se houver leg press adequado e avaliação da amplitude.',steps:['Ajuste o banco e posicione os pés no centro da plataforma, em largura confortável.','Em uma posição com flexão leve e confortável dos joelhos, faça pressão suave na plataforma sem deslocá-la.','Sustente por 3–5 segundos, relaxe e repita; nunca trave ou force a extensão do joelho.'],cue:'Isometria, não leg press dinâmico. Iniciar com resistência mínima somente após avaliação da tolerância à carga.',caution:true},
+        {id:'b8',name:'Mesa flexora',dose:'2 × 12',rest:'75–90 s',muscle:'Posteriores de coxa',kind:'knee',hotel:'Executar apenas se houver mesa flexora com regulagem adequada e sem dor.',steps:['Deite-se de barriga para baixo na mesa flexora e alinhe os joelhos com o eixo da máquina.','Flexione os joelhos lentamente, aproximando o apoio dos tornozelos dos glúteos na amplitude confortável.','Retorne sem soltar o peso ou forçar a extensão final do joelho.'],cue:'Carga mínima e amplitude adaptada se não houver dor ou bloqueio. Não realizar até avaliação se houver limitação importante da flexão.',caution:true},
+        {id:'b9',name:'Glúteos isométricos unilaterais',dose:'3 × 10 por lado · sustentar 3–5 s',rest:'45–60 s',muscle:'Glúteo máximo · isometria unilateral',kind:'isometric',hotel:'Contração unilateral sentada em cadeira firme.',steps:['Sente-se com os dois pés apoiados e a coluna confortável.','Contraia um glúteo de cada vez, sem deslocar o tronco nem forçar os joelhos.','Segure 3–5 segundos, solte e repita 10 vezes antes de trocar de lado.'],cue:'Sem elevar ou torcer a pelve. Respire normalmente. Volume por lado.',caution:true},
+        {id:'b10',name:'Extensão de joelho com caneleira + isometria',dose:'2 × 8 (provisório) + segurar 3–5 s',rest:'60–90 s',muscle:'Quadríceps · extensão terminal',kind:'knee',hotel:'Somente se houver apoio estável e liberação para caneleira.',steps:['Sentado, apoie a parte posterior distal da coxa com suporte protegido por toalha; não pressione o oco atrás do joelho.','Com caneleira muito leve ou sem carga, estenda suavemente o joelho apenas até a amplitude indolor e retorne.','Após as repetições, mantenha uma contração isométrica suave por 3–5 segundos e relaxe.'],cue:'O halter sob a parte posterior deve servir apenas como apoio protegido e estável, nunca comprimir a dobra do joelho. Confirmar montagem presencial. 2×8 é provisório porque o volume não foi informado.',caution:true},
+        {id:'b11',name:'Panturrilha sentado',dose:'3 × 10',rest:'60 s',muscle:'Panturrilhas · sóleo',kind:'ankle',hotel:'Elevação de calcanhar sentado com os pés apoiados e sem carga.',steps:['Sente-se com os joelhos numa posição confortável e a planta dos pés apoiada.','Eleve suavemente os calcanhares mantendo a ponta dos pés em contato com o chão.','Desça devagar sem provocar dor no joelho.'],cue:'Comece com carga mínima ou sem carga; ajuste se houver desconforto articular.',caution:true}
       ],
-      optional:[
-        {name:'Leg press com amplitude adaptada',note:'Somente após avaliação funcional e liberação para carga; definir amplitude e carga individualmente.'},
-        {name:'Cadeira flexora e extensora',note:'Somente após esclarecimento da dor e limitação dos joelhos e definição profissional de amplitude, carga e progressão.'}
-      ],
-      cardio:{name:'Bicicleta ergométrica',dose:'8–12 min · leve',suggestion:'Prefira bicicleta reclinada se mais confortável. Ajuste o banco e não force os joelhos. Pare se houver dor ou bloqueio.',kind:'cardio'}
+      cardio:{name:'Bicicleta ergométrica',dose:'8–12 min · leve',suggestion:'Selim ajustado e baixa resistência. Pedalar apenas se não aumentar a dor nos joelhos ou provocar travamento.',kind:'cardio'}
     },
     C:{
       title:'Costas + peito + braços',
@@ -109,6 +105,11 @@
     if(!weekData.training||typeof weekData.training!=='object'||Array.isArray(weekData.training))weekData.training={};
     if(!weekData.training[dayChoice]||typeof weekData.training[dayChoice]!=='object')weekData.training[dayChoice]={};
     var row=weekData.training[dayChoice];
+    // Mudança na ficha B: não marcar exercícios novos usando registros do plano antigo.
+    if(dayChoice==='B'&&row.planVersion!=='B-20261024-v2'){
+      if(row.complete===true)row.oldPlanCompletedAt=row.completedAt||'';
+      row.complete=false;row.completedAt='';row.planVersion='B-20261024-v2';
+    }
     if(!row.exercises||typeof row.exercises!=='object')row.exercises={};
     return row;
   }
