@@ -126,3 +126,19 @@
 .exercise-demo svg{width:135px;height:110px}
 .train-step-body .exercise-demo{margin:8px 0 0}
 .workout-actions .clear{font-size:11px}
+
+/* Aba Treinos: prioridade ao treino do dia */
+.train-day-btn{align-items:center;text-align:center;gap:2px;padding:12px 8px}
+.train-day-btn strong{font-size:22px}
+.train-day-btn small{font-size:11px}
+.train-day-btn .train-done{font-size:14px;min-height:0}
+.train-panel-head h3{font-size:18px}
+.train-step-body ol,.train-exercise-body ol{font-size:12px;line-height:1.65}
+.train-log{margin-top:20px;border:1px solid #dce9d9;border-radius:13px;background:#fff;overflow:hidden}
+.train-log summary{display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer;list-style:none;padding:14px 16px;background:#f4f8f1}
+.train-log summary::-webkit-details-marker{display:none}
+.train-log summary strong{font-size:14px;color:#2c5c3c}
+.train-log summary span{font-size:11px;color:#718372}
+.train-log[open] summary{border-bottom:1px solid #e1ebe0}
+.train-log .workout-session-form{padding:14px 15px}
+@media(max-width:540px){.train-day-btn{padding:11px 5px}.train-day-btn strong{font-size:20px}.train-day-btn small{font-size:10px}}
