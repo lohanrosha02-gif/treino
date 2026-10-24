@@ -1,5 +1,6 @@
-/* Meu Treino - vídeos de execução. Demonstrações de máquinas e musculação do ExerciseDB;
-vídeos instrutivos próprios nos movimentos sem equivalente 3D fiel. */
+/* Meu Treino: 30 animações anatômicas externas + 11 demonstrações 3D produzidas para este projeto.
+   Arquivos 3D do próprio repositório também copiados para Drive/Meutreino/Videos.
+   Vídeos iniciam em loop, silenciosos e sem controles. */
 window.MeuTreinoVideos=Object.freeze({
   "pastaId": "1P1cEjL-pOF4l2WX_SFgJHqzoSvN9jQs6",
   "pastaUrl": "https://drive.google.com/drive/folders/1P1cEjL-pOF4l2WX_SFgJHqzoSvN9jQs6",
@@ -57,13 +58,13 @@ window.MeuTreinoVideos=Object.freeze({
     },
     "b4": {
       "type": "local",
-      "url": "./assets/videos/gluteiso.mp4",
-      "name": "Isometria de glúteos"
+      "url": "./assets/videos/3d_gluteiso.mp4",
+      "name": "Isometria de glúteos (animação 3D)"
     },
     "b5": {
       "type": "local",
-      "url": "./assets/videos/quadiso.mp4",
-      "name": "Isometria de quadríceps"
+      "url": "./assets/videos/3d_quadiso.mp4",
+      "name": "Isometria de quadríceps (animação 3D)"
     },
     "b6": {
       "type": "mp4",
@@ -142,13 +143,13 @@ window.MeuTreinoVideos=Object.freeze({
     },
     "d4": {
       "type": "local",
-      "url": "./assets/videos/gluteiso.mp4",
-      "name": "Isometria de glúteos"
+      "url": "./assets/videos/3d_gluteiso.mp4",
+      "name": "Isometria de glúteos (animação 3D)"
     },
     "d5": {
       "type": "local",
-      "url": "./assets/videos/knee.mp4",
-      "name": "Mobilização ativa do joelho"
+      "url": "./assets/videos/3d_knee.mp4",
+      "name": "Mobilização ativa do joelho (animação 3D)"
     },
     "mA1": {
       "type": "mp4",
@@ -157,13 +158,13 @@ window.MeuTreinoVideos=Object.freeze({
     },
     "mA2": {
       "type": "local",
-      "url": "./assets/videos/twist.mp4",
-      "name": "Rotação torácica sentado"
+      "url": "./assets/videos/3d_twist.mp4",
+      "name": "Rotação torácica sentado (animação 3D)"
     },
     "mA3": {
       "type": "local",
-      "url": "./assets/videos/wall.mp4",
-      "name": "Deslizamento de braços na parede"
+      "url": "./assets/videos/3d_wall.mp4",
+      "name": "Deslizamento de braços na parede (animação 3D)"
     },
     "mB1": {
       "type": "mp4",
@@ -172,23 +173,23 @@ window.MeuTreinoVideos=Object.freeze({
     },
     "mB2": {
       "type": "local",
-      "url": "./assets/videos/hipseat.mp4",
-      "name": "Mobilidade de quadril sentado"
+      "url": "./assets/videos/3d_hipseat.mp4",
+      "name": "Mobilidade de quadril sentado (animação 3D)"
     },
     "mB3": {
       "type": "local",
-      "url": "./assets/videos/thorax.mp4",
-      "name": "Extensão torácica sentado"
+      "url": "./assets/videos/3d_thorax.mp4",
+      "name": "Extensão torácica sentado (animação 3D)"
     },
     "mC1": {
       "type": "local",
-      "url": "./assets/videos/twist.mp4",
-      "name": "Rotação torácica sentado"
+      "url": "./assets/videos/3d_twist.mp4",
+      "name": "Rotação torácica sentado (animação 3D)"
     },
     "mC2": {
       "type": "local",
-      "url": "./assets/videos/wall.mp4",
-      "name": "Deslizamento de braços na parede"
+      "url": "./assets/videos/3d_wall.mp4",
+      "name": "Deslizamento de braços na parede (animação 3D)"
     },
     "mC3": {
       "type": "mp4",
@@ -202,8 +203,8 @@ window.MeuTreinoVideos=Object.freeze({
     },
     "mD2": {
       "type": "local",
-      "url": "./assets/videos/twist.mp4",
-      "name": "Rotação torácica sentado"
+      "url": "./assets/videos/3d_twist.mp4",
+      "name": "Rotação torácica sentado (animação 3D)"
     },
     "mD3": {
       "type": "mp4",
