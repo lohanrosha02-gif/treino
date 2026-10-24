@@ -154,7 +154,8 @@
       return '<details class="train-step"><summary><span class="train-step-index">'+(index+1)+'</span>'
         +'<span class="train-step-content"><strong>'+escapeHtml(m.name)+'</strong><small>'+escapeHtml(m.dose)+'</small></span></summary>'
         +'<div class="train-step-body">'+stepsList(m.steps)
-        +'<p>Visual: posição inicial → movimento suave → retorno. Execute sem dor.</p></div></details>';
+        +'<div class="exercise-demo">'+movementSvg(m.kind)+'<p><b>Guia visual em movimento.</b> Ajuste a amplitude ao conforto e siga as instruções. Não force para acompanhar o desenho.</p></div>'
+        +'<p>Posição inicial → movimento suave → retorno.</p></div></details>';
     }).join('')+'</div>';
   }
   function renderExercise(x,index,location,entry){
@@ -219,6 +220,7 @@
       +maybeOptionals(p.optional)
       +'<h4 class="train-section-title">3. Cardio / condicionamento</h4>'
       +'<div class="train-warning"><b>'+escapeHtml(p.cardio.name)+' · '+escapeHtml(p.cardio.dose)+'</b>'+escapeHtml(p.cardio.suggestion)+' Intensidade inicial leve, capaz de conversar. Aumentar a duração gradualmente se não houver piora da dor.</div>'
+      +'<div class="exercise-demo" style="margin-top:12px">'+movementSvg('cardio')+'<p><b>Passo a passo:</b> ajuste o equipamento; comece devagar; mantenha um ritmo em que consiga conversar; reduza a intensidade para finalizar. Interrompa se houver piora dos joelhos ou sintomas incomuns.</p></div>'
       +'<h4 class="train-section-title">4. Registro da sessão</h4>'
       +'<p class="train-hint">Exercícios marcados: '+completedExercises+' de '+p.exercises.length+'. Preencha para acompanhar o treinamento presencial e remoto.</p>'
       +'<div class="workout-session-form">'
