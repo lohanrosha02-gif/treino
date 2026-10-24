@@ -10,7 +10,7 @@
       subtitle:'Força e hipertrofia com exercícios de empurrar e puxar.',
       duration:'60–70 min',interval:'Segunda-feira',recover:'72 h até o próximo superior',
       mobility:[
-        {id:'mA1',name:'Aquecimento dos ombros com elástico',dose:'1 × 8 movimentos suaves',kind:'mobility',steps:['Segure o elástico com as mãos mais afastadas que os ombros.','Eleve lentamente os braços à frente e acima da cabeça, sem dor.','Retorne com controle, sem forçar a passagem dos braços para trás.']},
+        {id:'mA1',name:'Aquecimento dos ombros com elástico',dose:'1 × 8 movimentos suaves',kind:'mobility',steps:['Segure o elástico com as mãos mais afastadas que os ombros.','Eleve lentamente os braços à frente e acima da cabeça, sem dor.','Se houver mobilidade confortável, leve a faixa para trás da cabeça; depois retorne. Nunca force a amplitude.']},
         {id:'mA2',name:'Rotação torácica sentado',dose:'1 × 8 por lado',kind:'rotate',steps:['Sente-se com os pés apoiados e cruze os braços no peito.','Gire suavemente a parte superior do tronco, mantendo a pelve estável.','Retorne ao centro e alterne os lados sem forçar a lombar.']},
         {id:'mA3',name:'Deslizamento dos braços na parede',dose:'1 × 8–10',kind:'raise',steps:['Fique de frente para uma parede com antebraços apoiados.','Deslize-os para cima até onde os ombros permitirem confortavelmente.','Desça devagar, evitando arquear a lombar.']}
       ],
@@ -75,7 +75,7 @@
       mobility:[
         {id:'mD1',name:'Círculos de tornozelo sentado',dose:'1 × 10 por sentido e lado',kind:'ankle',steps:['Sente-se e mantenha a perna relaxada.','Desenhe círculos pequenos com o pé, sem girar o joelho.','Inverta a direção e repita do outro lado.']},
         {id:'mD2',name:'Rotação do tronco sentado',dose:'1 × 8 por lado',kind:'rotate',steps:['Com os pés apoiados, cruze os braços sobre o peito.','Gire a parte superior do tronco suavemente.','Volte ao centro e alterne.']},
-        {id:'mD3',name:'Aquecimento dos ombros com elástico',dose:'1 × 8 movimentos suaves',kind:'mobility',steps:['Segure o elástico com as mãos mais afastadas que os ombros.','Leve os braços lentamente para cima dentro da amplitude confortável.','Retorne sem forçar a articulação dos ombros.']}
+        {id:'mD3',name:'Aquecimento dos ombros com elástico',dose:'1 × 8 movimentos suaves',kind:'mobility',steps:['Segure o elástico com as mãos mais afastadas que os ombros.','Leve os braços lentamente para cima dentro da amplitude confortável.','Se for confortável, passe a faixa por trás da cabeça e retorne devagar, sem forçar os ombros.']}
       ],
       exercises:[
         {id:'d1',name:'Abdução de quadril na máquina, leve',dose:'2 × 12–15',rest:'60–90 s',muscle:'Glúteo médio',kind:'hip',hotel:'Abdução sentada com miniband se houver e sem dor.',steps:['Ajuste o banco e não force a flexão dos joelhos.','Afaste as pernas lentamente em pequena amplitude confortável.','Retorne com controle.'],caution:true},
