@@ -198,6 +198,13 @@
     @media(max-width:540px){.topbar-inner{min-height:69px}.brand-icon{height:37px;width:37px;border-radius:12px}.brand-title{font-size:15px}.brand-sub{font-size:10px}.top-pill{font-size:10px;padding:7px 9px}.app{padding-top:23px}.page-head{margin-bottom:20px}.page-head h1{font-size:31px;letter-spacing:-1.2px;margin:8px 0}.lead{font-size:13px}.hero{padding:23px;min-height:147px}.hero h2{font-size:24px;max-width:250px}.hero p{font-size:12px;max-width:225px}.hero-symbol{position:absolute;right:18px;top:24px;opacity:.5}.week-panel{padding:18px 13px}.section-head{padding-inline:5px}.section-head h3{font-size:14px}.section-head span{font-size:10px}.week-list{grid-template-columns:repeat(8,minmax(54px,1fr));overflow-x:auto;padding-bottom:5px;scrollbar-width:thin}.week-button{min-height:59px}.panel{padding:21px 17px}.form-head h2{font-size:20px}.form-head p{font-size:12px}.form-group{padding:21px 0}.fields{gap:14px 10px}.field label{font-size:11px;min-height:16px}.entry{height:46px}.entry input{padding-left:11px;font-size:14px}.entry .unit{padding-right:11px}.info-strip{padding:12px 13px}.plain-btn{margin-left:0}.actions .primary-btn{flex:1}.actions .outline-btn{flex:1}.actions .plain-btn{width:100%;justify-content:center}.footer{flex-direction:column;gap:4px}}
     @media(max-width:340px){.fields{grid-template-columns:1fr}.hero-symbol{display:none}.brand-sub{display:none}.top-pill{font-size:9px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+    .hero{min-height:115px;padding:20px 26px}
+    .hero h2{font-size:25px;margin:5px 0 0}
+    .page-head{margin-bottom:16px}
+    .page-head h1{margin-bottom:0}
+    .indicator-card .indicator-title{min-height:auto}
+    .indicators-panel,.comparison-panel,.bodies-panel{padding-top:21px;padding-bottom:21px}
+    @media(max-width:540px){.hero{min-height:100px;padding:18px}.hero h2{font-size:23px}}
   </style>
   <link rel="stylesheet" href="./treinos.css">
 </head>
@@ -217,11 +224,10 @@
 <div class="container app">
   <div class="page-head">
     <div>
-      <div class="eyebrow">Sua jornada, no seu ritmo</div>
-      <h1>Seu plano de treino</h1>
-      <p class="lead">Avaliação inicial e treinos organizados em áreas separadas, para acompanhar suas 8 semanas.</p>
+      <div class="eyebrow">Meu Treino</div>
+      <h1>Seu acompanhamento</h1>
     </div>
-    <div class="page-count"><strong>08 <span style="font-size:13px;color:#a0aba2">semanas</span></strong><span>para acompanhar sua jornada</span></div>
+    <div class="page-count"><strong>08 <span style="font-size:13px;color:#a0aba2">semanas</span></strong><span>Plano de treino</span></div>
   </div>
 
   <div class="layout">
@@ -241,19 +247,18 @@
         <div>
           <div class="small-heading">Avaliação inicial</div>
           <div class="big-progress"><span id="weeksCompleted">0</span><span> / 12</span></div>
-          <p>Medidas preenchidas na ficha inicial.</p>
+          
         </div>
         <div class="track" role="progressbar" aria-label="Medidas da avaliação preenchidas" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0" id="overallProgress"><div id="overallBar"></div></div>
       </div>
-      <div class="side-tip"><strong>Uma avaliação, 8 semanas</strong> Registre as medidas em Avaliação inicial. Os treinos ficam em uma aba independente.</div>
+      
     </aside>
 
     <main class="main">
       <section class="hero" aria-labelledby="heroHeading">
         <div>
-          <div class="hero-label">Meu plano personalizado</div>
-          <h2 id="heroHeading">Tudo no seu lugar.</h2>
-          <p>Suas medidas iniciais ficam separadas dos treinos das 8 semanas.</p>
+          <div class="hero-label">Plano personalizado</div>
+          <h2 id="heroHeading">Evolução em foco.</h2>
         </div>
         <div class="hero-symbol" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none"><path d="M14 65h17l11-25 14 33 12-20h18" stroke="#D6F0C9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="44" stroke="#B5D6B5" stroke-width="1.5"/></svg></div>
       </section>
@@ -261,7 +266,7 @@
       <div class="tab-content" id="evaluationTab" role="tabpanel" aria-labelledby="tabEvaluation">
       <section class="panel" id="initialPanel" aria-labelledby="formHeading">
         <div class="form-head">
-          <div><div class="eyebrow">Seus dados · avaliação inicial</div><h2 id="formHeading">Suas medidas iniciais</h2><p>Registre suas medidas aqui, independentemente dos dias de treino.</p></div>
+          <div><div class="eyebrow">Avaliação inicial</div><h2 id="formHeading">Suas medidas</h2></div>
           <span class="step-tag" id="stepTag">FICHA INICIAL</span>
         </div>
         <div class="info-strip">
@@ -273,7 +278,7 @@
             <label for="measureDate">Data da avaliação <span style="color:#a4aea5;font-weight:500">(opcional)</span></label>
             <input type="date" id="measureDate" name="date">
           </div>
-          <p class="comparison-intro" style="margin:0 0 8px">Dados informados na anamnese: <strong>52 anos, 80 kg e 172 cm</strong>. Confirme-os durante a avaliação. As outras circunferências ainda precisam ser medidas.</p>
+          <p class="comparison-intro" style="margin:0 0 8px">Dados iniciais: <strong>52 anos · 80 kg · 172 cm</strong>. Confirme na avaliação.</p>
           <div id="measureFields"></div>
           <div class="actions">
             <button class="primary-btn" type="submit" id="saveButton">
@@ -292,7 +297,7 @@
       <section class="panel indicators-panel" aria-labelledby="indicatorsHeading">
         <div class="eyebrow">Resultados automáticos</div>
         <h2 id="indicatorsHeading" style="margin:7px 0 7px;font-size:22px;letter-spacing:-.7px">Indicadores antropométricos</h2>
-        <p class="indicators-intro">Calculados com os dados da sua avaliação inicial, sem preencher nada novamente.</p>
+        
         <div class="indicator-grid">
           <article class="indicator-card">
             <span class="indicator-title">Índice de massa corporal (IMC)</span>
@@ -316,24 +321,21 @@
             <div class="indicator-formula">Cintura (cm) ÷ quadril (cm)<div>Distribuição corporal</div></div>
           </article>
         </div>
-        <div class="indicator-note">
-          <strong>Variação das circunferências</strong>
-          Esse indicador compara duas avaliações (medida atual − medida anterior). Como as medidas serão preenchidas apenas uma vez, ele ainda não pode ser calculado e não aparece nas semanas de treino.
-        </div>
-        <p class="indicator-disclaimer">Estes indicadores são ferramentas de triagem, não diagnósticos. O IMC, em especial, não distingue gordura de massa muscular e sua interpretação varia conforme o contexto individual.</p>
+
+        <p class="indicator-disclaimer">Indicadores de triagem, não diagnósticos. IMC não distingue músculo de gordura.</p>
       </section>
       <section class="panel bodies-panel" aria-labelledby="bodiesHeading">
         <div class="eyebrow">Representação visual</div>
         <h2 class="bodies-heading" id="bodiesHeading">Faixas de IMC ilustradas</h2>
-        <p class="bodies-description">Figuras padronizadas, com mesma altura, ângulo frontal e estilo visual. A faixa de IMC calculada para o aluno aparece destacada automaticamente.</p>
+        
         <div class="bodies-grid" id="bodiesGrid" aria-label="Representações padronizadas de cinco faixas do IMC"></div>
         <div class="bodies-result" id="bodiesResult" role="status" aria-live="polite">Preencha o peso e a altura para destacar a faixa de IMC.</div>
-        <p class="bodies-note"><strong>Importante:</strong> estas figuras são apenas ilustrações conceituais, não uma previsão da aparência do aluno. O IMC não distingue massa muscular de gordura corporal e não determina o formato real de uma pessoa.</p>
+        <p class="bodies-note">Silhuetas ilustrativas. O IMC não representa a aparência real.</p>
       </section>
       <section class="panel comparison-panel" aria-labelledby="comparisonHeading">
         <div class="eyebrow">Resumo da avaliação</div>
         <h2 id="comparisonHeading" style="margin:6px 0 8px;font-size:22px;letter-spacing:-.6px">Medidas atuais × referências</h2>
-        <p class="comparison-intro">A coluna <strong>Atual</strong> acompanha os dados preenchidos na avaliação inicial. Onde não existe um valor ideal universal, considere a evolução individual.</p>
+        
         <div class="comparison-meta" id="comparisonDate">Avaliação inicial · sem data</div>
         <div class="compare-table-wrap">
           <table class="compare-table">
@@ -547,7 +549,7 @@
     }).join('');
     el('bodiesResult').textContent=selected<0
       ?'Informe peso e altura na avaliação inicial para identificar a faixa do IMC.'
-      :'IMC de '+ptNumber(bmi,1)+' kg/m²: '+profiles[selected].label+'. As figuras não representam a aparência real do aluno.';
+      :'IMC '+ptNumber(bmi,1)+' · '+profiles[selected].label;
   }
   function status(label,tone){return {label:label,tone:tone};}
   function classifyBmi(value){
