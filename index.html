@@ -227,22 +227,6 @@
           <span id="saveStatusText">Os dados são salvos neste navegador.</span>
         </div>
       </section>
-      </div>
-
-      <div class="tab-content" id="trainingTab" role="tabpanel" aria-labelledby="tabTraining" hidden>
-      <section class="week-panel" aria-labelledby="weeksHeading">
-        <div class="section-head"><h3 id="weeksHeading">Escolha sua semana</h3><span id="navCaption">Treino 1 de 8</span></div>
-        <div class="week-list" id="weekList" aria-label="Selecionar semana"></div>
-      </section>
-      <section class="panel upcoming" id="upcomingPanel" aria-labelledby="upcomingTitle" hidden>
-        <div class="upcoming-icon" aria-hidden="true">↗</div>
-        <div class="eyebrow" id="upcomingEyebrow">Semana 01 de 08</div>
-        <h2 id="upcomingTitle">Treino da semana 1</h2>
-        <p>Os treinos serão organizados nesta área. Os campos de peso, altura e demais medidas estão exclusivamente na aba Avaliação inicial, sem aparecer nos dias de treino.</p>
-        <button class="outline-btn" type="button" id="backInitial">← Ir para avaliação inicial</button>
-      </section>
-      </div>
-
       <section class="backup-panel" aria-label="Backup das medidas">
         <div><strong>Guarde uma cópia das suas medidas</strong><p>O registro fica salvo neste navegador. Use o backup para levar os dados a outro aparelho ou evitar perdas.</p></div>
         <div class="backup-actions">
@@ -251,7 +235,24 @@
           <input type="file" id="importFile" accept=".json,application/json" hidden>
         </div>
       </section>
-      <footer class="footer"><span>Meu Treino · Registro de evolução corporal</span><span>Simples, pessoal e feito para sua rotina.</span></footer>
+      </div>
+
+      <div class="tab-content" id="trainingTab" role="tabpanel" aria-labelledby="tabTraining" hidden>
+      <section class="week-panel" aria-labelledby="weeksHeading">
+        <div class="section-head"><h3 id="weeksHeading">Escolha sua semana</h3><span id="navCaption">Semana 1 de 8</span></div>
+        <div class="week-list" id="weekList" aria-label="Selecionar semana"></div>
+      </section>
+      <section class="panel upcoming" id="upcomingPanel" aria-labelledby="upcomingTitle">
+        <div class="upcoming-icon" aria-hidden="true">↗</div>
+        <div class="eyebrow" id="upcomingEyebrow">Semana 01 de 08</div>
+        <h2 id="upcomingTitle">Treino da semana 1</h2>
+        <p>Os treinos serão organizados nesta área. Os campos de peso, altura e demais medidas estão exclusivamente na aba Avaliação inicial, sem aparecer nos dias de treino.</p>
+        <button class="outline-btn" type="button" id="backInitial">← Ir para avaliação inicial</button>
+      </section>
+      </div>
+
+
+      <footer class="footer"><span>Meu Treino · Seu plano de 8 semanas</span><span>Simples, pessoal e feito para sua rotina.</span></footer>
     </main>
   </div>
 </div>
