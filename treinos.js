@@ -126,7 +126,7 @@
       &&/^https:\/\/pub-585d42eb1aa64a67aedf483ec328d3fe\.r2\.dev\/exercise-videos\/male\/[a-z0-9-]+\.mp4$/.test(clip.url)){
       source=clip.url;
     }else if(clip&&clip.type==='local'&&typeof clip.url==='string'
-      &&/^\.\/assets\/videos\/[a-z]+\.mp4$/.test(clip.url)){
+      &&/^\.\/assets\/videos\/3d_[a-z]+\.mp4$/.test(clip.url)){
       source=clip.url;
     }
     if(!source){
