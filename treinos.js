@@ -158,13 +158,28 @@
   };
   var photoStripRows={a:11,b:10,c:11,d:9};
   function exercisePhoto(id,kind){
+    // GIFs renderizados localmente para carregamento estável;
+    // o Google Drive guarda uma cópia de cada GIF e permite abri-la por link.
+    var cfg=window.MeuTreinoVideos||{};
+    var gifId=cfg.gifs&&cfg.gifs[id];
+    if(id==='b4'||id==='d4'||id==='b5'){
+      return '<div class="exercise-demo isometric-demo" role="note"><span>Isometria · contração sem deslocamento</span></div>';
+    }
+    if(typeof gifId==='string'&&/^[a-zA-Z0-9_-]{10,}$/.test(gifId)&&/^[a-zA-Z][a-zA-Z0-9]{1,4}$/.test(id)){
+      var source='./assets/gifs/'+encodeURIComponent(id)+'.gif';
+      var drive='https://drive.google.com/file/d/'+encodeURIComponent(gifId)+'/view';
+      return '<div class="exercise-demo gif-demo">'
+        +'<img src="'+source+'" alt="Sequência de posições ilustrativas do exercício" width="160" height="192" loading="lazy" decoding="async">'
+        +'<a class="gif-drive-link" href="'+drive+'" target="_blank" rel="noopener noreferrer" aria-label="Ver GIF no Google Drive">Drive</a>'
+        +'</div>';
+    }
     var item=photoIndexes[id];
     if(!item)return '<div class="exercise-demo">'+movementSvg(kind)+'</div>';
     var letter=item[0],row=item[1],still=!!item[2];
     return '<div class="exercise-demo real-demo">'
       +'<div class="photo-frame'+(still?' still':'')+'"'
       +' style="--photo-sheet:url(./assets/animacoes/treino-'+letter+'-quadros.webp);--sheet-height:'+(photoStripRows[letter]*192)+'px;--frame-y:-'+(row*192)+'px"'
-      +' role="img" aria-label="'+(still?'Posição inicial ilustrativa':'Sequência ilustrativa de três poses')+'"></div></div>';
+      +' role="img" aria-label="'+(still?'Posição ilustrativa':'Sequência ilustrativa de três poses')+'"></div></div>';
   }
   function bicyclePhoto(){
     return '<div class="exercise-demo bike-demo"><div class="bike-photo" role="img" aria-label="Exemplo de bicicleta ergométrica">'
