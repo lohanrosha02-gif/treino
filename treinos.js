@@ -10,12 +10,12 @@
       subtitle:'Força e hipertrofia com exercícios de empurrar e puxar.',
       duration:'60–70 min',interval:'Segunda-feira',recover:'72 h até o próximo superior',
       mobility:[
-        {id:'mA1',name:'Circundução dos ombros',dose:'1 × 10 para cada sentido',kind:'mobility',steps:['Em pé ou sentado, relaxe os braços junto ao corpo.','Eleve e gire os ombros para trás em círculos lentos.','Faça o mesmo movimento para a frente, sem dor.']},
+        {id:'mA1',name:'Aquecimento dos ombros com elástico',dose:'1 × 8 movimentos suaves',kind:'mobility',steps:['Segure o elástico com as mãos mais afastadas que os ombros.','Eleve lentamente os braços à frente e acima da cabeça, sem dor.','Retorne com controle, sem forçar a passagem dos braços para trás.']},
         {id:'mA2',name:'Rotação torácica sentado',dose:'1 × 8 por lado',kind:'rotate',steps:['Sente-se com os pés apoiados e cruze os braços no peito.','Gire suavemente a parte superior do tronco, mantendo a pelve estável.','Retorne ao centro e alterne os lados sem forçar a lombar.']},
         {id:'mA3',name:'Deslizamento dos braços na parede',dose:'1 × 8–10',kind:'raise',steps:['Fique de frente para uma parede com antebraços apoiados.','Deslize-os para cima até onde os ombros permitirem confortavelmente.','Desça devagar, evitando arquear a lombar.']}
       ],
       exercises:[
-        {id:'a1',name:'Chest press na máquina',dose:'3 × 8–12',rest:'90–120 s',muscle:'Peito · tríceps · deltoide anterior',kind:'press',hotel:'Supino com halteres em banco, se houver apoio e boa estabilidade.',steps:['Ajuste o banco para manter as alças próximas à altura do peito.','Com costas apoiadas, empurre as alças sem trancar os cotovelos.','Retorne lentamente, mantendo os ombros confortáveis.'],cue:'Sem impulso das pernas; inicie com carga que permita aproximadamente 3 repetições de reserva.'},
+        {id:'a1',name:'Chest press reto na máquina (deitado)',dose:'3 × 8–12',rest:'90–120 s',muscle:'Peito · tríceps · deltoide anterior',kind:'press',hotel:'Supino reto com halteres em banco estável, se disponível.',steps:['Deite-se no banco da máquina com pés firmes no apoio ou no chão e segure as alças à altura do peito.','Empurre as alças para cima e à frente, sem travar os cotovelos.','Retorne devagar à posição inicial sem tirar as costas do apoio.'],cue:'Use a máquina de supino reto deitado mostrada no vídeo. Se a academia tiver apenas chest press sentado, ajuste a prescrição e a demonstração; não use o vídeo como modelo de máquina diferente.'},
         {id:'a2',name:'Remada com apoio peitoral',dose:'3 × 8–12',rest:'90–120 s',muscle:'Costas · bíceps',kind:'row',hotel:'Remada unilateral com halter e mão apoiada no banco.',steps:['Ajuste o apoio de peito e mantenha a coluna estável.','Puxe os cotovelos para trás sem levantar o tronco.','Retorne até estender os braços de modo confortável.'],cue:'Alterne com o chest press somente se a técnica não piorar.'},
         {id:'a3',name:'Supino inclinado na máquina',dose:'2 × 10–12',rest:'75–90 s',muscle:'Peito superior · tríceps',kind:'press',hotel:'Supino inclinado com halteres, com banco estável.',steps:['Ajuste o banco e mantenha as costas apoiadas.','Empurre as alças para cima e à frente em trajetória confortável.','Volte devagar, sem forçar os ombros.']},
         {id:'a4',name:'Puxada frontal na polia',dose:'3 × 10–12',rest:'75–90 s',muscle:'Dorsais · bíceps',kind:'pull',hotel:'Polia alta do hotel, se disponível; caso contrário, registrar não realizado.',steps:['Segure a barra com pegada confortável e peito aberto.','Puxe a barra em direção à parte superior do peito.','Retorne devagar, sem jogar o tronco para trás.'],cue:'Não puxar atrás da nuca.'},
@@ -55,14 +55,14 @@
       mobility:[
         {id:'mC1',name:'Rotação torácica sentado',dose:'1 × 8 por lado',kind:'rotate',steps:['Sente-se e cruze os braços em frente ao peito.','Gire o tronco lentamente para um lado sem deslocar o quadril.','Retorne ao centro e repita para o outro lado.']},
         {id:'mC2',name:'Wall slides (braços na parede)',dose:'1 × 8–10',kind:'raise',steps:['Apoie os antebraços em uma parede.','Deslize para cima até uma amplitude livre de dor.','Retorne lentamente sem compensar na lombar.']},
-        {id:'mC3',name:'Retração escapular',dose:'1 × 10–12',kind:'row',steps:['Mantenha os braços relaxados e pescoço solto.','Aproxime suavemente as escápulas sem elevar os ombros.','Solte e repita, mantendo a respiração.']}
+        {id:'mC3',name:'Mobilidade escapular sentado',dose:'1 × 8–10',kind:'row',steps:['Sente-se ereto com os pés apoiados.','Eleve os braços de forma confortável, sem forçar os ombros.','Abaixe suavemente os ombros, aproxime as escápulas e relaxe.']}
       ],
       exercises:[
         {id:'c1',name:'Supino inclinado na máquina',dose:'3 × 8–12',rest:'90–120 s',muscle:'Peito · tríceps',kind:'press',hotel:'Supino inclinado com halteres e banco estável.',steps:['Ajuste o encosto para apoiar completamente as costas.','Empurre as alças na direção indicada pela máquina.','Retorne com controle sem descer além do conforto.']},
         {id:'c2',name:'Remada sentada com apoio',dose:'3 × 8–12',rest:'90–120 s',muscle:'Costas · bíceps',kind:'row',hotel:'Remada apoiada unilateral com halter.',steps:['Sente-se com peito apoiado ou tronco estabilizado.','Puxe as alças sem inclinar o corpo para trás.','Estenda os braços devagar e repita.']},
         {id:'c3',name:'Crucifixo no peck deck',dose:'2 × 12–15',rest:'60–90 s',muscle:'Peitoral',kind:'fly',hotel:'Crucifixo com halteres leves e amplitude curta, se orientado.',steps:['Ajuste o banco na altura adequada dos ombros.','Aproxime as alças à frente do peito em movimento controlado.','Abra os braços até uma amplitude confortável.']},
         {id:'c4',name:'Puxada alta na polia',dose:'2 × 10–12',rest:'75–90 s',muscle:'Dorsais · bíceps',kind:'pull',hotel:'Polia alta, se disponível.',steps:['Segure a barra com pegada confortável.','Puxe para a parte superior do peito, sem inclinar excessivamente o tronco.','Devolva a barra de forma lenta.']},
-        {id:'c5',name:'Face pull',dose:'2 × 12–15',rest:'60 s',muscle:'Deltoide posterior · escápulas',kind:'row',hotel:'Remada alta leve com elástico, somente se houver técnica e conforto.',steps:['Ajuste a corda na altura do rosto ou um pouco acima.','Puxe em direção ao rosto, abrindo os cotovelos.','Retorne devagar, sem elevar os ombros.']},
+        {id:'c5',name:'Remada para deltoide posterior na polia',dose:'2 × 12–15',rest:'60 s',muscle:'Deltoide posterior · escápulas',kind:'row',hotel:'Remada para deltoide posterior com elástico, se tiver bom controle.',steps:['Prenda a corda numa polia baixa e afaste-se até criar uma leve tensão.','Incline discretamente o tronco com costas alinhadas e puxe a corda em direção ao peito alto, abrindo os cotovelos.','Retorne lentamente, sem arredondar as costas.']},
         {id:'c6',name:'Rosca bíceps na polia',dose:'2 × 10–15',rest:'60 s',muscle:'Bíceps',kind:'curl',hotel:'Rosca com halteres sentado.',steps:['Fique estável, preferencialmente sentado se necessário.','Flexione os cotovelos sem balançar o tronco.','Retorne lentamente.']},
         {id:'c7',name:'Tríceps na polia com corda',dose:'2 × 10–15',rest:'60 s',muscle:'Tríceps',kind:'press',hotel:'Extensão de tríceps com halter leve e apoio adequado.',steps:['Mantenha os cotovelos ao lado do tronco.','Estenda os cotovelos para abaixar a corda.','Retorne lentamente sem movimentar os ombros.']}
       ],
@@ -75,7 +75,7 @@
       mobility:[
         {id:'mD1',name:'Círculos de tornozelo sentado',dose:'1 × 10 por sentido e lado',kind:'ankle',steps:['Sente-se e mantenha a perna relaxada.','Desenhe círculos pequenos com o pé, sem girar o joelho.','Inverta a direção e repita do outro lado.']},
         {id:'mD2',name:'Rotação do tronco sentado',dose:'1 × 8 por lado',kind:'rotate',steps:['Com os pés apoiados, cruze os braços sobre o peito.','Gire a parte superior do tronco suavemente.','Volte ao centro e alterne.']},
-        {id:'mD3',name:'Mobilidade de ombros',dose:'1 × 10 para cada sentido',kind:'mobility',steps:['Relaxe os braços ao lado do corpo.','Gire os ombros lentamente para trás e depois para a frente.','Mantenha o pescoço solto para preparar o cardio de braços.']}
+        {id:'mD3',name:'Aquecimento dos ombros com elástico',dose:'1 × 8 movimentos suaves',kind:'mobility',steps:['Segure o elástico com as mãos mais afastadas que os ombros.','Leve os braços lentamente para cima dentro da amplitude confortável.','Retorne sem forçar a articulação dos ombros.']}
       ],
       exercises:[
         {id:'d1',name:'Abdução de quadril na máquina, leve',dose:'2 × 12–15',rest:'60–90 s',muscle:'Glúteo médio',kind:'hip',hotel:'Abdução sentada com miniband se houver e sem dor.',steps:['Ajuste o banco e não force a flexão dos joelhos.','Afaste as pernas lentamente em pequena amplitude confortável.','Retorne com controle.'],caution:true},
@@ -135,12 +135,6 @@
         +'Seu navegador não suporta o vídeo. <a href="'+escapeHtml(clip.url)+'" target="_blank" rel="noopener noreferrer">Abrir MP4</a>'
         +'</video>'
         +'<a class="teaching-video-source" href="'+escapeHtml(clip.url)+'" target="_blank" rel="noopener noreferrer">Abrir vídeo</a></div>';
-    }
-    if(clip&&clip.type==='youtube'&&typeof clip.videoId==='string'&&/^[a-zA-Z0-9_-]{11}$/.test(clip.videoId)){
-      var url='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(clip.videoId)+'?rel=0';
-      return '<div class="teaching-video" data-video-exercise="'+escapeHtml(id)+'">'
-        +'<iframe loading="lazy" title="Vídeo demonstrativo: '+escapeHtml(clip.name||'exercício')+'" src="'+url+'" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
-        +'<a class="teaching-video-source" href="https://www.youtube.com/watch?v='+encodeURIComponent(clip.videoId)+'" target="_blank" rel="noopener noreferrer">Abrir vídeo</a></div>';
     }
     return '<p class="video-unavailable" data-video-unavailable="'+escapeHtml(id)+'">Vídeo específico indisponível. Siga as etapas de execução.</p>';
   }
