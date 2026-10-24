@@ -182,3 +182,35 @@
 .teaching-video video{display:block;width:100%;aspect-ratio:16/9;height:auto;min-height:205px;border:0;background:#e7eee6;object-fit:contain;pointer-events:none;cursor:default;-webkit-user-select:none;user-select:none}
 .video-unavailable{margin:11px 0;padding:12px 14px;border:1px dashed #cfded0;border-radius:11px;background:#f8faf7;color:#65766a;font-size:11px;line-height:1.5}
 @media(max-width:540px){.teaching-video video{min-height:180px}}
+
+/* Padrão visual único para toda a galeria de demonstrações.
+   A reprodução continua automática e sem interação. */
+.training-guide .teaching-video.auto-loop{
+  width:min(100%,520px);
+  max-width:520px;
+  aspect-ratio:16/9;
+  display:grid;
+  place-items:center;
+  margin:12px auto;
+  padding:0;
+  overflow:hidden;
+  border:1px solid #dbe6dd;
+  border-radius:14px;
+  box-shadow:0 3px 14px rgba(26,49,34,.06);
+  background:#f7faf7;
+  pointer-events:none;
+}
+.training-guide .teaching-video.auto-loop video{
+  display:block;
+  width:100%;
+  height:100%;
+  aspect-ratio:16/9;
+  min-height:0;
+  margin:0;
+  padding:0;
+  background:#f7faf7;
+  object-fit:contain;
+  border:0;
+  border-radius:0;
+  pointer-events:none;
+}
