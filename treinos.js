@@ -163,10 +163,10 @@
     return '<details class="train-exercise" id="exercise-'+escapeHtml(x.id)+'">'
       +'<summary><span class="exercise-ordinal">'+(index+1)+'</span><span>'
       +'<div class="exercise-name">'+escapeHtml(x.name)+'</div>'
-      +'<div class="exercise-description">'+escapeHtml(x.dose)+' · '+escapeHtml(x.muscle)+'</div>'
+      +'<div class="exercise-description">'+escapeHtml(x.dose)+' · '+escapeHtml(x.rest)+' descanso</div>'
       +'</span><span class="exercise-caret" aria-hidden="true">⌄</span></summary>'
       +'<div class="train-exercise-body">'
-      +'<div class="exercise-meta"><span>Descanso: '+escapeHtml(x.rest)+'</span>'
+      +'<div class="exercise-meta"><span>'+escapeHtml(x.muscle)+'</span>'
       +(x.caution?'<span class="safety">Sem dor</span>':'')+'</div>'
       +'<div class="exercise-demo">'+movementSvg(x.kind)+'</div>'
       +stepsList(x.steps)
@@ -190,10 +190,11 @@
     var completedExercises=p.exercises.filter(function(x){return r.exercises[x.id]&&r.exercises[x.id].done;}).length;
 
     mount.innerHTML='<div class="training-guide">'
-      +'<div class="train-safety-short" role="note">Joelhos: sem dor ou travamento. Avaliação clínica antes de aumentar cargas.</div>'
+      +'<div class="train-safety-short" role="note">Joelhos: não forçar dor ou travamento. Avaliar antes de aumentar cargas.</div>'
       +'<nav class="train-day-nav" aria-label="Escolha a sessão">'+['A','B','C','D'].map(function(key){
         var done=getDayRecord(key).complete===true,day=plans[key];
-        return '<button type="button" class="train-day-btn'+(dayChoice===key?' active':'')+'" data-day="'+key+'" aria-pressed="'+(dayChoice===key)+'"><strong>Treino '+key+'</strong><small>'+escapeHtml(day.title)+'</small><span class="train-done">'+(done?'✓ Concluído':'')+'</span></button>';
+        var shortName={A:'Superior',B:'Inferiores',C:'Superior',D:'Mobilidade'}[key];
+        return '<button type="button" class="train-day-btn'+(dayChoice===key?' active':'')+'" data-day="'+key+'" aria-pressed="'+(dayChoice===key)+'"><strong>'+key+'</strong><small>'+shortName+'</small><span class="train-done">'+(done?'✓':'')+'</span></button>';
       }).join('')+'</nav>'
       +'<section class="panel train-panel" aria-labelledby="trainingDetailTitle"><div class="train-panel-head"><div>'
       +'<h3 id="trainingDetailTitle">'+dayChoice+' · '+escapeHtml(p.title)+'</h3></div>'
@@ -206,7 +207,7 @@
 
       +'<h4 class="train-section-title">Cardio</h4>'
       +'<details class="train-step"><summary><span class="train-step-index">♥</span><span class="train-step-content"><strong>'+escapeHtml(p.cardio.name)+'</strong><small>'+escapeHtml(p.cardio.dose)+'</small></span></summary><div class="train-step-body"><p>'+escapeHtml(p.cardio.suggestion)+'</p><div class="exercise-demo">'+movementSvg('cardio')+'</div></div></details>'
-      +'<h4 class="train-section-title">Registro · '+completedExercises+'/'+p.exercises.length+'</h4>'
+      +'<details class="train-log"><summary><strong>Registro</strong><span>'+completedExercises+'/'+p.exercises.length+' exercícios</span></summary>'
       +'<div class="workout-session-form">'
       +'<div class="workout-field-row">'
       +field('Dor antes (0–10)','painBefore','number',r.painBefore===undefined?'':r.painBefore,'min="0" max="10" step="1"')
@@ -219,8 +220,8 @@
       +'<div class="workout-actions"><button class="save" type="button" data-action="save">Salvar</button>'
       +'<button class="finish" type="button" data-action="finish">'+(r.complete?'✓ Sessão concluída':'Concluir sessão')+'</button>'
       +'<button class="clear" type="button" data-action="clear">Limpar</button></div>'
-      +'<p class="workout-last">Dados salvos neste aparelho.</p>'
-      +'</div></section>'
+      +'<p class="workout-last">Salvo neste aparelho.</p>'
+      +'</div></details></section>'
       +'</div>';
   }
   function saveAuto(){
