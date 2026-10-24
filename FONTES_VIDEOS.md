@@ -1,25 +1,23 @@
-# Fontes dos vídeos demonstrativos
+# Fontes dos vídeos do Meu Treino
 
-O Meu Treino utiliza links para vídeos reais de exercícios de bibliotecas externas. Esses vídeos são reproduzidos no site; **não foram baixados para o Google Drive do usuário nem copiados para este repositório**.
+## Demonstrações em MP4
 
-## ExerciseDB / Free Exercise DB with Videos
+- Biblioteca pública: https://github.com/buzops9/exercisedb
+- Arquivo de exercícios: https://github.com/buzops9/exercisedb/blob/main/data/exercises.json
+- Os **28 vínculos de exercícios** com vídeos do acervo são carregados diretamente do CDN da biblioteca. Alguns exercícios usam o mesmo vídeo por serem equivalentes.
+- No site os vídeos iniciam automaticamente, em loop, silenciosos e sem controles. A reprodução pode depender das restrições do navegador.
 
-- Projeto: https://github.com/buzops9/exercisedb
-- Dataset: https://github.com/buzops9/exercisedb/blob/main/data/exercises.json
-- Vídeos reproduzidos de um CDN público informado pelo projeto.
-- O material disponibilizado pelo projeto declara licença MIT. Os exercícios devem ser revisados pelo profissional antes da prescrição.
+## Vídeos instrutivos próprios
 
-## Vídeos incorporados do YouTube
+- Foram preparados **8 MP4 curtos e esquemáticos**, usados em 13 atividades de mobilidade e isometria.
+- Arquivos: `assets/videos/*.mp4` neste repositório.
+- Cópias em `Google Drive / Meutreino / Videos`.
+- Esses 8 vídeos usam representações simplificadas do movimento e **não são filmagens nem animações anatômicas 3D**.
+- Não representam limites seguros de amplitude para um aluno específico.
 
-- Chest press: FITVELY — https://www.youtube.com/watch?v=6CPnYJonfUo
-- Face pull: QMotion — https://www.youtube.com/watch?v=BzeAjF1EeCY
-- Shoulder Rolls e Shoulder Blade Squeeze: UCSF Sports Medicine — https://sportsrehab.ucsf.edu/content/shoulder
+## Segurança
 
-Esses vídeos são incorporados pelo player do YouTube, não redistribuídos.
-
-## Treinamento individual
-
-Vídeos genéricos não substituem correções presenciais. No caso de dor crônica e limitação dos joelhos, não forçar exercícios ou amplitudes dolorosas.
+Vídeos não substituem avaliação e supervisão individual, especialmente para dor crônica nos dois joelhos e limitação de flexão/extensão. Interromper um exercício que piore os sintomas.
 
 ## Licença MIT original do ExerciseDB
 
