@@ -50,6 +50,13 @@
     .side-tip{background:#e9efe4;border:1px solid #dfe8d9;padding:18px;border-radius:18px;font-size:12px;color:#617164;line-height:1.65}
     .side-tip strong{display:block;color:#304a39;font-size:13px;margin-bottom:5px}
     .main{min-width:0}
+    [hidden]{display:none!important}
+    .upcoming{padding:35px 30px;min-height:275px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+    .upcoming .upcoming-icon{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-deep);margin-bottom:19px;font-size:25px}
+    .upcoming h2{font-size:24px;letter-spacing:-.8px;margin:8px 0 10px}
+    .upcoming p{font-size:14px;color:var(--muted);max-width:540px;line-height:1.7}
+    .upcoming .outline-btn{margin-top:8px}
+    @media(max-width:540px){.upcoming{padding:28px 20px;min-height:280px}}
     .hero{position:relative;overflow:hidden;min-height:179px;padding:29px 34px;background:linear-gradient(108deg,#1d4a36 0%,#2d684c 62%,#397c56 100%);color:#fff;border-radius:var(--radius);margin-bottom:19px;display:flex;justify-content:space-between;align-items:center;isolation:isolate}
     .hero::before,.hero::after{content:"";position:absolute;border:1px solid rgba(218,255,210,.18);border-radius:50%;z-index:-1}
     .hero::before{width:370px;height:370px;right:-80px;top:-215px}
@@ -141,7 +148,7 @@
     <div>
       <div class="eyebrow">Sua jornada, no seu ritmo</div>
       <h1>Acompanhamento físico</h1>
-      <p class="lead">Registre suas medidas e acompanhe sua evolução semana a semana, de um jeito simples e organizado.</p>
+      <p class="lead">Preencha suas medidas no primeiro treino. As próximas semanas ficam reservadas para o seu plano personalizado.</p>
     </div>
     <div class="page-count"><strong>08 <span style="font-size:13px;color:#a0aba2">semanas</span></strong><span>para acompanhar sua jornada</span></div>
   </div>
@@ -157,13 +164,13 @@
       </div>
       <div class="side-progress">
         <div>
-          <div class="small-heading">Semanas preenchidas</div>
-          <div class="big-progress"><span id="weeksCompleted">0</span><span> / 8</span></div>
-          <p>Semanas com todas as 11 medidas registradas.</p>
+          <div class="small-heading">Medidas iniciais</div>
+          <div class="big-progress"><span id="weeksCompleted">0</span><span> / 11</span></div>
+          <p>Campos da avaliação inicial preenchidos.</p>
         </div>
-        <div class="track" role="progressbar" aria-label="Semanas completas" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" id="overallProgress"><div id="overallBar"></div></div>
+        <div class="track" role="progressbar" aria-label="Medidas iniciais preenchidas" aria-valuemin="0" aria-valuemax="11" aria-valuenow="0" id="overallProgress"><div id="overallBar"></div></div>
       </div>
-      <div class="side-tip"><strong>Um registro por semana</strong> Preencha os campos da semana escolhida. Você pode voltar e corrigir os valores quando quiser.</div>
+      <div class="side-tip"><strong>Uma única avaliação inicial</strong> As medidas antropométricas são preenchidas só no primeiro treino e podem ser corrigidas depois.</div>
     </aside>
 
     <main class="main">
@@ -171,23 +178,23 @@
         <div>
           <div class="hero-label">Registro antropométrico</div>
           <h2 id="heroHeading">Sua evolução começa aqui.</h2>
-          <p>O que importa é acompanhar suas próprias mudanças ao longo dessas 8 semanas.</p>
+          <p>Registre suas medidas uma única vez, no primeiro treino.</p>
         </div>
         <div class="hero-symbol" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none"><path d="M14 65h17l11-25 14 33 12-20h18" stroke="#D6F0C9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="44" stroke="#B5D6B5" stroke-width="1.5"/></svg></div>
       </section>
 
       <section class="week-panel" aria-labelledby="weeksHeading">
-        <div class="section-head"><h3 id="weeksHeading">Escolha a semana</h3><span id="navCaption">Semana 1 de 8</span></div>
+        <div class="section-head"><h3 id="weeksHeading">Plano de 8 semanas</h3><span id="navCaption">Treino 1 de 8</span></div>
         <div class="week-list" id="weekList" aria-label="Selecionar semana"></div>
       </section>
 
-      <section class="panel" aria-labelledby="formHeading">
+      <section class="panel" id="initialPanel" aria-labelledby="formHeading">
         <div class="form-head">
-          <div><div class="eyebrow">Ficha de medidas</div><h2 id="formHeading">Semana 01</h2><p>Preencha os valores em kg e cm.</p></div>
+          <div><div class="eyebrow">Primeiro treino · avaliação inicial</div><h2 id="formHeading">Suas medidas iniciais</h2><p>Preencha apenas uma vez, no primeiro treino.</p></div>
           <span class="step-tag" id="stepTag">01 / 08</span>
         </div>
         <div class="info-strip">
-          <div><div class="info-main">Medidas desta semana</div><div class="info-sub" id="filledLabel">0 de 11 campos preenchidos</div></div>
+          <div><div class="info-main">Medidas do primeiro treino</div><div class="info-sub" id="filledLabel">0 de 11 campos preenchidos</div></div>
           <div class="week-complete"><span class="mini-circle" id="filledCircle">0/11</span></div>
         </div>
         <form id="measureForm" novalidate>
@@ -202,13 +209,21 @@
               Salvar medidas
             </button>
             <button type="button" class="outline-btn" id="nextWeek">Próxima semana <span aria-hidden="true">→</span></button>
-            <button type="button" class="plain-btn" id="clearWeek">Limpar esta semana</button>
+            <button type="button" class="plain-btn" id="clearWeek">Limpar avaliação inicial</button>
           </div>
         </form>
         <div class="save-msg" id="saveStatus" role="status" aria-live="polite">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>
           <span id="saveStatusText">Os dados são salvos neste navegador.</span>
         </div>
+      </section>
+
+      <section class="panel upcoming" id="upcomingPanel" aria-labelledby="upcomingTitle" hidden>
+        <div class="upcoming-icon" aria-hidden="true">↗</div>
+        <div class="eyebrow" id="upcomingEyebrow">Semana 02 de 08</div>
+        <h2 id="upcomingTitle">Treino da semana 2</h2>
+        <p>A avaliação antropométrica é feita somente no primeiro treino. Nesta semana, você não precisa preencher peso, altura ou medidas corporais. Este espaço fica reservado para os próximos detalhes do seu treino personalizado.</p>
+        <button class="outline-btn" type="button" id="backInitial">← Ver avaliação inicial</button>
       </section>
 
       <section class="backup-panel" aria-label="Backup das medidas">
@@ -283,23 +298,31 @@
     catch(e){el('saveStatusText').textContent='Não foi possível salvar. Exporte um backup.';toast('Armazenamento indisponível neste navegador.');return false;}
   }
   function countFields(week){return allIds.filter(function(id){return hasValue(week.values[id]);}).length;}
-  function countCompleteWeeks(){return data.weeks.filter(function(week){return countFields(week)===allIds.length;}).length;}
   function escapeHtml(s){return String(s).replace(/[&<>"']/g,function(char){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char];});}
 
   function renderWeekNav(){
     var html='';
     data.weeks.forEach(function(week,index){
-      var number=index+1, filled=countFields(week);
-      html+='<button type="button" class="week-button'+(number===activeWeek?' active':'')+(filled===allIds.length?' complete':'')+(filled>0?' has-data':'')+'" data-week="'+number+'" aria-label="Semana '+number+', '+filled+' de '+allIds.length+' medidas" aria-pressed="'+(number===activeWeek)+'"><small>SEM</small><b>'+String(number).padStart(2,'0')+'</b><span class="wk-mark"></span></button>';
+      var number=index+1, isFirst=number===1;
+      var filled=isFirst?countFields(week):0;
+      var firstLabel='Treino 1: avaliação inicial, '+filled+' de '+allIds.length+' medidas preenchidas';
+      var laterLabel='Treino '+number+': sem medidas antropométricas para preencher';
+      html+='<button type="button" class="week-button'+(number===activeWeek?' active':'')+(isFirst && filled===allIds.length?' complete':'')+(isFirst && filled>0?' has-data':'')+'" data-week="'+number+'" aria-label="'+(isFirst?firstLabel:laterLabel)+'" aria-pressed="'+(number===activeWeek)+'"><small>'+(isFirst?'INÍCIO':'SEM')+'</small><b>'+String(number).padStart(2,'0')+'</b><span class="wk-mark"></span></button>';
     });
     el('weekList').innerHTML=html;
-    el('navCaption').textContent='Semana '+activeWeek+' de 8';
+    el('navCaption').textContent='Treino '+activeWeek+' de 8';
   }
 
   function renderFields(){
-    var week=data.weeks[activeWeek-1];
-    el('formHeading').textContent='Semana '+String(activeWeek).padStart(2,'0');
-    el('stepTag').textContent=String(activeWeek).padStart(2,'0')+' / 08';
+    var isFirst=activeWeek===1;
+    el('initialPanel').hidden=!isFirst;
+    el('upcomingPanel').hidden=isFirst;
+    if(!isFirst){
+      el('upcomingEyebrow').textContent='Semana '+String(activeWeek).padStart(2,'0')+' de 08';
+      el('upcomingTitle').textContent='Treino da semana '+activeWeek;
+      return;
+    }
+    var week=data.weeks[0];
     el('measureDate').value=week.date;
     var html='';
     groups.forEach(function(group){
@@ -312,19 +335,16 @@
       html+='</div></section>';
     });
     el('measureFields').innerHTML=html;
-    el('nextWeek').disabled=activeWeek===8;
-    el('nextWeek').style.opacity=activeWeek===8?'.45':'1';
     el('saveStatusText').textContent='Os dados são salvos automaticamente neste navegador.';
   }
 
   function updateProgress(){
-    var filled=countFields(data.weeks[activeWeek-1]);
-    var completed=countCompleteWeeks();
+    var filled=countFields(data.weeks[0]);
     el('filledLabel').textContent=filled+' de '+allIds.length+' campos preenchidos';
     el('filledCircle').textContent=filled+'/'+allIds.length;
-    el('weeksCompleted').textContent=String(completed);
-    el('overallBar').style.width=(completed/8*100)+'%';
-    el('overallProgress').setAttribute('aria-valuenow',String(completed));
+    el('weeksCompleted').textContent=String(filled);
+    el('overallBar').style.width=(filled/allIds.length*100)+'%';
+    el('overallProgress').setAttribute('aria-valuenow',String(filled));
     renderWeekNav();
   }
 
@@ -342,7 +362,7 @@
   });
   el('measureFields').addEventListener('input',function(event){
     var input=event.target.closest('[data-id]');
-    if(!input)return;
+    if(!input || activeWeek!==1)return;
     var value=input.value.trim().replace(/\s+/g,'');
     if(!isValidEntry(value)){
       input.value=data.weeks[activeWeek-1].values[input.dataset.id]||'';
@@ -353,27 +373,31 @@
     updateProgress();
   });
   el('measureDate').addEventListener('change',function(e){
-    data.weeks[activeWeek-1].date=e.target.value;
+    if(activeWeek!==1)return;
+    data.weeks[0].date=e.target.value;
     if(persist())el('saveStatusText').textContent='Data salva automaticamente.';
   });
   el('measureForm').addEventListener('submit',function(e){
     e.preventDefault();
-    if(persist()){el('saveStatusText').textContent='Medidas salvas com sucesso.';toast('Medidas da semana '+activeWeek+' salvas!');}
+    if(activeWeek!==1)return;
+    if(persist()){el('saveStatusText').textContent='Medidas salvas com sucesso.';toast('Avaliação inicial salva!');}
   });
   el('nextWeek').addEventListener('click',function(){
     if(activeWeek<8){selectWeek(activeWeek+1);el('weekList').querySelector('.active').scrollIntoView({block:'nearest',inline:'nearest',behavior:'smooth'});window.scrollTo({top:el('weekList').getBoundingClientRect().top+window.scrollY-90,behavior:'smooth'});}
   });
+  el('backInitial').addEventListener('click',function(){selectWeek(1);});
   el('clearWeek').addEventListener('click',function(){
-    if(countFields(data.weeks[activeWeek-1])===0 && !data.weeks[activeWeek-1].date){toast('Esta semana já está vazia.');return;}
-    if(!confirm('Limpar todas as medidas e a data da semana '+activeWeek+'? Esta ação não pode ser desfeita.'))return;
-    data.weeks[activeWeek-1]=emptyWeek();
-    persist();renderFields();updateProgress();toast('Semana '+activeWeek+' limpa.');
+    if(activeWeek!==1)return;
+    if(countFields(data.weeks[0])===0 && !data.weeks[0].date){toast('A avaliação inicial já está vazia.');return;}
+    if(!confirm('Limpar todas as medidas e a data do primeiro treino? Esta ação não pode ser desfeita.'))return;
+    data.weeks[0]=emptyWeek();
+    persist();renderFields();updateProgress();toast('Avaliação inicial limpa.');
   });
   el('exportBtn').addEventListener('click',function(){
     var out={type:'meu-treino-medidas',exportedAt:new Date().toISOString(),version:1,weeks:data.weeks};
     var blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
     var url=URL.createObjectURL(blob),a=document.createElement('a');
-    a.href=url;a.download='meu-treino-medidas-8-semanas.json';document.body.appendChild(a);a.click();a.remove();
+    a.href=url;a.download='meu-treino-avaliacao-inicial.json';document.body.appendChild(a);a.click();a.remove();
     setTimeout(function(){URL.revokeObjectURL(url);},500);
     toast('Backup exportado com sucesso!');
   });
@@ -389,7 +413,7 @@
         if(obj.type!=='meu-treino-medidas')throw new Error('Tipo inválido');
         var imported=normalizeData(obj);
         if(!confirm('Importar o backup vai substituir todas as medidas atuais das 8 semanas. Deseja continuar?'))return;
-        data=imported;persist();renderFields();updateProgress();toast('Medidas importadas com sucesso!');
+        data=imported;selectWeek(1);persist();renderFields();updateProgress();toast('Avaliação inicial importada com sucesso!');
       }catch(e){toast('Backup inválido. Escolha um arquivo exportado deste site.');}
       finally{event.target.value='';}
     };
