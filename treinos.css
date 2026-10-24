@@ -173,3 +173,30 @@
 .drive-video{width:100%;padding:0;background:#101a15;overflow:hidden}
 .drive-video iframe{display:block;width:100%;aspect-ratio:16/9;height:auto;border:0;min-height:210px}
 @media(max-width:540px){.drive-library-body iframe{height:300px}.drive-video iframe{min-height:190px}}
+
+
+/* Registro individual de séries: carga e repetições independentes */
+.series-tracker{border:1px solid #dfebdf;background:#fbfcfa;border-radius:13px;padding:11px 12px;margin-top:12px}
+.series-tracker-title{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;color:#2b5236;font-size:12px}
+.series-tracker-title span{font-size:11px;color:#6b7e70;font-weight:700}
+.series-row{display:grid;grid-template-columns:66px minmax(0,1fr) minmax(0,1fr) 57px;align-items:end;gap:9px;padding:8px 0}
+.series-row+.series-row{border-top:1px solid #e5eee4}
+.series-number{font-size:12px;color:#365944;align-self:center;white-space:nowrap}
+.series-input{display:block;min-width:0}
+.series-input span{display:block;font-size:10px;color:#65766a;font-weight:750;margin-bottom:4px}
+.series-input input{display:block;width:100%;min-width:0;height:40px;border:1px solid #d3e0d2;border-radius:9px;background:#fff;color:#234733;font-size:14px;font-variant-numeric:tabular-nums;padding:7px 8px}
+.series-input input:focus{outline:2px solid #95bf9d;outline-offset:1px}
+.series-input input:invalid{border-color:#b45a40}
+.series-done{display:flex;flex-direction:column;align-items:center;justify-content:end;gap:4px;align-self:stretch;font-size:10px;color:#65766a;font-weight:700;cursor:pointer}
+.series-done input{width:19px;height:19px;margin:0;accent-color:#346f4a}
+.series-legacy,.series-history{font-size:11px;color:#66786a;line-height:1.5;margin:10px 0 0}
+.series-legacy{color:#885d2a}
+.series-history{background:#eff5ed;padding:8px 10px;border-radius:8px;overflow-wrap:anywhere}
+@media(max-width:540px){
+ .series-tracker{padding:10px 9px}
+ .series-row{grid-template-columns:54px minmax(0,1fr) minmax(0,1fr) 46px;gap:5px}
+ .series-number{font-size:11px}
+ .series-input input{padding:6px;font-size:13px;height:39px}
+ .series-input span{font-size:10px}
+ .series-done{font-size:9px}
+}
