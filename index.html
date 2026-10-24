@@ -354,13 +354,7 @@
         <div class="section-head"><h3 id="weeksHeading">Escolha sua semana</h3><span id="navCaption">Semana 1 de 8</span></div>
         <div class="week-list" id="weekList" aria-label="Selecionar semana"></div>
       </section>
-      <section class="panel" id="upcomingPanel" aria-labelledby="upcomingTitle" style="margin-bottom:17px;padding:17px 23px;">
-        <div class="form-head" style="margin:0;align-items:center;">
-          <div><div class="eyebrow" id="upcomingEyebrow">Semana 01 de 08</div>
-          <h2 id="upcomingTitle" style="font-size:17px;margin:4px 0 0;">Treino da semana 1</h2></div>
-          <button class="outline-btn" type="button" id="backInitial">← Avaliação inicial</button>
-        </div>
-      </section>
+
       <div id="trainingMount" aria-label="Plano completo de treino A a D"></div>
       </div>
 
@@ -616,8 +610,6 @@
   function selectWeek(number){
     if(!Number.isInteger(number)||number<1||number>8)return;
     activeWeek=number;
-    el('upcomingEyebrow').textContent='Semana '+String(number).padStart(2,'0')+' de 08';
-    el('upcomingTitle').textContent='Treino da semana '+number;
     renderWeekNav();persist();
     if(window.MeuTreinoTreinos)window.MeuTreinoTreinos.render();
   }
@@ -660,7 +652,6 @@
     if(persist()){el('saveStatusText').textContent='Medidas salvas com sucesso.';toast('Avaliação inicial salva!');}
   });
   el('nextWeek').addEventListener('click',function(){selectTab('training');});
-  el('backInitial').addEventListener('click',function(){selectTab('evaluation');});
   el('clearWeek').addEventListener('click',function(){
     if(countFields(data.evaluation)===0&&!data.evaluation.date){toast('A avaliação inicial já está vazia.');return;}
     if(!confirm('Limpar todas as medidas e a data da avaliação inicial? Esta ação não pode ser desfeita.'))return;
