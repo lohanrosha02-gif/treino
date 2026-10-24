@@ -205,6 +205,15 @@
     .indicator-card .indicator-title{min-height:auto}
     .indicators-panel,.comparison-panel,.bodies-panel{padding-top:21px;padding-bottom:21px}
     @media(max-width:540px){.hero{min-height:100px;padding:18px}.hero h2{font-size:23px}}
+    .page-head{margin-bottom:15px}
+    .page-head h1{font-size:clamp(24px,3.5vw,34px);letter-spacing:-1.1px}
+    .app{padding-top:20px}
+    .indicator-card{padding:15px 14px}
+    .indicator-card .indicator-value{margin:6px 0}
+    .indicator-status{margin:0;min-height:0}
+    .indicator-card p{min-height:0}
+    .indicators-panel,.bodies-panel,.comparison-panel{margin-top:14px}
+    .footer{margin-top:15px}
   </style>
   <link rel="stylesheet" href="./treinos.css">
 </head>
@@ -224,10 +233,9 @@
 <div class="container app">
   <div class="page-head">
     <div>
-      <div class="eyebrow">Meu Treino</div>
-      <h1>Seu acompanhamento</h1>
+      <h1>Avaliação e treinos</h1>
     </div>
-    <div class="page-count"><strong>08 <span style="font-size:13px;color:#a0aba2">semanas</span></strong><span>Plano de treino</span></div>
+    
   </div>
 
   <div class="layout">
@@ -255,19 +263,13 @@
     </aside>
 
     <main class="main">
-      <section class="hero" aria-labelledby="heroHeading">
-        <div>
-          <div class="hero-label">Plano personalizado</div>
-          <h2 id="heroHeading">Evolução em foco.</h2>
-        </div>
-        <div class="hero-symbol" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none"><path d="M14 65h17l11-25 14 33 12-20h18" stroke="#D6F0C9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="44" stroke="#B5D6B5" stroke-width="1.5"/></svg></div>
-      </section>
+
 
       <div class="tab-content" id="evaluationTab" role="tabpanel" aria-labelledby="tabEvaluation">
       <section class="panel" id="initialPanel" aria-labelledby="formHeading">
         <div class="form-head">
           <div><div class="eyebrow">Avaliação inicial</div><h2 id="formHeading">Suas medidas</h2></div>
-          <span class="step-tag" id="stepTag">FICHA INICIAL</span>
+
         </div>
         <div class="info-strip">
           <div><div class="info-main">Avaliação antropométrica</div><div class="info-sub" id="filledLabel">0 de 12 campos preenchidos</div></div>
@@ -278,7 +280,7 @@
             <label for="measureDate">Data da avaliação <span style="color:#a4aea5;font-weight:500">(opcional)</span></label>
             <input type="date" id="measureDate" name="date">
           </div>
-          <p class="comparison-intro" style="margin:0 0 8px">Dados iniciais: <strong>52 anos · 80 kg · 172 cm</strong>. Confirme na avaliação.</p>
+          
           <div id="measureFields"></div>
           <div class="actions">
             <button class="primary-btn" type="submit" id="saveButton">
@@ -295,8 +297,8 @@
         </div>
       </section>
       <section class="panel indicators-panel" aria-labelledby="indicatorsHeading">
-        <div class="eyebrow">Resultados automáticos</div>
-        <h2 id="indicatorsHeading" style="margin:7px 0 7px;font-size:22px;letter-spacing:-.7px">Indicadores antropométricos</h2>
+        
+        <h2 id="indicatorsHeading" style="margin:7px 0 7px;font-size:22px;letter-spacing:-.7px">Indicadores</h2>
         
         <div class="indicator-grid">
           <article class="indicator-card">
@@ -304,37 +306,37 @@
             <div class="indicator-value" id="indicatorBmi" aria-live="polite">—</div>
              <div class="indicator-status" id="indicatorBmiStatus" aria-live="polite"></div>
             <p id="indicatorBmiHelp">Informe peso e altura.</p>
-            <div class="indicator-formula">Peso (kg) ÷ altura² (m)<div>Triagem do estado nutricional</div></div>
+
           </article>
           <article class="indicator-card">
             <span class="indicator-title">Relação cintura / altura</span>
             <div class="indicator-value" id="indicatorWaistHeight" aria-live="polite">—</div>
              <div class="indicator-status" id="indicatorWaistHeightStatus" aria-live="polite"></div>
             <p id="indicatorWaistHeightHelp">Informe cintura e altura.</p>
-            <div class="indicator-formula">Cintura (cm) ÷ altura (cm)<div>Triagem de risco cardiometabólico</div></div>
+
           </article>
           <article class="indicator-card">
             <span class="indicator-title">Relação cintura / quadril</span>
             <div class="indicator-value" id="indicatorWaistHip" aria-live="polite">—</div>
              <div class="indicator-status" id="indicatorWaistHipStatus" aria-live="polite"></div>
             <p id="indicatorWaistHipHelp">Informe cintura e quadril.</p>
-            <div class="indicator-formula">Cintura (cm) ÷ quadril (cm)<div>Distribuição corporal</div></div>
+
           </article>
         </div>
 
         <p class="indicator-disclaimer">Indicadores de triagem, não diagnósticos. IMC não distingue músculo de gordura.</p>
       </section>
       <section class="panel bodies-panel" aria-labelledby="bodiesHeading">
-        <div class="eyebrow">Representação visual</div>
-        <h2 class="bodies-heading" id="bodiesHeading">Faixas de IMC ilustradas</h2>
+        
+        <h2 class="bodies-heading" id="bodiesHeading">Faixas de IMC</h2>
         
         <div class="bodies-grid" id="bodiesGrid" aria-label="Representações padronizadas de cinco faixas do IMC"></div>
         <div class="bodies-result" id="bodiesResult" role="status" aria-live="polite">Preencha o peso e a altura para destacar a faixa de IMC.</div>
         <p class="bodies-note">Silhuetas ilustrativas. O IMC não representa a aparência real.</p>
       </section>
       <section class="panel comparison-panel" aria-labelledby="comparisonHeading">
-        <div class="eyebrow">Resumo da avaliação</div>
-        <h2 id="comparisonHeading" style="margin:6px 0 8px;font-size:22px;letter-spacing:-.6px">Medidas atuais × referências</h2>
+        
+        <h2 id="comparisonHeading" style="margin:6px 0 8px;font-size:22px;letter-spacing:-.6px">Medidas × referência</h2>
         
         <div class="comparison-meta" id="comparisonDate">Avaliação inicial · sem data</div>
         <div class="compare-table-wrap">
@@ -483,7 +485,7 @@
       return;
     }
     el(id).textContent=value.toLocaleString('pt-BR',{minimumFractionDigits:decimals,maximumFractionDigits:decimals});
-    el(helpId).textContent='Calculado com suas medidas iniciais';
+    el(helpId).textContent='';
   }
   function updateIndicators(){
     var weight=measurement('peso'),heightCm=measurement('altura');
@@ -572,18 +574,18 @@
     var height=measurement('altura'),weight=measurement('peso');
     var waist=measurement('cintura'),hip=measurement('quadril');
     var refs={
-      idade:'Informação de contexto, sem meta antropométrica',
-      peso:'Meta individual conforme composição corporal e evolução',
-      altura:'Dado de referência, sem meta de alteração',
-      cintura:height!==null?'Triagem: abaixo de '+ptNumber(height/2,1)+' cm (menos da metade da altura)':'Triagem: cintura menor que metade da altura',
-      abdomen:'Acompanhar evolução; sem valor ideal universal',
-      quadril:'Acompanhar evolução; sem valor ideal universal',
-      busto:'Acompanhar evolução; sem valor ideal universal',
-      torax:'Acompanhar evolução; sem valor ideal universal',
-      bracoRelaxado:'Acompanhar evolução; sem valor ideal universal',
-      bracoIsometria:'Acompanhar evolução; sem valor ideal universal',
-      coxa:'Acompanhar evolução; sem valor ideal universal',
-      panturrilha:'Acompanhar evolução; sem valor ideal universal'
+      idade:'Sem meta',
+      peso:'Meta individual',
+      altura:'Sem meta',
+      cintura:height!==null?'Abaixo de '+ptNumber(height/2,1)+' cm':'Abaixo de metade da altura',
+      abdomen:'Comparar evolução',
+      quadril:'Comparar evolução',
+      busto:'Comparar evolução',
+      torax:'Comparar evolução',
+      bracoRelaxado:'Comparar evolução',
+      bracoIsometria:'Comparar evolução',
+      coxa:'Comparar evolução',
+      panturrilha:'Comparar evolução'
     };
     var rows=groups.flatMap(function(group){return group.items;}).map(function(item){
       var value=measurement(item[0]);
@@ -591,9 +593,9 @@
       return {name:item[1],current:value===null?'A medir':ptNumber(value,item[0]==='idade'?0:1)+' '+item[2],reference:refs[item[0]]||'Avaliar individualmente',state:state};
     });
     rows=rows.concat([
-      {name:'IMC',current:weight!==null&&height!==null?ptNumber(weight/Math.pow(height/100,2),1)+' kg/m²':'A calcular',reference:'18,5–24,9 kg/m² (referência para adultos; não é meta isolada)',state:classifyBmi(weight!==null&&height!==null?weight/Math.pow(height/100,2):null)},
-      {name:'Cintura / altura',current:waist!==null&&height!==null?ptNumber(waist/height,2):'A calcular',reference:'0,40–0,49: faixa favorável; 0,50–0,59: risco aumentado; 0,60 ou mais: risco ainda maior',state:classifyWaistHeight(waist!==null&&height!==null?waist/height:null)},
-      {name:'Cintura / quadril',current:waist!==null&&hip!==null?ptNumber(waist/hip,2):'A calcular',reference:'Interpretação individualizada; sem meta única aqui',state:status(waist!==null&&hip!==null?'Acompanhar':'A calcular','neutral')}
+      {name:'IMC',current:weight!==null&&height!==null?ptNumber(weight/Math.pow(height/100,2),1)+' kg/m²':'A calcular',reference:'18,5 a 24,9 kg/m²',state:classifyBmi(weight!==null&&height!==null?weight/Math.pow(height/100,2):null)},
+      {name:'Cintura / altura',current:waist!==null&&height!==null?ptNumber(waist/height,2):'A calcular',reference:'Preferível abaixo de 0,50',state:classifyWaistHeight(waist!==null&&height!==null?waist/height:null)},
+      {name:'Cintura / quadril',current:waist!==null&&hip!==null?ptNumber(waist/hip,2):'A calcular',reference:'Meta individual',state:status(waist!==null&&hip!==null?'Acompanhar':'A calcular','neutral')}
     ]);
     el('comparisonRows').innerHTML=rows.map(function(row,index){
       var missing=row.current==='A medir'||row.current==='A calcular';
