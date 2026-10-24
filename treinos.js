@@ -200,6 +200,73 @@
         +driveVideoFor(m.id,exercisePhoto(m.id,m.kind))+'</div></details>';
     }).join('')+'</div>';
   }
+
+  function setCount(exercise){
+    var dose=String(exercise.dose||'');
+    var found=dose.match(/^\s*(\d+)(?:\s*[-–]\s*(\d+))?\s*[×xX]/);
+    return found?Math.min(10,Number(found[2]||found[1])):1;
+  }
+  function exerciseIsComplete(exercise,entry){
+    if(!entry||typeof entry!=='object')return false;
+    if(Array.isArray(entry.series)){
+      var count=setCount(exercise);
+      return entry.series.length>=count&&Array.from({length:count},function(_,i){return entry.series[i]&&entry.series[i].done===true;}).every(Boolean);
+    }
+    return entry.done===true;
+  }
+  function completedSets(exercise,entry){
+    if(!entry||!Array.isArray(entry.series))return 0;
+    return Array.from({length:setCount(exercise)},function(_,i){return entry.series[i]&&entry.series[i].done===true;}).filter(Boolean).length;
+  }
+  function previousSeries(id){
+    var weeks=bridge.getData().weeks||[];
+    for(var number=bridge.getWeek()-2;number>=0;number--){
+      var data=weeks[number]&&weeks[number].training&&weeks[number].training[dayChoice];
+      var value=data&&data.exercises&&data.exercises[id];
+      if(value&&Array.isArray(value.series)&&value.series.some(function(s){return s&&(s.load||s.reps||s.done);})){
+        return {week:number+1,series:value.series};
+      }
+    }
+    return null;
+  }
+  function seriesProgressNote(id){
+    var earlier=previousSeries(id);
+    if(!earlier)return '';
+    var entries=earlier.series.map(function(s,i){
+      if(!s||(s.load===undefined||s.load==='')&&(s.reps===undefined||s.reps===''))return '';
+      var parts=[];
+      if(s.load!==undefined&&s.load!=='')parts.push(String(s.load).replace('.',',')+' kg');
+      if(s.reps!==undefined&&s.reps!=='')parts.push(s.reps+' rep.');
+      return 'S'+(i+1)+' '+parts.join(' · ');
+    }).filter(Boolean);
+    return entries.length?'<p class="series-history">Semana '+earlier.week+': '+escapeHtml(entries.join('  |  '))+'</p>':'';
+  }
+  function seriesRows(exercise,entry){
+    var count=setCount(exercise),existing=Array.isArray(entry.series)?entry.series:[];
+    var rows=Array.from({length:count},function(_,i){
+      var record=existing[i]&&typeof existing[i]==='object'?existing[i]:{};
+      var number=i+1;
+      return '<div class="series-row" data-series-row="'+number+'">'
+        +'<strong class="series-number">Série '+number+'</strong>'
+        +'<label class="series-input"><span>Carga (kg)</span><input type="text" inputmode="decimal" autocomplete="off" maxlength="8" id="load-'+exercise.id+'-'+number+'" data-exercise="'+exercise.id+'" data-series="'+i+'" data-exfield="load" aria-label="Carga em quilos da série '+number+'" placeholder="kg" value="'+escapeHtml(record.load===undefined?'':record.load)+'"></label>'
+        +'<label class="series-input"><span>Repetições</span><input type="number" inputmode="numeric" min="0" max="200" step="1" id="reps-'+exercise.id+'-'+number+'" data-exercise="'+exercise.id+'" data-series="'+i+'" data-exfield="reps" aria-label="Repetições da série '+number+'" placeholder="reps" value="'+escapeHtml(record.reps===undefined?'':record.reps)+'"></label>'
+        +'<label class="series-done"><input type="checkbox" data-exercise="'+exercise.id+'" data-series="'+i+'" data-exfield="done" aria-label="Série '+number+' concluída" '+(record.done?'checked':'')+'><span>Feita</span></label>'
+        +'</div>';
+    }).join('');
+    var old=(entry.load||entry.reps)&&!Array.isArray(entry.series)
+      ?'<p class="series-legacy">Registro antigo: '+escapeHtml([entry.load?(entry.load+' kg'):'',entry.reps?(entry.reps+' repetições'):''].filter(Boolean).join(' · '))+'</p>':'';
+    return '<div class="series-tracker"><div class="series-tracker-title"><strong>Séries</strong><span data-series-progress="'+exercise.id+'">'+completedSets(exercise,entry)+'/'+count+' feitas</span></div>'
+      +rows+old+seriesProgressNote(exercise.id)+'</div>';
+  }
+  function refreshSeriesIndicators(exercise){
+    if(typeof mount.querySelector!=='function')return;
+    var entry=safeRecord().exercises[exercise.id]||{};
+    var done=completedSets(exercise,entry),progress=mount.querySelector('[data-series-progress="'+exercise.id+'"]');
+    if(progress)progress.textContent=done+'/'+setCount(exercise)+' feitas';
+    var completed=plans[dayChoice].exercises.filter(function(x){return exerciseIsComplete(x,safeRecord().exercises[x.id]);}).length;
+    var total=mount.querySelector('[data-exercises-progress]');
+    if(total)total.textContent=completed+'/'+plans[dayChoice].exercises.length+' exercícios';
+  }
   function renderExercise(x,index,location,entry){
     entry=entry&&typeof entry==='object'?entry:{};
     var disp=location==='hotel'?(x.hotel||'Sem alternativa definida.'):'';
@@ -215,10 +282,7 @@
       +stepsList(x.steps)
       +(disp?'<p class="exercise-note">'+escapeHtml(disp)+'</p>':'')
       +(x.cue?'<p class="exercise-note caution">'+escapeHtml(x.cue)+'</p>':'')
-      +'<div class="workout-field-row">'
-      +'<div class="workout-field"><label for="load-'+x.id+'">Carga usada (kg, opcional)</label><input id="load-'+x.id+'" data-exercise="'+x.id+'" data-exfield="load" inputmode="decimal" placeholder="Ex.: 5" value="'+escapeHtml(entry.load||'')+'"></div>'
-      +'<div class="workout-field"><label for="reps-'+x.id+'">Repetições realizadas</label><input id="reps-'+x.id+'" data-exercise="'+x.id+'" data-exfield="reps" placeholder="Ex.: 12/12" maxlength="40" value="'+escapeHtml(entry.reps||'')+'"></div>'
-      +'</div><label class="workout-check" style="margin-top:10px"><input type="checkbox" data-exercise="'+x.id+'" data-exfield="done" '+(entry.done?'checked':'')+'>Concluído</label>'
+      +seriesRows(x,entry)
       +'</div></details>';
   }
   function field(label,id,type,value,extra){
@@ -230,7 +294,7 @@
     if(!mount)return;
     var week=bridge.getWeek(),p=plans[dayChoice],r=safeRecord(),location=r.location==='hotel'?'hotel':'condominio';
     var completed=['A','B','C','D'].filter(function(key){return getDayRecord(key).complete===true;}).length;
-    var completedExercises=p.exercises.filter(function(x){return r.exercises[x.id]&&r.exercises[x.id].done;}).length;
+    var completedExercises=p.exercises.filter(function(x){return exerciseIsComplete(x,r.exercises[x.id]);}).length;
 
     mount.innerHTML='<div class="training-guide">'
       +'<div class="train-safety-short" role="note">Joelhos: não forçar dor ou travamento. Avaliar antes de aumentar cargas.</div>'
@@ -251,7 +315,7 @@
       +'<h4 class="train-section-title">Cardio</h4>'
       +'<details class="train-step"><summary><span class="train-step-index">♥</span><span class="train-step-content"><strong>'+escapeHtml(p.cardio.name)+'</strong><small>'+escapeHtml(p.cardio.dose)+'</small></span></summary><div class="train-step-body"><p>'+escapeHtml(p.cardio.suggestion)+'</p>'+driveVideoFor('cardio'+dayChoice,bicyclePhoto())+'</div></details>'
       +driveFolderLibrary()
-      +'<details class="train-log"><summary><strong>Registro</strong><span>'+completedExercises+'/'+p.exercises.length+' exercícios</span></summary>'
+      +'<details class="train-log"><summary><strong>Registro</strong><span data-exercises-progress>'+completedExercises+'/'+p.exercises.length+' exercícios</span></summary>'
       +'<div class="workout-session-form">'
       +'<div class="workout-field-row">'
       +field('Dor antes (0–10)','painBefore','number',r.painBefore===undefined?'':r.painBefore,'min="0" max="10" step="1"')
@@ -295,15 +359,39 @@
       return;
     }
     if(target.hasAttribute('data-exercise')){
-      var id=target.getAttribute('data-exercise'),key=target.getAttribute('data-exfield');
-      if(!id||!['load','reps','done'].includes(key))return;
-      if(!plans[dayChoice].exercises.some(function(x){return x.id===id;}))return;
+      var id=target.getAttribute('data-exercise');
+      var key=target.getAttribute('data-exfield');
+      var idxText=target.getAttribute('data-series');
+      var exercise=plans[dayChoice].exercises.find(function(x){return x.id===id;});
+      if(!exercise||!['load','reps','done'].includes(key))return;
+      if(idxText===null)return;
+      var seriesNumber=Number(idxText);
+      if(!Number.isInteger(seriesNumber)||seriesNumber<0||seriesNumber>=setCount(exercise))return;
       if(!r.exercises[id])r.exercises[id]={};
       var entry=r.exercises[id];
-      if(key==='done')entry.done=target.checked;
-      else if(key==='load')entry.load=target.value.slice(0,16);
-      else entry.reps=target.value.slice(0,40);
+      if(!Array.isArray(entry.series))entry.series=[];
+      if(!entry.series[seriesNumber])entry.series[seriesNumber]={load:'',reps:'',done:false};
+      var set=entry.series[seriesNumber];
+      if(key==='done'){
+        set.done=target.checked;
+      }else{
+        var value=target.value.trim();
+        if(key==='load'){
+          // Aceita vírgula e ponto decimal; mantém o texto para exibição.
+          var validLoad=value===''||(/^\d{1,4}([.,]\d{1,2})?$/.test(value)&&Number(value.replace(',','.'))<=9999);
+          if(typeof target.setCustomValidity==='function')target.setCustomValidity(validLoad?'':'Digite uma carga válida em kg');
+          if(!validLoad)return;
+          set.load=value.slice(0,8);
+        }else{
+          var validReps=value===''||(/^\d{1,3}$/.test(value)&&Number(value)<=200);
+          if(typeof target.setCustomValidity==='function')target.setCustomValidity(validReps?'':'Use de 0 a 200 repetições');
+          if(!validReps)return;
+          set.reps=value;
+        }
+      }
+      entry.done=exerciseIsComplete(exercise,entry);
       saveAuto();
+      refreshSeriesIndicators(exercise);
     }
   }
   mount.addEventListener('click',function(event){
