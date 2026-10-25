@@ -214,3 +214,7 @@
   border-radius:0;
   pointer-events:none;
 }
+
+/* Prancha: somente segundos por série, sem campo de carga. */
+.series-row.timed-row{grid-template-columns:66px minmax(0,1fr) 57px}
+@media(max-width:540px){.series-row.timed-row{grid-template-columns:54px minmax(0,1fr) 46px}}
