@@ -203,10 +203,11 @@
     var earlier=previousSeries(id);
     if(!earlier)return '';
     var entries=earlier.series.map(function(s,i){
-      if(!s||(s.load===undefined||s.load==='')&&(s.reps===undefined||s.reps===''))return '';
+      if(!s||(s.load===undefined||s.load==='')&&(s.reps===undefined||s.reps==='')&&(s.seconds===undefined||s.seconds===''))return '';
       var parts=[];
       if(s.load!==undefined&&s.load!=='')parts.push(String(s.load).replace('.',',')+' kg');
       if(s.reps!==undefined&&s.reps!=='')parts.push(s.reps+' rep.');
+      if(s.seconds!==undefined&&s.seconds!=='')parts.push(s.seconds+' s');
       return 'S'+(i+1)+' '+parts.join(' · ');
     }).filter(Boolean);
     return entries.length?'<p class="series-history">Semana '+earlier.week+': '+escapeHtml(entries.join('  |  '))+'</p>':'';
@@ -218,8 +219,10 @@
       var number=i+1;
       return '<div class="series-row" data-series-row="'+number+'">'
         +'<strong class="series-number">Série '+number+'</strong>'
-        +'<label class="series-input"><span>Carga (kg)</span><input type="text" inputmode="decimal" autocomplete="off" maxlength="8" id="load-'+exercise.id+'-'+number+'" data-exercise="'+exercise.id+'" data-series="'+i+'" data-exfield="load" aria-label="Carga em quilos da série '+number+'" placeholder="kg" value="'+escapeHtml(record.load===undefined?'':record.load)+'"></label>'
-        +'<label class="series-input"><span>Repetições</span><input type="number" inputmode="numeric" min="0" max="200" step="1" id="reps-'+exercise.id+'-'+number+'" data-exercise="'+exercise.id+'" data-series="'+i+'" data-exfield="reps" aria-label="Repetições da série '+number+'" placeholder="reps" value="'+escapeHtml(record.reps===undefined?'':record.reps)+'"></label>'
+        +(exercise.timeBased
+          ?'<label class="series-input"><span>Tempo realizado (s)</span><input type="number" inputmode="numeric" min="0" max="600" step="1" id="seconds-'+exercise.id+'-'+number+'" data-exercise="'+exercise.id+'" data-series="'+i+'" data-exfield="seconds" aria-label="Tempo em segundos da série '+number+'" placeholder="40" value="'+escapeHtml(record.seconds===undefined?'':record.seconds)+'"></label>'
+          :'<label class="series-input"><span>Carga (kg)</span><input type="text" inputmode="decimal" autocomplete="off" maxlength="8" id="load-'+exercise.id+'-'+number+'" data-exercise="'+exercise.id+'" data-series="'+i+'" data-exfield="load" aria-label="Carga em quilos da série '+number+'" placeholder="kg" value="'+escapeHtml(record.load===undefined?'':record.load)+'"></label>'
+           +'<label class="series-input"><span>Repetições</span><input type="number" inputmode="numeric" min="0" max="200" step="1" id="reps-'+exercise.id+'-'+number+'" data-exercise="'+exercise.id+'" data-series="'+i+'" data-exfield="reps" aria-label="Repetições da série '+number+'" placeholder="reps" value="'+escapeHtml(record.reps===undefined?'':record.reps)+'"></label>')
         +'<label class="series-done"><input type="checkbox" data-exercise="'+exercise.id+'" data-series="'+i+'" data-exfield="done" aria-label="Série '+number+' concluída" '+(record.done?'checked':'')+'><span>Feita</span></label>'
         +'</div>';
     }).join('');
@@ -333,7 +336,7 @@
       var key=target.getAttribute('data-exfield');
       var idxText=target.getAttribute('data-series');
       var exercise=plans[dayChoice].exercises.find(function(x){return x.id===id;});
-      if(!exercise||!['load','reps','done'].includes(key))return;
+      if(!exercise||!['load','reps','seconds','done'].includes(key))return;
       if(idxText===null)return;
       var seriesNumber=Number(idxText);
       if(!Number.isInteger(seriesNumber)||seriesNumber<0||seriesNumber>=setCount(exercise))return;
@@ -352,6 +355,11 @@
           if(typeof target.setCustomValidity==='function')target.setCustomValidity(validLoad?'':'Digite uma carga válida em kg');
           if(!validLoad)return;
           set.load=value.slice(0,8);
+        }else if(key==='seconds'){
+          var validSeconds=value===''||(/^\d{1,3}$/.test(value)&&Number(value)<=600);
+          if(typeof target.setCustomValidity==='function')target.setCustomValidity(validSeconds?'':'Use de 0 a 600 segundos');
+          if(!validSeconds)return;
+          set.seconds=value;
         }else{
           var validReps=value===''||(/^\d{1,3}$/.test(value)&&Number(value)<=200);
           if(typeof target.setCustomValidity==='function')target.setCustomValidity(validReps?'':'Use de 0 a 200 repetições');
