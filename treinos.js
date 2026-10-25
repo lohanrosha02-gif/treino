@@ -45,24 +45,23 @@
       cardio:{name:'Bicicleta ergométrica',dose:'8–12 min · leve',suggestion:'Selim ajustado e baixa resistência. Pedalar apenas se não aumentar a dor nos joelhos ou provocar travamento.',kind:'cardio'}
     },
     C:{
-      title:'Costas + peito + braços',
-      subtitle:'Segundo estímulo para peito e costas.',
+      title:'Costas + peito + tríceps + prancha',
+      subtitle:'Segundo estímulo superior e estabilidade do tronco.',
       duration:'60–70 min',interval:'Quinta-feira',recover:'~72 h depois do treino A',
       mobility:[
-        {id:'mC1',name:'Rotação torácica sentado',dose:'1 × 8 por lado',kind:'rotate',steps:['Sente-se e cruze os braços em frente ao peito.','Gire o tronco lentamente para um lado sem deslocar o quadril.','Retorne ao centro e repita para o outro lado.']},
-        {id:'mC2',name:'Wall slides (braços na parede)',dose:'1 × 8–10',kind:'raise',steps:['Apoie os antebraços em uma parede.','Deslize para cima até uma amplitude livre de dor.','Retorne lentamente sem compensar na lombar.']},
-        {id:'mC3',name:'Mobilidade escapular sentado',dose:'1 × 8–10',kind:'row',steps:['Sente-se ereto com os pés apoiados.','Eleve os braços de forma confortável, sem forçar os ombros.','Abaixe suavemente os ombros, aproxime as escápulas e relaxe.']}
+        {id:'mC1',name:'Rotação torácica em quatro apoios',dose:'1 × 8 por lado',kind:'rotate',steps:['Em quatro apoios sobre um colchonete, alinhe mãos e joelhos e coloque uma mão atrás da cabeça.','Leve o cotovelo em direção ao chão e depois abra o peito girando a região torácica, mantendo o quadril estável.','Retorne lentamente. Não force o pescoço ou os joelhos.'],cue:'Use apoio acolchoado. Se a posição ajoelhada provocar dor, interrompa e substitua por mobilidade sentada.'},
+        {id:'mC2',name:'Rotação com braço passando por baixo',dose:'1 × 8 por lado',kind:'rotate',steps:['Em quatro apoios, mantenha uma das mãos apoiada com o quadril estável.','Passe o outro braço por baixo do peito, girando suavemente até o ombro se aproximar do chão sem forçar.','Retorne e abra o braço para cima; acompanhe com o olhar apenas se for confortável.'],cue:'Não apoiar o peso no pescoço; interromper se os joelhos doerem.'},
+        {id:'mC3',name:'Alongamento em quatro apoios com alcance',dose:'1 × 8 movimentos lentos',kind:'mobility',steps:['Em quatro apoios sobre colchonete, mantenha os joelhos confortavelmente apoiados.','Deslize as mãos para a frente enquanto leva o quadril lentamente em direção aos calcanhares, sem dor.','Sustente brevemente e volte à posição inicial com controle, respirando sem prender o ar.'],cue:'Se não tolerar ajoelhar ou dobrar o joelho, não executar.'}
       ],
       exercises:[
         {id:'c1',name:'Supino inclinado na máquina',dose:'3 × 8–12',rest:'90–120 s',muscle:'Peito · tríceps',kind:'press',hotel:'Supino inclinado com halteres e banco estável.',steps:['Ajuste o encosto para apoiar completamente as costas.','Empurre as alças na direção indicada pela máquina.','Retorne com controle sem descer além do conforto.']},
         {id:'c2',name:'Remada sentada com apoio',dose:'3 × 8–12',rest:'90–120 s',muscle:'Costas · bíceps',kind:'row',hotel:'Remada apoiada unilateral com halter.',steps:['Sente-se com peito apoiado ou tronco estabilizado.','Puxe as alças sem inclinar o corpo para trás.','Estenda os braços devagar e repita.']},
         {id:'c3',name:'Crucifixo no peck deck',dose:'2 × 12–15',rest:'60–90 s',muscle:'Peitoral',kind:'fly',hotel:'Crucifixo com halteres leves e amplitude curta, se orientado.',steps:['Ajuste o banco na altura adequada dos ombros.','Aproxime as alças à frente do peito em movimento controlado.','Abra os braços até uma amplitude confortável.']},
         {id:'c4',name:'Puxada alta na polia',dose:'2 × 10–12',rest:'75–90 s',muscle:'Dorsais · bíceps',kind:'pull',hotel:'Polia alta, se disponível.',steps:['Segure a barra com pegada confortável.','Puxe para a parte superior do peito, sem inclinar excessivamente o tronco.','Devolva a barra de forma lenta.']},
-        {id:'c5',name:'Remada para deltoide posterior na polia',dose:'2 × 12–15',rest:'60 s',muscle:'Deltoide posterior · escápulas',kind:'row',hotel:'Remada para deltoide posterior com elástico, se tiver bom controle.',steps:['Prenda a corda numa polia baixa e afaste-se até criar uma leve tensão.','Incline discretamente o tronco com costas alinhadas e puxe a corda em direção ao peito alto, abrindo os cotovelos.','Retorne lentamente, sem arredondar as costas.']},
-        {id:'c6',name:'Rosca bíceps unilateral na polia',dose:'2 × 10–15 por braço',rest:'60 s',muscle:'Bíceps',kind:'curl',hotel:'Rosca unilateral com halter, se a polia não estiver disponível.',steps:['Ajuste a polia baixa e fique em pé de frente para ela, segurando um pegador com a palma voltada para cima.','Mantenha o cotovelo próximo ao tronco e flexione lentamente em direção ao ombro.','Retorne com controle, complete as séries e repita no outro braço.']},
-        {id:'c7',name:'Tríceps na polia com corda',dose:'2 × 10–15',rest:'60 s',muscle:'Tríceps',kind:'press',hotel:'Extensão de tríceps com halter leve e apoio adequado.',steps:['Mantenha os cotovelos ao lado do tronco.','Estenda os cotovelos para abaixar a corda.','Retorne lentamente sem movimentar os ombros.']}
+        {id:'c7',name:'Tríceps na polia com corda',dose:'2 × 10–15',rest:'60 s',muscle:'Tríceps',kind:'press',hotel:'Extensão de tríceps com halter leve e apoio adequado.',steps:['Mantenha os cotovelos ao lado do tronco.','Estenda os cotovelos para abaixar a corda.','Retorne lentamente sem movimentar os ombros.']},
+        {id:'c8',name:'Prancha com apoio de antebraços',dose:'3 × 40 s',rest:'60–90 s',muscle:'Abdômen · estabilizadores do tronco',kind:'isometric',timeBased:true,hotel:'Prancha em colchonete, se tolerada.',steps:['De bruços, apoie os antebraços e alinhe os cotovelos abaixo dos ombros.','Eleve o tronco mantendo cabeça, quadril e calcanhares em linha, sem afundar a lombar.','Respire normalmente por até 40 segundos e descanse antes de repetir.'],cue:'Verificar histórico de cirurgia abdominal e tolerância ao esforço. Reduzir duração se perder a postura ou causar dor.'}
       ],
-      cardio:{name:'Bicicleta ergométrica',dose:'5–8 min · leve',suggestion:'Selim ajustado e pedalada suave. Use apenas se não agravar o joelho.',kind:'cardio'}
+      cardio:{name:'Bicicleta ergométrica',dose:'8–12 min · leve',suggestion:'Pedalada confortável, selim ajustado e resistência baixa, apenas se não piorar a dor nos joelhos.',kind:'cardio'}
     },
     D:{
       title:'Quadril + mobilidade + cardio',
@@ -105,6 +104,11 @@
     if(!weekData.training||typeof weekData.training!=='object'||Array.isArray(weekData.training))weekData.training={};
     if(!weekData.training[dayChoice]||typeof weekData.training[dayChoice]!=='object')weekData.training[dayChoice]={};
     var row=weekData.training[dayChoice];
+    if(dayChoice==='C'&&row.planVersion!=='C-20261024-v2'){
+      if(row.complete===true)row.oldPlanCompletedAt=row.completedAt||'';
+      row.complete=false;row.completedAt='';row.planVersion='C-20261024-v2';
+    }
+
     // Mudança na ficha B: não marcar exercícios novos usando registros do plano antigo.
     if(dayChoice==='B'&&row.planVersion!=='B-20261024-v2'){
       if(row.complete===true)row.oldPlanCompletedAt=row.completedAt||'';
