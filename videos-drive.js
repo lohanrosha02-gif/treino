@@ -1,5 +1,6 @@
-/* Meu Treino: vídeos instrutivos para treinos A-D. MP4 externos do ExerciseDB,
-   e animações 3D ilustrativas locais. Ver FONTES_VIDEOS.md. */
+/* Biblioteca de demonstrações do Meu Treino.
+   Vídeos 3D do projeto em ./assets/videos e outros MP4 demonstrativos.
+   Os registros dos alunos permanecem locais no navegador. */
 window.MeuTreinoVideos=Object.freeze({
   "pastaId": "1P1cEjL-pOF4l2WX_SFgJHqzoSvN9jQs6",
   "pastaUrl": "https://drive.google.com/drive/folders/1P1cEjL-pOF4l2WX_SFgJHqzoSvN9jQs6",
@@ -90,20 +91,15 @@ window.MeuTreinoVideos=Object.freeze({
       "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/cable-bar-lateral-pulldown-wide-shoulder-grip.mp4",
       "name": "Wide Grip Cable Lat Pulldown"
     },
-    "c5": {
-      "type": "mp4",
-      "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/cable-rear-delt-row-with-rope.mp4",
-      "name": "Cable Rear Delt Row (with rope)"
-    },
-    "c6": {
-      "type": "mp4",
-      "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/cable-standing-inner-curl.mp4",
-      "name": "Cable Standing Inner Curl"
-    },
     "c7": {
       "type": "mp4",
       "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/cable-pushdown-rope-attachment.mp4",
       "name": "Cable Rope Triceps Pushdown"
+    },
+    "c8": {
+      "type": "local",
+      "url": "./assets/videos/C_prancha_antebracos.mp4",
+      "name": "Prancha com apoio de antebraços (3D)"
     },
     "cardioA": {
       "type": "mp4",
@@ -182,18 +178,18 @@ window.MeuTreinoVideos=Object.freeze({
     },
     "mC1": {
       "type": "local",
-      "url": "./assets/videos/3d_twist.mp4",
-      "name": "Rotação torácica sentado (animação 3D)"
+      "url": "./assets/videos/C_rotacao_quatro_apoios.mp4",
+      "name": "Rotação torácica em quatro apoios (3D)"
     },
     "mC2": {
       "type": "local",
-      "url": "./assets/videos/3d_wall.mp4",
-      "name": "Deslizamento de braços na parede (animação 3D)"
+      "url": "./assets/videos/C_braco_por_baixo.mp4",
+      "name": "Rotação com braço passando por baixo (3D)"
     },
     "mC3": {
-      "type": "mp4",
-      "url": "https://pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev/exercise-videos/male/stretching-seated-shoulder-flexor-depresor-retractor.mp4",
-      "name": "Seated Shoulder Flexor, Depressor, Retractor Stretch"
+      "type": "local",
+      "url": "./assets/videos/C_alcance_costas_ombros.mp4",
+      "name": "Alongamento em quatro apoios com alcance (3D)"
     },
     "mD1": {
       "type": "mp4",
