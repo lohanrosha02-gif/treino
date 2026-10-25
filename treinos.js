@@ -217,7 +217,7 @@
     var rows=Array.from({length:count},function(_,i){
       var record=existing[i]&&typeof existing[i]==='object'?existing[i]:{};
       var number=i+1;
-      return '<div class="series-row" data-series-row="'+number+'">'
+      return '<div class="series-row'+(exercise.timeBased?' timed-row':'')+'" data-series-row="'+number+'">'
         +'<strong class="series-number">Série '+number+'</strong>'
         +(exercise.timeBased
           ?'<label class="series-input"><span>Tempo realizado (s)</span><input type="number" inputmode="numeric" min="0" max="600" step="1" id="seconds-'+exercise.id+'-'+number+'" data-exercise="'+exercise.id+'" data-series="'+i+'" data-exfield="seconds" aria-label="Tempo em segundos da série '+number+'" placeholder="40" value="'+escapeHtml(record.seconds===undefined?'':record.seconds)+'"></label>'
