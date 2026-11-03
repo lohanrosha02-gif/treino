@@ -1,12 +1,13 @@
 # Meu Treino · painel administrativo
 
-Este repositório publica o painel do professor. O portal dos alunos e a biblioteca de exercícios ficam em [`treino-v2`](https://github.com/lohanrosha02-gif/treino-v2).
+Este repositório publica o painel da professora. O portal dos alunos e o catálogo de exercícios ficam em [`treino-v2`](https://github.com/lohanrosha02-gif/treino-v2).
 
 ## O que o painel faz
 
 - Autentica o administrador pelo Supabase.
 - Cadastra alunos, acompanha inscrições pendentes e aprova o acesso.
 - Registra 12 medidas corporais por aluno e monta treinos personalizados.
+- Salvar a ficha envia a atualização apenas para o aluno selecionado; o portal dele busca mudanças automaticamente enquanto estiver aberto.
 - Publica comunicados para alunos aprovados.
 - Pode aplicar um plano a todos os cadastros após duas confirmações; as medidas individuais são preservadas.
 

@@ -4,18 +4,19 @@
 <title>Meu Treino · Administração</title><meta name="theme-color" content="#f2f5ef">
 <link rel="stylesheet" href="./admin.css?v=supabase-2">
 <link rel="stylesheet" href="./admin-supabase.css?v=supabase-2">
+<link rel="stylesheet" href="./admin-personal.css?v=20261103-3.3">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
 <script src="./supabase-config.js?v=supabase-2" defer></script>
 <script src="./videos.js?v=legacy-3.0" defer></script>
-<script src="./admin-supabase.js?v=legacy-3.0" defer></script>
+<script src="./admin-supabase.js?v=20261103-admin-personal-3.3" defer></script>
 </head><body>
 <a class="skip-link" href="#main">Ir para o conteúdo</a>
 <header class="topbar"><div class="shell top-inner">
 <a href="./" class="brand"><span class="brand-mark">↗</span><span><strong>meu treino<span class="dot">.</span></strong><small>ADMINISTRAÇÃO</small></span></a>
-<a class="site-link" href="https://lohanrosha02-gif.github.io/treino-v2/" target="_blank" rel="noopener noreferrer">Site do cliente ↗</a>
+<a class="site-link" href="https://lohanrosha02-gif.github.io/treino-v2/" target="_blank" rel="noopener noreferrer">Abrir portal do aluno ↗</a>
 </div></header>
 <main id="main" class="shell">
-<section class="hero"><div class="eyebrow">GESTÃO DE TREINOS INDIVIDUAIS</div><h1>Seu painel.<br><em>Todos os treinos.</em></h1><p>Aprove os alunos, preencha medidas e edite treinos, séries, exercícios, imagens e vídeos de cada pessoa. As informações ficam no Supabase e cada cliente vê apenas seu próprio plano.</p></section>
+<section class="hero"><div class="eyebrow">PAINEL DA PROFESSORA</div><h1>Alunos e treinos</h1><p>Escolha um aluno, ajuste as medidas ou a ficha e envie a atualização. Cada pessoa vê só as informações da própria conta.</p><div class="hero-points"><span>Fichas individuais</span><span>Medidas protegidas</span><span>Atualização automática no portal</span></div></section>
 <p class="feedback" role="status" aria-live="polite" id="status">Verificando a configuração...</p>
 <section id="setup" class="panel" hidden><h2>Ativar conexão Supabase</h2><p>É necessário configurar a URL e a chave publicável do projeto, instalar o banco e autorizar seu usuário administrador.</p><a href="https://github.com/lohanrosha02-gif/treino/blob/main/SUPABASE_SETUP.md" target="_blank" rel="noopener noreferrer">Ver como configurar o Supabase</a></section>
 <section id="auth" class="panel" hidden><div class="section-eyebrow">ACESSO RESTRITO</div><h2>Entrar como administrador</h2><p class="muted">Use a conta do Supabase cadastrada como administradora.</p>
@@ -24,44 +25,51 @@
 <label for="loginPassword">Senha</label><input id="loginPassword" class="field-input" type="password" autocomplete="current-password" required>
 <button class="button primary" type="submit">Entrar</button></form></section>
 <section id="workspace" hidden>
-<div class="dashboard-heading"><div><div class="section-eyebrow">PAINEL DO PROFESSOR</div><h2>Clientes e treinos</h2></div><div class="top-actions"><span id="adminIdentity"></span><button class="button secondary" id="signOut" type="button">Sair</button></div></div>
+<div class="dashboard-heading"><div><div class="section-eyebrow">ÁREA ADMINISTRATIVA</div><h2>Alunos e fichas</h2></div><div class="top-actions"><span id="adminIdentity"></span><button class="button secondary" id="signOut" type="button">Sair</button></div></div>
+<section class="admin-stats" aria-label="Resumo dos alunos">
+<article class="stat-card"><span>Alunos cadastrados</span><strong id="totalClientCount">0</strong></article>
+<article class="stat-card"><span>Acesso aprovado</span><strong id="approvedClientCount">0</strong></article>
+<article class="stat-card waiting"><span>Aguardando confirmação ou aprovação</span><strong id="waitingClientCount">0</strong></article>
+</section>
 <div class="dashboard-layout">
 <aside class="panel clients-panel">
-<div class="section-head"><h3>Clientes</h3><button id="refreshClients" class="button secondary mini" type="button">Atualizar</button></div>
+<div class="section-head"><h3>Alunos</h3><button id="refreshClients" class="button secondary mini" type="button">Atualizar lista</button></div>
 <p class="muted tiny">O aluno cria a conta e confirma o e-mail. Você aprova o acesso aqui.</p>
 <div class="approval-filters">
-<button id="showPending" class="button secondary mini" type="button">Pendentes (<span id="pendingCount">0</span>)</button>
-<button id="showAll" class="button secondary mini" type="button">Todos os alunos</button>
+<button id="showPending" class="button secondary mini" type="button" aria-pressed="false">Aguardando (<span id="pendingCount">0</span>)</button>
+<button id="showAll" class="button secondary mini" type="button" aria-pressed="true">Todos os alunos</button>
 </div>
-<input id="clientSearch" class="field-input" placeholder="Buscar por nome ou e-mail" aria-label="Buscar cliente">
+<input id="clientSearch" class="field-input" placeholder="Buscar aluno por nome ou e-mail" aria-label="Buscar aluno">
 <div class="client-list" id="clientList"></div>
 
 </aside>
 <div>
-<section class="panel" id="noClient"><h2>Escolha um cliente</h2><p class="muted">Selecione alguém da lista para editar medidas e treinos.</p></section>
+<section class="panel empty-client" id="noClient"><div class="empty-icon" aria-hidden="true">↖</div><h2>Selecione um aluno</h2><p class="muted">As medidas e a ficha aparecem aqui para você conferir e editar.</p></section>
 <div id="clientArea" hidden>
 <section class="panel client-title"><div><span class="section-eyebrow">CADASTRO</span><h2 id="selectedName"></h2><p id="selectedEmail" class="muted"></p><small id="linkedStatus"></small>
 <div class="form-actions" id="approvalActions" hidden>
 <button class="button primary" id="approveClient" type="button">Aprovar aluno</button>
 </div></div>
 <button class="button danger" id="deleteClient" type="button">Excluir cliente</button></section>
-<nav class="editor-tabs" aria-label="Editar cliente">
-<button class="editor-tab active" type="button" data-tab="measurements">Medições</button>
-<button class="editor-tab" type="button" data-tab="plans">Treinos</button></nav>
-<section class="panel" id="measureEditor"><h2>Medições corporais</h2><p class="muted">Insira os valores em centímetros. Só o cliente vinculado poderá consultar.</p>
+<nav class="editor-tabs" role="tablist" aria-label="Editar aluno">
+<button class="editor-tab active" type="button" role="tab" aria-selected="true" aria-controls="measureEditor" data-tab="measurements">Medidas</button>
+<button class="editor-tab" type="button" role="tab" aria-selected="false" aria-controls="planEditor" data-tab="plans">Ficha de treino</button></nav>
+<section class="panel" id="measureEditor" role="tabpanel"><h2>Medidas corporais</h2><p class="muted">Preencha os valores em centímetros. Só este aluno consegue consultar as próprias medidas.</p>
 <form id="saveMeasures"><div class="form-grid" id="measureFields"></div><div class="form-actions"><button class="button primary" type="submit">Salvar medições</button></div></form></section>
-<section class="panel" id="planEditor" hidden><h2>Treinos do cliente</h2><p class="muted">Organize sessões, séries, exercícios e orientações com poucos cliques.</p>
+<section class="panel" id="planEditor" role="tabpanel" hidden><h2>Ficha de treino</h2><p class="muted">Monte as sessões e escolha as demonstrações que o aluno vai ver nos exercícios.</p>
+<div class="plan-recipient-note"><strong id="planStudentName">Ficha individual</strong><span>Ao salvar, a ficha atualiza no portal desse aluno sem alterar os registros de treino dele.</span></div>
 <div class="form-actions"><button id="addDay" class="button primary" type="button">+ Novo treino</button><button id="useTemplate" class="button secondary" type="button">Usar plano-base</button></div>
 <div id="daysList"></div>
-<div class="form-actions"><button id="savePlan" class="button primary" type="button">Salvar treinos</button><button id="saveAllPlans" class="button secondary" type="button">Aplicar a todos os clientes</button></div>
-<p class="muted tiny">Aplicar a todos substitui apenas os planos, nunca as medidas individuais.</p></section>
+<div class="form-actions plan-save-actions"><button id="savePlan" class="button primary" type="button">Salvar e enviar ao aluno</button></div>
+<details class="bulk-actions"><summary>Aplicar a ficha atual a todos os alunos</summary><p class="muted tiny">Essa ação substitui as fichas individuais de todos. As medidas e os registros de treino permanecem intactos.</p><button id="saveAllPlans" class="button secondary" type="button">Aplicar a todos os alunos</button></details>
+</section>
 </div></div></div>
-<section class="panel notice-panel"><h2>Comunicado geral</h2><p class="muted">A mensagem aparece no site de todos os clientes autenticados.</p>
+<details class="panel notice-panel"><summary><span>Comunicado geral</span><small>Uma mensagem aparece no portal de todos os alunos aprovados.</small></summary><div class="notice-content"><h2>Comunicado geral</h2><p class="muted">A mensagem aparece no site de todos os alunos aprovados.</p>
 <form id="noticeForm" class="form-stack">
 <label class="checkbox-line"><input type="checkbox" id="noticeOn"> Mostrar comunicado</label>
 <label for="noticeTitle">Título</label><input id="noticeTitle" class="field-input" maxlength="120">
 <label for="noticeBody">Mensagem</label><textarea id="noticeBody" class="field-area" maxlength="1000"></textarea>
-<button class="button primary" type="submit">Publicar comunicado</button></form></section>
+<button class="button primary" type="submit">Publicar comunicado</button></form></div></details>
 </section>
-<footer>Meu Treino · Administração protegida com autenticação e regras de acesso do Supabase.</footer>
+<footer>Meu Treino · Painel da professora</footer>
 </main></body></html>
