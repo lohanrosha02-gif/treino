@@ -1,5 +1,5 @@
-/* Configuração PUBLICÁVEL. Nunca coloque sb_secret_* ou service_role neste arquivo. */
+/* Configuração pública: protegida pelas políticas RLS do Supabase. */
 window.MEU_TREINO_SUPABASE = {
-  url: "",
-  publishableKey: ""
+  url: "https://blhhtffmcaqvbqapspdg.supabase.co",
+  publishableKey: "sb_publishable_6dVenwst4tZkf59tt-Jezg_NiRaGg7r"
 };
