@@ -4,6 +4,7 @@
   var PATH='data/site-content.json';
   var BASE='https://api.github.com/repos/'+REPO+'/contents/'+PATH;
   var token='',documentData=null,baseline=null,blobSha='',activeTab='site',activeDay='A',busy=false,dirty=false;
+  var MEASUREMENT_FIELDS=[["shoulder","Ombro"],["chest","Peito"],["bicepsLeft","Bíceps esquerdo"],["bicepsRight","Bíceps direito"],["forearmLeft","Antebraço esquerdo"],["forearmRight","Antebraço direito"],["abdomen","Abdômen"],["hip","Quadril"],["thighLeft","Coxa esquerda"],["thighRight","Coxa direita"],["calfLeft","Panturrilha esquerda"],["calfRight","Panturrilha direita"]];
   var el=function(id){return document.getElementById(id);};
   var feedback=el('feedback');
   function tell(message,type){feedback.textContent=message;feedback.className='feedback'+(type?' '+type:'');}
@@ -48,6 +49,15 @@
   }
   function validate(input){
     if(!input||input.schemaVersion!==1||!input.site||!input.plans)throw Error('Conteúdo inesperado; publicação cancelada.');
+    var measures=input.site.measurements;
+    if(!measures||typeof measures!=='object'||typeof measures.values!=='object'||!measures.values)throw Error('Registro de medições ausente.');
+    if(typeof measures.date!=='string'||(measures.date!==''&&!/^\\d{4}-\\d{2}-\\d{2}$/.test(measures.date)))throw Error('Data das medições inválida.');
+    MEASUREMENT_FIELDS.forEach(function(item){
+      var value=measures.values[item[0]];
+      if(typeof value!=='string'||(value!==''&&(!/^\\d{1,3}(?:[.,]\\d{1,2})?$/.test(value)||Number(value.replace(',','.'))<=0||Number(value.replace(',','.'))>300))){
+        throw Error('Medida inválida para '+item[1]+'. Use um número de 0,01 a 300 cm, ou deixe vazio.');
+      }
+    });
     ['A','B','C','D'].forEach(function(day){
       var p=input.plans[day];
       if(!p||!Array.isArray(p.mobility)||!Array.isArray(p.exercises)||!p.cardio)throw Error('Ficha '+day+' incompleta.');
@@ -176,6 +186,41 @@
     field(g,'Dose / duração',day.cardio,'dose',{wide:true});
     field(g,'Orientações',day.cardio,'suggestion',{wide:true,multiline:true,rows:4});
   }
+
+  function measurementsFields(){
+    var section=panel('Registrar medições (cm)','Preencha as medidas abaixo. Após publicar, todos os visitantes do site principal poderão visualizar os mesmos valores, sem opção de alteração.');
+    note(section,'Atenção à privacidade: esses valores serão publicados em um repositório público, acessíveis a qualquer pessoa. Não use medições identificáveis de alunos sem autorização e proteção de dados adequadas.');
+    var measurement=documentData.site.measurements;
+    if(!measurement||!measurement.values)return;
+    var group=grid(section);
+    var wrapper=document.createElement('div');wrapper.className='field wide';
+    var dateLabel=document.createElement('label');dateLabel.className='field-label';dateLabel.setAttribute('for','adminMeasureDate');dateLabel.textContent='Data da medição (opcional)';
+    var date=document.createElement('input');date.type='date';date.className='field-input';date.id='adminMeasureDate';date.value=measurement.date||'';
+    date.addEventListener('change',function(){measurement.date=date.value;changed();});
+    wrapper.append(dateLabel,date);group.appendChild(wrapper);
+    var notice=document.createElement('p');notice.className='measurements-intro';notice.textContent='Campos sem valor serão exibidos como “Não informado” no site principal.';group.appendChild(notice);
+    MEASUREMENT_FIELDS.forEach(function(info){
+      var fieldWrap=document.createElement('div');fieldWrap.className='field';
+      var ident='measure-'+info[0];
+      var label=document.createElement('label');label.className='field-label';label.setAttribute('for',ident);label.textContent=info[1]+' (cm)';
+      var unit=document.createElement('div');unit.className='measure-input-wrap';
+      var input=document.createElement('input');
+      input.type='text';input.inputMode='decimal';input.autocomplete='off';
+      input.id=ident;input.className='field-input';input.maxLength=6;input.placeholder='Ex.: 35,5';
+      input.value=typeof measurement.values[info[0]]==='string'?measurement.values[info[0]]:'';
+      var cm=document.createElement('span');cm.textContent='cm';cm.setAttribute('aria-hidden','true');
+      input.addEventListener('input',function(){
+        measurement.values[info[0]]=input.value.trim();
+        var value=measurement.values[info[0]];
+        input.setCustomValidity(value===''||(/^\\d{1,3}(?:[,.]\\d{1,2})?$/.test(value)&&Number(value.replace(',','.'))>0&&Number(value.replace(',','.'))<=300)?'':'Informe uma medida válida até 300 cm.');
+        changed();
+      });
+      unit.append(input,cm);fieldWrap.append(label,unit);group.appendChild(fieldWrap);
+    });
+    var foot=document.createElement('p');foot.className='measurements-info';
+    foot.textContent='As medições são compartilhadas com TODOS os usuários do treino-v2. A tela pública é somente leitura, sem campos de edição.';
+    section.appendChild(foot);
+  }
   function render(){
     if(!documentData)return;
     var mount=el('editorFields');mount.replaceChildren();
@@ -183,7 +228,7 @@
       var on=btn.dataset.tab===activeTab;
       btn.classList.toggle('active',on);btn.setAttribute('aria-selected',String(on));
     });
-    if(activeTab==='site')siteFields();else plansFields();
+    if(activeTab==='site')siteFields();else if(activeTab==='plans')plansFields();else measurementsFields();
   }
   el('authForm').addEventListener('submit',function(event){
     event.preventDefault();if(busy)return;
@@ -214,7 +259,9 @@
       var prev=before.plans[day],now=documentData.plans[day];
       return ['mobility','exercises'].some(function(group){return now[group].some(function(item,index){return item.dose!==prev[group][index].dose;});})||now.cardio.dose!==prev.cardio.dose;
     });
-    var warning=dosesChanged?'\n\nAtenção: você modificou doses/séries e isso pode alterar o acompanhamento de registros existentes.':'';
+    var warning=dosesChanged?'\\n\\nAtenção: você modificou doses/séries e isso pode alterar o acompanhamento de registros existentes.':'';
+    var measuresChanged=JSON.stringify(before.site.measurements)!==JSON.stringify(documentData.site.measurements);
+    if(measuresChanged)warning+='\\n\\nAs medições são PÚBLICAS e aparecerão para todos os visitantes. Evite publicar dados privados ou identificáveis.';
     if(!confirm('Publicar essas alterações para todos os usuários do treino-v2?'+warning))return;
     setBusy(true);tell('Publicando alterações em treino-v2…');
     try{

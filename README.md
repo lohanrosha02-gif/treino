@@ -8,7 +8,7 @@ Este repositório (`treino`) hospeda o **painel administrativo** estático do pr
 2. No GitHub, crie um **fine-grained personal access token** em Settings → Developer settings → Personal access tokens → Fine-grained tokens.
 3. Restrinja o token a **Only select repositories → treino-v2** e dê somente a permissão **Repository permissions → Contents: Read and write**. Use validade curta.
 4. Cole o token **somente no campo do painel** e clique em Conectar.
-5. Altere avisos, títulos, dias de treino, doses, orientações, passos e cardio. Clique em **Publicar para todos**.
+5. Nas abas **Textos e avisos**, **Treinos A–D** e **Medições (cm)**, edite o conteúdo e clique em **Publicar para todos**. As 12 medições são: ombro, peito, bíceps e antebraço esquerdo/direito, abdômen, quadril, coxa e panturrilha esquerda/direita; pode informar uma data opcional.
 6. O painel envia o JSON atualizado para `lohanrosha02-gif/treino-v2` → `data/site-content.json` em `main` via API oficial do GitHub. O site dos usuários busca esse JSON a cada carregamento de página.
 
 ### Segurança e privacidade
@@ -19,6 +19,8 @@ Este repositório (`treino`) hospeda o **painel administrativo** estático do pr
 - O GitHub Pages é estático: não há banco de dados nem sincronização de dados individuais. Medidas, cargas, semanas e progresso permanecem em `localStorage` do navegador de cada aluno no site `treino-v2`.
 - Não crie avisos com dados pessoais. Qualquer alteração no JSON público fica visível a todos.
 - O painel não altera IDs, vídeos, tipos de exercício nem adiciona/remove exercícios. Isso exige atualização do código do site principal.
+- **Medições públicas:** os valores preenchidos em `site.measurements` são globais, iguais para todos os visitantes do site, e ficam disponíveis para consulta em `treino-v2`. Não os utilize para armazenar dados corporais identificáveis de alunos sem consentimento e infraestrutura segura. Campos vazios aparecem como “Não informado”.
+- O site dos usuários oculta os antigos formulários individuais de avaliação, mas mantém os dados preexistentes em armazenamento local e backups.
 - Se o GitHub Pages não estiver habilitado, configure **Settings → Pages → Deploy from a branch → main → / (root)** em cada repositório.
 
 Os arquivos do site antigo continuam no histórico e no repositório por compatibilidade, mas a página `index.html` agora abre o painel administrativo.

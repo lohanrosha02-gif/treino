@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#f2f5ef">
   <meta name="description" content="Painel de administração do Meu Treino: publique avisos e atualize textos de treino para todos os visitantes.">
   <title>Meu Treino · Painel administrativo</title>
-  <link rel="stylesheet" href="./admin.css?v=1.0.0-20261102">
-  <script src="./admin.js?v=1.0.0-20261102" defer></script>
+  <link rel="stylesheet" href="./admin.css?v=1.1.0-measurements-20261102">
+  <script src="./admin.js?v=1.1.0-measurements-20261102" defer></script>
 </head>
 <body>
 <a href="#main" class="skip-link">Pular para o conteúdo</a>
@@ -25,8 +25,8 @@
   <section class="hero" aria-labelledby="heroHeading">
     <div class="eyebrow"><span class="signal" aria-hidden="true"></span> GERENCIAMENTO DO CONTEÚDO</div>
     <h1 id="heroHeading">Uma atualização.<br><em>Para todos os alunos.</em></h1>
-    <p>Edite os textos do site e as orientações dos treinos A–D aqui. Quando publicar, o conteúdo é atualizado no repositório <code>treino-v2</code> e fica disponível aos visitantes após a publicação do GitHub Pages.</p>
-    <div class="hero-points"><span>✓ Site dos alunos preservado</span><span>✓ Sem dados pessoais no painel</span><span>✓ Alterações versionadas no GitHub</span></div>
+    <p>Registre as 12 medições corporais (cm), edite avisos e mantenha as orientações dos treinos A–D aqui. Quando publicar, o conteúdo é atualizado no repositório <code>treino-v2</code> e fica disponível aos visitantes após a publicação do GitHub Pages.</p>
+    <div class="hero-points"><span>✓ Site dos alunos preservado</span><span>✓ Medições públicas, sem identificação pessoal</span><span>✓ Alterações versionadas no GitHub</span></div>
   </section>
 
   <section class="panel auth-panel" aria-labelledby="authHeading">
@@ -57,9 +57,10 @@
     <nav class="editor-tabs" role="tablist" aria-label="Seções de edição">
       <button type="button" class="editor-tab active" role="tab" data-tab="site" aria-selected="true">Textos e avisos</button>
       <button type="button" class="editor-tab" role="tab" data-tab="plans" aria-selected="false">Treinos A–D</button>
+      <button type="button" class="editor-tab" role="tab" data-tab="measurements" aria-selected="false">Medições (cm)</button>
     </nav>
     <div id="editorFields" class="editor-fields"></div>
-    <p class="editor-footnote">Alterações em texto e prescrição são compartilhadas, mas as avaliações, cargas e séries de cada aluno continuam salvas apenas no navegador dele. Não cole dados pessoais no conteúdo público. O painel não adiciona ou remove exercícios nem substitui vídeos.</p>
+    <p class="editor-footnote">Alterações em texto e prescrição são compartilhadas, mas as avaliações, cargas e séries de cada aluno continuam salvas apenas no navegador dele. Não cole dados pessoais no conteúdo público. O painel não adiciona ou remove exercícios nem substitui vídeos. As medições publicadas ficam acessíveis a qualquer visitante: não registre medidas pessoais identificáveis sem consentimento e infraestrutura apropriada.</p>
   </section>
   <footer>Meu Treino Admin · <a href="https://github.com/lohanrosha02-gif/treino-v2" target="_blank" rel="noopener noreferrer">Repositório público do site</a></footer>
 </main>
