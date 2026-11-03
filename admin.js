@@ -51,10 +51,10 @@
     if(!input||input.schemaVersion!==1||!input.site||!input.plans)throw Error('Conteúdo inesperado; publicação cancelada.');
     var measures=input.site.measurements;
     if(!measures||typeof measures!=='object'||typeof measures.values!=='object'||!measures.values)throw Error('Registro de medições ausente.');
-    if(typeof measures.date!=='string'||(measures.date!==''&&!/^\\d{4}-\\d{2}-\\d{2}$/.test(measures.date)))throw Error('Data das medições inválida.');
+    if(typeof measures.date!=='string'||(measures.date!==''&&!/^\d{4}-\d{2}-\d{2}$/.test(measures.date)))throw Error('Data das medições inválida.');
     MEASUREMENT_FIELDS.forEach(function(item){
       var value=measures.values[item[0]];
-      if(typeof value!=='string'||(value!==''&&(!/^\\d{1,3}(?:[.,]\\d{1,2})?$/.test(value)||Number(value.replace(',','.'))<=0||Number(value.replace(',','.'))>300))){
+      if(typeof value!=='string'||(value!==''&&(!/^\d{1,3}(?:[.,]\d{1,2})?$/.test(value)||Number(value.replace(',','.'))<=0||Number(value.replace(',','.'))>300))){
         throw Error('Medida inválida para '+item[1]+'. Use um número de 0,01 a 300 cm, ou deixe vazio.');
       }
     });
@@ -212,7 +212,7 @@
       input.addEventListener('input',function(){
         measurement.values[info[0]]=input.value.trim();
         var value=measurement.values[info[0]];
-        input.setCustomValidity(value===''||(/^\\d{1,3}(?:[,.]\\d{1,2})?$/.test(value)&&Number(value.replace(',','.'))>0&&Number(value.replace(',','.'))<=300)?'':'Informe uma medida válida até 300 cm.');
+        input.setCustomValidity(value===''||(/^\d{1,3}(?:[,.]\d{1,2})?$/.test(value)&&Number(value.replace(',','.'))>0&&Number(value.replace(',','.'))<=300)?'':'Informe uma medida válida até 300 cm.');
         changed();
       });
       unit.append(input,cm);fieldWrap.append(label,unit);group.appendChild(fieldWrap);
@@ -259,9 +259,9 @@
       var prev=before.plans[day],now=documentData.plans[day];
       return ['mobility','exercises'].some(function(group){return now[group].some(function(item,index){return item.dose!==prev[group][index].dose;});})||now.cardio.dose!==prev.cardio.dose;
     });
-    var warning=dosesChanged?'\\n\\nAtenção: você modificou doses/séries e isso pode alterar o acompanhamento de registros existentes.':'';
+    var warning=dosesChanged?'\n\nAtenção: você modificou doses/séries e isso pode alterar o acompanhamento de registros existentes.':'';
     var measuresChanged=JSON.stringify(before.site.measurements)!==JSON.stringify(documentData.site.measurements);
-    if(measuresChanged)warning+='\\n\\nAs medições são PÚBLICAS e aparecerão para todos os visitantes. Evite publicar dados privados ou identificáveis.';
+    if(measuresChanged)warning+='\n\nAs medições são PÚBLICAS e aparecerão para todos os visitantes. Evite publicar dados privados ou identificáveis.';
     if(!confirm('Publicar essas alterações para todos os usuários do treino-v2?'+warning))return;
     setBusy(true);tell('Publicando alterações em treino-v2…');
     try{
