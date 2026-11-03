@@ -8,7 +8,7 @@ const measurementGroups=[
   {title:'Pernas',fields:[['thighLeft','Coxa esquerda','cm'],['thighRight','Coxa direita','cm'],['calfLeft','Panturrilha esquerda','cm'],['calfRight','Panturrilha direita','cm']]}
 ];
 const defs=measurementGroups.flatMap(group=>group.fields);
-let db,clients=[],selected=null,measure={},plan={days:[]},template={days:[]},tab='measurements',onlyPending=false,selectionRevision=0,previewDayId='',previewExerciseId='',previewMediaKey='';
+let db,clients=[],selected=null,measure={},plan={days:[]},template={days:[]},tab='measurements',onlyPending=false,selectionRevision=0,previewDayId='',previewExerciseId='',previewMediaKey='',catalogTargetDayId='';
 function say(text,error=false){$('status').textContent=text;$('status').className='feedback'+(error?' error':' success');}
 function check(result){if(result.error)throw result.error;return result.data;}
 function setupOk(){const c=window.MEU_TREINO_SUPABASE||{};return /^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(c.url||'')&&typeof c.publishableKey==='string'&&c.publishableKey.length>15;}
@@ -135,32 +135,15 @@ function exerciseCatalogue(){
   }
   return all;
 }
-function mediaSelector(parent,ex){
-  const catalog=exerciseCatalogue(),clips=window.MeuTreinoVideos?.clips||{};
-  const presetBox=document.createElement('div');presetBox.className='field-block full';
-  const presetLabel=document.createElement('label');presetLabel.textContent='Adicionar / copiar exercício do acervo';
-  const presetSelect=document.createElement('select');presetSelect.className='field-input';
-  presetSelect.append(new Option('Escolha um dos exercícios originais (opcional)',''));
-  for(const [id,item] of catalog)presetSelect.append(new Option(item.name+' · '+id,id));
-  presetSelect.addEventListener('change',()=>{
-    const item=catalog.get(presetSelect.value);
-    if(!item)return;
-    if(ex.name!=='Novo exercício'&&!confirm('Substituir os dados deste exercício pelos do acervo?')){presetSelect.value='';return;}
-    const stableId=ex.id;
-    Object.assign(ex,copy(item),{id:stableId,category:exerciseCategory(item)});
-    paintPlans();
-  });
-  presetBox.append(presetLabel,presetSelect);parent.appendChild(presetBox);
+function mediaSelector(parent,ex,onMediaChange=()=>{}){
+  const clips=window.MeuTreinoVideos?.clips||{};
   const box=document.createElement('div');box.className='field-block full';
   const label=document.createElement('label');label.textContent='Vídeo ou imagem demonstrativa';
   const select=document.createElement('select');select.className='field-input';
   select.appendChild(new Option('Sem vídeo',''));
   const ids=Object.keys(clips).filter(k=>clips[k]?.url&&k!=='version');
   if(ex.videoId&&!ids.includes(ex.videoId))select.appendChild(new Option(ex.videoId+' (não encontrado)',ex.videoId));
-  for(const id of ids){
-    const item=catalog.get(id),clip=clips[id];
-    select.appendChild(new Option((item?.name||clip.name||id)+' · '+id,id));
-  }
+  for(const id of ids){const clip=clips[id];select.appendChild(new Option((clip.name||id)+' · '+id,id));}
   select.value=String(ex.videoId||'');
   const preview=document.createElement('div');preview.className='media-preview';
   function render(){
@@ -174,7 +157,7 @@ function mediaSelector(parent,ex){
       video.poster='https://lohanrosha02-gif.github.io/treino-v2/'+clip.poster.replace(/^\.\//,'');
     preview.appendChild(video);
   }
-  select.addEventListener('change',()=>{ex.videoId=select.value;render();paintPlanPreview();});
+  select.addEventListener('change',()=>{ex.videoId=select.value;render();onMediaChange();paintPlanPreview();});
   box.append(label,select,preview);parent.appendChild(box);render();
 }
 function mediaAssetUrl(path){
@@ -254,18 +237,44 @@ function paintPlanPreview(){
   });
   const guidance=$('previewGuidance');guidance.textContent=day.description||'';guidance.hidden=!day.description;
 }
-function categorySelector(parent,ex){
+function paintExercisePicker(){
+  const root=$('exercisePickerGrid'),query=$('exercisePickerSearch').value.trim().toLocaleLowerCase('pt-BR');
+  const clips=window.MeuTreinoVideos?.clips||{},catalog=[...exerciseCatalogue().values()];root.replaceChildren();
+  const matching=catalog.filter(item=>[item.name,item.muscle,item.category].filter(Boolean).join(' ').toLocaleLowerCase('pt-BR').includes(query));
+  if(!matching.length){const empty=document.createElement('p');empty.className='exercise-picker-empty';empty.textContent=catalog.length?'Nenhum exercício encontrado. Tente outro nome.':'O acervo de exercícios não está disponível.';root.appendChild(empty);return;}
+  matching.forEach(item=>{
+    const clip=clips[item.videoId]||{},poster=mediaAssetUrl(clip.poster);
+    const option=document.createElement('button');option.type='button';option.className='exercise-library-card';
+    const imageWrap=document.createElement('span');imageWrap.className='exercise-library-image';
+    if(poster){const image=document.createElement('img');image.src=poster;image.alt='';image.loading='lazy';imageWrap.appendChild(image);}else imageWrap.textContent='✳';
+    const name=document.createElement('strong');name.textContent=item.name||clip.name||'Exercício';
+    const meta=document.createElement('small');meta.textContent=[item.muscle,exerciseCategory(item)==='mobility'?'Mobilidade':exerciseCategory(item)==='cardio'?'Cardio':'Musculação'].filter(Boolean).join(' · ');
+    const add=document.createElement('span');add.className='exercise-library-add';add.textContent='Adicionar +';
+    option.append(imageWrap,name,meta,add);
+    option.addEventListener('click',()=>{
+      const day=plan.days.find(entry=>entry.id===catalogTargetDayId);
+      if(!day)return;
+      if(day.exercises.length>=40){say('Limite de 40 exercícios por treino.',true);return;}
+      const added={...copy(item),id:newId(),category:exerciseCategory(item)};
+      day.exercises.push(added);previewDayId=day.id;previewExerciseId=added.id;previewMediaKey='';
+      paintPlans();$('exercisePickerDialog').close();
+    });
+    root.appendChild(option);
+  });
+}
+function categorySelector(parent,ex,onChange=()=>{}){
   const wrap=document.createElement('div');wrap.className='field-block';
   const label=document.createElement('label');label.textContent='Tipo de atividade';
   const select=document.createElement('select');select.className='field-input';
   [['exercise','Musculação'],['mobility','Mobilidade / aquecimento'],['cardio','Cardio']].forEach(([v,title])=>select.add(new Option(title,v)));
   select.value=exerciseCategory(ex);ex.category=select.value;
-  select.addEventListener('change',()=>{ex.category=select.value;paintPlanPreview();});
+  select.addEventListener('change',()=>{ex.category=select.value;onChange();paintPlanPreview();});
   wrap.append(label,select);parent.appendChild(wrap);
 }
 function paintPlans(){
   const root=$('daysList');root.replaceChildren();
   plan.days.forEach((day,di)=>{
+    if(!Array.isArray(day.exercises))day.exercises=[];
     const card=document.createElement('section');card.className='day-card';
     const head=document.createElement('div');head.className='day-head';
     const heading=document.createElement('strong');heading.textContent='Treino '+(di+1);
@@ -280,27 +289,60 @@ function paintPlans(){
     field(info,'Orientações gerais',day.description,v=>day.description=v,{full:true,multi:true,max:2000});
     card.appendChild(info);
     const exercises=document.createElement('div');exercises.className='exercise-list';
+    if(day.exercises?.length){const hint=document.createElement('p');hint.className='exercise-list-hint';hint.textContent='↑ ↓ muda a ordem · ⧉ duplica · × remove';exercises.appendChild(hint);}
     (day.exercises||[]).forEach((ex,ei)=>{
+      const item=document.createElement('div');item.className='exercise-editor-item';
       const details=document.createElement('details');details.className='exercise';
-      const summary=document.createElement('summary');summary.textContent=(ei+1)+'. '+ex.name;details.appendChild(summary);
+      const summary=document.createElement('summary');summary.className='exercise-summary';
+      const thumb=document.createElement('span');thumb.className='exercise-summary-thumb';
+      const summaryCopy=document.createElement('span');summaryCopy.className='exercise-summary-copy';
+      const summaryName=document.createElement('strong'),summaryMeta=document.createElement('small');
+      summaryCopy.append(summaryName,summaryMeta);
+      const badge=document.createElement('span');badge.className='exercise-media-badge';
+      summary.append(thumb,summaryCopy,badge);
+      function paintSummary(){
+        const clip=(window.MeuTreinoVideos?.clips||{})[ex.videoId||ex.id]||{},poster=mediaAssetUrl(clip.poster);
+        thumb.replaceChildren();
+        if(poster){const image=document.createElement('img');image.src=poster;image.alt='';image.loading='lazy';thumb.appendChild(image);}
+        else{thumb.textContent=ex.category==='mobility'?'↗':ex.category==='cardio'?'◌':'✳';}
+        summaryName.textContent=(ei+1)+'. '+(ex.name||'Novo exercício');
+        const category=ex.category==='mobility'?'Mobilidade':ex.category==='cardio'?'Cardio':'Musculação';
+        summaryMeta.textContent=[category,ex.dose||'Séries não definidas',ex.rest&&'Pausa '+ex.rest].filter(Boolean).join(' · ');
+        const hasVideo=!!videoAssetUrl(clip.url);badge.textContent=hasVideo?'▶ Vídeo':poster?'Imagem':'Sem mídia';
+        badge.classList.toggle('has-media',hasVideo||!!poster);
+      }
+      details.appendChild(summary);
       const body=document.createElement('div');body.className='exercise-fields';
-      field(body,'Exercício',ex.name,v=>{ex.name=v;summary.textContent=(ei+1)+'. '+v;},{full:true,max:130});
-      field(body,'Séries / repetições',ex.dose,v=>ex.dose=v,{max:100});
-      field(body,'Descanso',ex.rest,v=>ex.rest=v,{max:70});
-      categorySelector(body,ex);
+      field(body,'Exercício',ex.name,v=>{ex.name=v;paintSummary();},{full:true,max:130});
+      field(body,'Séries / repetições',ex.dose,v=>{ex.dose=v;paintSummary();},{max:100});
+      field(body,'Descanso',ex.rest,v=>{ex.rest=v;paintSummary();},{max:70});
+      categorySelector(body,ex,paintSummary);
       field(body,'Grupo muscular (opcional)',ex.muscle||'',v=>ex.muscle=v,{max:170});
       field(body,'Alternativa (opcional)',ex.hotel||'',v=>ex.hotel=v,{full:true,max:350});
       field(body,'Instruções',ex.description,v=>ex.description=v,{full:true,multi:true,max:2000});
       field(body,'Aviso / cuidado (opcional)',ex.cue||'',v=>ex.cue=v,{full:true,multi:true,max:450});
-      mediaSelector(body,ex);
-      body.appendChild(button('Remover exercício','danger mini',()=>{if(confirm('Excluir '+ex.name+'?')){day.exercises.splice(ei,1);paintPlans();}}));
-      details.appendChild(body);exercises.appendChild(details);
+      mediaSelector(body,ex,paintSummary);
+      details.appendChild(body);paintSummary();
+      const actions=document.createElement('div');actions.className='exercise-card-actions';
+      function action(icon,label,cls,onClick,disabled=false){const b=button(icon,cls+' exercise-icon-button',onClick);b.title=label;b.setAttribute('aria-label',label);b.disabled=disabled;return b;}
+      actions.append(
+        action('↑','Mover para cima','secondary mini',()=>{const moved=day.exercises.splice(ei,1)[0];day.exercises.splice(ei-1,0,moved);paintPlans();},ei===0),
+        action('↓','Mover para baixo','secondary mini',()=>{const moved=day.exercises.splice(ei,1)[0];day.exercises.splice(ei+1,0,moved);paintPlans();},ei===day.exercises.length-1),
+        action('⧉','Duplicar exercício','secondary mini',()=>{if(day.exercises.length>=40){say('Limite de 40 exercícios por treino.',true);return;}const duplicate={...copy(ex),id:newId(),name:((ex.name||'Exercício')+' (cópia)').slice(0,130)};day.exercises.splice(ei+1,0,duplicate);previewDayId=day.id;previewExerciseId=duplicate.id;paintPlans();}),
+        action('×','Excluir exercício','danger mini',()=>{if(confirm('Excluir '+ex.name+'?')){day.exercises.splice(ei,1);paintPlans();}})
+      );
+      item.append(details,actions);exercises.appendChild(item);
     });
     card.appendChild(exercises);
-    card.appendChild(button('+ Adicionar exercício','secondary mini',()=>{
+    const addActions=document.createElement('div');addActions.className='day-exercise-add-actions';
+    addActions.appendChild(button('+ Exercício personalizado','secondary mini',()=>{
       if(day.exercises.length>=40){say('Limite de 40 exercícios por treino.',true);return;}
       day.exercises.push(addExercise());paintPlans();
     }));
+    addActions.appendChild(button('Escolher do acervo com imagens','secondary mini',()=>{
+      catalogTargetDayId=day.id;$('exercisePickerSearch').value='';paintExercisePicker();$('exercisePickerDialog').showModal();$('exercisePickerSearch').focus();
+    }));
+    card.appendChild(addActions);
     root.appendChild(card);
   });
   if(!plan.days.length){const p=document.createElement('p');p.className='muted';p.textContent='Nenhum treino cadastrado. Clique em Novo treino ou Usar plano-base.';root.appendChild(p);}
@@ -403,6 +445,8 @@ $('useTemplate').addEventListener('click',()=>{
   if(!template.days?.length){say('Plano-base não disponível.',true);return;}
   if(confirm('Substituir o rascunho atual pelo plano-base?')){plan=copy(template);paintPlans();}
 });
+$('closeExercisePicker').addEventListener('click',()=>$('exercisePickerDialog').close());
+$('exercisePickerSearch').addEventListener('input',paintExercisePicker);
 $('previewDaySelect').addEventListener('change',()=>{previewDayId=$('previewDaySelect').value;previewExerciseId='';previewMediaKey='';paintPlanPreview();});
 $('savePlan').addEventListener('click',async()=>{
   if(!selected)return;
