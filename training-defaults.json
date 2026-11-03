@@ -414,6 +414,16 @@
       "muscle": "Lombar · glúteos · posteriores de coxa",
       "videoId": "teacher-superman",
       "category": "exercise"
+    },
+    {
+      "id": "teacher-barbell-bench-press",
+      "name": "Supino reto (barra)",
+      "dose": "",
+      "rest": "",
+      "description": "",
+      "muscle": "Peito · tríceps · ombros",
+      "videoId": "teacher-barbell-bench-press",
+      "category": "exercise"
     }
   ]
 }
