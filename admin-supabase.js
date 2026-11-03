@@ -133,6 +133,9 @@ function exerciseCategory(ex){
 }
 function exerciseCatalogue(){
   const all=new Map();
+  for(const ex of template?.exerciseLibrary||[]){
+    if(ex.videoId&&!all.has(ex.videoId))all.set(ex.videoId,ex);
+  }
   for(const day of template?.days||[])for(const ex of day.exercises||[]){
     if(ex.videoId&&!all.has(ex.videoId))all.set(ex.videoId,ex);
   }

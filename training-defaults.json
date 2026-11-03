@@ -353,5 +353,67 @@
         }
       ]
     }
+  ],
+  "exerciseLibrary": [
+    {
+      "id": "teacher-bodyweight-squat",
+      "name": "Agachamento (peso corporal)",
+      "dose": "",
+      "rest": "",
+      "description": "",
+      "muscle": "Quadríceps · glúteos",
+      "videoId": "teacher-bodyweight-squat",
+      "category": "exercise"
+    },
+    {
+      "id": "teacher-dumbbell-biceps-curl",
+      "name": "Rosca direta (halter)",
+      "dose": "",
+      "rest": "",
+      "description": "",
+      "muscle": "Bíceps",
+      "videoId": "teacher-dumbbell-biceps-curl",
+      "category": "exercise"
+    },
+    {
+      "id": "teacher-seated-cable-row",
+      "name": "Remada sentada com barra (cabo)",
+      "dose": "",
+      "rest": "",
+      "description": "",
+      "muscle": "Costas · bíceps · antebraços",
+      "videoId": "teacher-seated-cable-row",
+      "category": "exercise"
+    },
+    {
+      "id": "teacher-iso-lateral-chest-press",
+      "name": "Supino iso-lateral (máquina)",
+      "dose": "",
+      "rest": "",
+      "description": "",
+      "muscle": "Peito · ombros · tríceps",
+      "videoId": "teacher-iso-lateral-chest-press",
+      "category": "exercise"
+    },
+    {
+      "id": "teacher-seated-leg-curl",
+      "name": "Cadeira flexora (máquina)",
+      "dose": "",
+      "rest": "",
+      "description": "",
+      "muscle": "Posteriores de coxa · panturrilhas",
+      "videoId": "teacher-seated-leg-curl",
+      "category": "exercise"
+    },
+    {
+      "id": "teacher-superman",
+      "name": "Super-homem",
+      "dose": "",
+      "rest": "",
+      "description": "",
+      "muscle": "Lombar · glúteos · posteriores de coxa",
+      "videoId": "teacher-superman",
+      "category": "exercise"
+    }
   ]
 }
