@@ -1,0 +1,357 @@
+{
+  "version": 1,
+  "days": [
+    {
+      "id": "A",
+      "title": "Peito + costas + braços",
+      "weekday": "Segunda-feira",
+      "description": "Força e hipertrofia com exercícios de empurrar e puxar.",
+      "exercises": [
+        {
+          "id": "mA1",
+          "name": "Aquecimento dos ombros com elástico",
+          "dose": "1 × 8 movimentos suaves",
+          "rest": "",
+          "description": "Segure o elástico com as mãos mais afastadas que os ombros.\nEleve lentamente os braços à frente e acima da cabeça, sem dor.\nSe houver mobilidade confortável, leve a faixa para trás da cabeça; depois retorne. Nunca force a amplitude.",
+          "videoId": "mA1"
+        },
+        {
+          "id": "mA2",
+          "name": "Rotação torácica sentado",
+          "dose": "1 × 8 por lado",
+          "rest": "",
+          "description": "Sente-se com os pés apoiados e cruze os braços no peito.\nGire suavemente a parte superior do tronco, mantendo a pelve estável.\nRetorne ao centro e alterne os lados sem forçar a lombar.",
+          "videoId": "mA2"
+        },
+        {
+          "id": "mA3",
+          "name": "Deslizamento dos braços na parede",
+          "dose": "1 × 8–10",
+          "rest": "",
+          "description": "Fique de frente para uma parede com antebraços apoiados.\nDeslize-os para cima até onde os ombros permitirem confortavelmente.\nDesça devagar, evitando arquear a lombar.",
+          "videoId": "mA3"
+        },
+        {
+          "id": "a1",
+          "name": "Chest press reto na máquina (deitado)",
+          "dose": "3 × 8–12",
+          "rest": "90–120 s",
+          "description": "Deite-se no banco da máquina com pés firmes no apoio ou no chão e segure as alças à altura do peito.\nEmpurre as alças para cima e à frente, sem travar os cotovelos.\nRetorne devagar à posição inicial sem tirar as costas do apoio.\nUse a máquina de supino reto deitado mostrada no vídeo. Se a academia tiver apenas chest press sentado, ajuste a prescrição e a demonstração; não use o vídeo como modelo de máquina diferente.",
+          "videoId": "a1"
+        },
+        {
+          "id": "a2",
+          "name": "Remada com apoio peitoral",
+          "dose": "3 × 8–12",
+          "rest": "90–120 s",
+          "description": "Ajuste o apoio de peito e mantenha a coluna estável.\nPuxe os cotovelos para trás sem levantar o tronco.\nRetorne até estender os braços de modo confortável.\nAlterne com o chest press somente se a técnica não piorar.",
+          "videoId": "a2"
+        },
+        {
+          "id": "a3",
+          "name": "Supino inclinado na máquina",
+          "dose": "2 × 10–12",
+          "rest": "75–90 s",
+          "description": "Ajuste o banco e mantenha as costas apoiadas.\nEmpurre as alças para cima e à frente em trajetória confortável.\nVolte devagar, sem forçar os ombros.",
+          "videoId": "a3"
+        },
+        {
+          "id": "a4",
+          "name": "Puxada frontal na polia",
+          "dose": "3 × 10–12",
+          "rest": "75–90 s",
+          "description": "Segure a barra com pegada confortável e peito aberto.\nPuxe a barra em direção à parte superior do peito.\nRetorne devagar, sem jogar o tronco para trás.\nNão puxar atrás da nuca.",
+          "videoId": "a4"
+        },
+        {
+          "id": "a5",
+          "name": "Elevação lateral sentada",
+          "dose": "2 × 12–15",
+          "rest": "60 s",
+          "description": "Sente-se com tronco apoiado e braços ao lado do corpo.\nEleve os braços para os lados até uma amplitude confortável.\nDesça devagar, sem balançar.",
+          "videoId": "a5"
+        },
+        {
+          "id": "a6",
+          "name": "Tríceps na polia com corda",
+          "dose": "2 × 10–15",
+          "rest": "60 s",
+          "description": "Mantenha os cotovelos próximos ao tronco.\nEstenda os cotovelos para empurrar a corda para baixo.\nRetorne controladamente sem abrir os cotovelos.",
+          "videoId": "a6"
+        },
+        {
+          "id": "a7",
+          "name": "Rosca bíceps sentada",
+          "dose": "2 × 10–15",
+          "rest": "60 s",
+          "description": "Sente-se com a coluna apoiada e braços ao lado do corpo.\nFlexione os cotovelos sem impulsionar com o tronco.\nDesça lentamente, mantendo os punhos neutros.",
+          "videoId": "a7"
+        },
+        {
+          "id": "cardioA",
+          "name": "Bicicleta ergométrica",
+          "dose": "5–8 min · leve",
+          "rest": "",
+          "description": "Ajuste o selim e pedale com resistência leve, somente se os joelhos tolerarem. Pare se houver dor crescente.",
+          "videoId": "cardioA"
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "title": "Inferiores + cardio",
+      "weekday": "Terça-feira",
+      "description": "Quadríceps, posteriores, glúteos e panturrilhas com controle da dor.",
+      "exercises": [
+        {
+          "id": "mB1",
+          "name": "Flexão e extensão dos tornozelos sentado",
+          "dose": "1 × 12–15 por lado",
+          "rest": "",
+          "description": "Sente-se com as pernas em posição confortável.\nAponte os dedos dos pés para a frente e depois leve-os para cima.\nRepita sem forçar os joelhos.",
+          "videoId": "mB1"
+        },
+        {
+          "id": "mB4",
+          "name": "Alongamento de panturrilha sentado",
+          "dose": "1 × 20–30 s por lado",
+          "rest": "",
+          "description": "Sente-se e estenda uma perna até onde for confortável, apoiando o calcanhar.\nTraga a ponta do pé suavemente na direção do corpo até sentir alongar a panturrilha.\nMantenha sem movimentos bruscos e troque de lado, sem dor no joelho.",
+          "videoId": "mB4"
+        },
+        {
+          "id": "mB5",
+          "name": "Alongamento de posterior de coxa",
+          "dose": "1 × 20–30 s por lado",
+          "rest": "",
+          "description": "Em pé, apoie as mãos numa superfície firme para equilíbrio.\nDeixe uma perna à frente com o calcanhar apoiado e incline levemente o quadril para trás.\nMantenha as costas alinhadas e a amplitude confortável; troque de lado.",
+          "videoId": "mB5"
+        },
+        {
+          "id": "b1",
+          "name": "Abdução de quadril na máquina",
+          "dose": "2 × 12–15",
+          "rest": "60–90 s",
+          "description": "Ajuste o banco e apoie as costas sem forçar os joelhos.\nAfaste as pernas lentamente em amplitude indolor.\nRetorne devagar, sem deixar o peso bater.\nNão utilizar a máquina se a posição sentada ou o apoio nos joelhos causar dor.",
+          "videoId": "b1"
+        },
+        {
+          "id": "b7",
+          "name": "Quadríceps isométrico no leg press",
+          "dose": "3 × 8 · sustentar 3–5 s",
+          "rest": "75–90 s",
+          "description": "Ajuste o banco e posicione os pés no centro da plataforma, em largura confortável.\nEm uma posição com flexão leve e confortável dos joelhos, faça pressão suave na plataforma sem deslocá-la.\nSustente por 3–5 segundos, relaxe e repita; nunca trave ou force a extensão do joelho.\nIsometria, não leg press dinâmico. Iniciar com resistência mínima somente após avaliação da tolerância à carga.",
+          "videoId": "b7"
+        },
+        {
+          "id": "b8",
+          "name": "Mesa flexora",
+          "dose": "2 × 12",
+          "rest": "75–90 s",
+          "description": "Deite-se de barriga para baixo na mesa flexora e alinhe os joelhos com o eixo da máquina.\nFlexione os joelhos lentamente, aproximando o apoio dos tornozelos dos glúteos na amplitude confortável.\nRetorne sem soltar o peso ou forçar a extensão final do joelho.\nCarga mínima e amplitude adaptada se não houver dor ou bloqueio. Não realizar até avaliação se houver limitação importante da flexão.",
+          "videoId": "b8"
+        },
+        {
+          "id": "b9",
+          "name": "Glúteos isométricos unilaterais",
+          "dose": "3 × 10 por lado · sustentar 3–5 s",
+          "rest": "45–60 s",
+          "description": "Sente-se com os dois pés apoiados e a coluna confortável.\nContraia um glúteo de cada vez, sem deslocar o tronco nem forçar os joelhos.\nSegure 3–5 segundos, solte e repita 10 vezes antes de trocar de lado.\nSem elevar ou torcer a pelve. Respire normalmente. Volume por lado.",
+          "videoId": "b9"
+        },
+        {
+          "id": "b10",
+          "name": "Extensão de joelho com caneleira + isometria",
+          "dose": "2 × 8 (provisório) + segurar 3–5 s",
+          "rest": "60–90 s",
+          "description": "Sentado, apoie a parte posterior distal da coxa com suporte protegido por toalha; não pressione o oco atrás do joelho.\nCom caneleira muito leve ou sem carga, estenda suavemente o joelho apenas até a amplitude indolor e retorne.\nApós as repetições, mantenha uma contração isométrica suave por 3–5 segundos e relaxe.\nO halter sob a parte posterior deve servir apenas como apoio protegido e estável, nunca comprimir a dobra do joelho. Confirmar montagem presencial. 2×8 é provisório porque o volume não foi informado.",
+          "videoId": "b10"
+        },
+        {
+          "id": "b11",
+          "name": "Panturrilha sentado",
+          "dose": "3 × 10",
+          "rest": "60 s",
+          "description": "Sente-se com os joelhos numa posição confortável e a planta dos pés apoiada.\nEleve suavemente os calcanhares mantendo a ponta dos pés em contato com o chão.\nDesça devagar sem provocar dor no joelho.\nComece com carga mínima ou sem carga; ajuste se houver desconforto articular.",
+          "videoId": "b11"
+        },
+        {
+          "id": "cardioB",
+          "name": "Bicicleta ergométrica",
+          "dose": "8–12 min · leve",
+          "rest": "",
+          "description": "Selim ajustado e baixa resistência. Pedalar apenas se não aumentar a dor nos joelhos ou provocar travamento.",
+          "videoId": "cardioB"
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "title": "Costas + peito + tríceps + prancha",
+      "weekday": "Quinta-feira",
+      "description": "Segundo estímulo superior e estabilidade do tronco.",
+      "exercises": [
+        {
+          "id": "mC1",
+          "name": "Rotação torácica em quatro apoios",
+          "dose": "1 × 8 por lado",
+          "rest": "",
+          "description": "Em quatro apoios sobre um colchonete, alinhe mãos e joelhos e coloque uma mão atrás da cabeça.\nLeve o cotovelo em direção ao chão e depois abra o peito girando a região torácica, mantendo o quadril estável.\nRetorne lentamente. Não force o pescoço ou os joelhos.",
+          "videoId": "mC1"
+        },
+        {
+          "id": "mC2",
+          "name": "Rotação com braço passando por baixo",
+          "dose": "1 × 8 por lado",
+          "rest": "",
+          "description": "Em quatro apoios, mantenha uma das mãos apoiada com o quadril estável.\nPasse o outro braço por baixo do peito, girando suavemente até o ombro se aproximar do chão sem forçar.\nRetorne e abra o braço para cima; acompanhe com o olhar apenas se for confortável.",
+          "videoId": "mC2"
+        },
+        {
+          "id": "mC3",
+          "name": "Alongamento em quatro apoios com alcance",
+          "dose": "1 × 8 movimentos lentos",
+          "rest": "",
+          "description": "Em quatro apoios sobre colchonete, mantenha os joelhos confortavelmente apoiados.\nDeslize as mãos para a frente enquanto leva o quadril lentamente em direção aos calcanhares, sem dor.\nSustente brevemente e volte à posição inicial com controle, respirando sem prender o ar.",
+          "videoId": "mC3"
+        },
+        {
+          "id": "c1",
+          "name": "Supino inclinado na máquina",
+          "dose": "3 × 8–12",
+          "rest": "90–120 s",
+          "description": "Ajuste o encosto para apoiar completamente as costas.\nEmpurre as alças na direção indicada pela máquina.\nRetorne com controle sem descer além do conforto.",
+          "videoId": "c1"
+        },
+        {
+          "id": "c2",
+          "name": "Remada sentada com apoio",
+          "dose": "3 × 8–12",
+          "rest": "90–120 s",
+          "description": "Sente-se com peito apoiado ou tronco estabilizado.\nPuxe as alças sem inclinar o corpo para trás.\nEstenda os braços devagar e repita.",
+          "videoId": "c2"
+        },
+        {
+          "id": "c3",
+          "name": "Crucifixo no peck deck",
+          "dose": "2 × 12–15",
+          "rest": "60–90 s",
+          "description": "Ajuste o banco na altura adequada dos ombros.\nAproxime as alças à frente do peito em movimento controlado.\nAbra os braços até uma amplitude confortável.",
+          "videoId": "c3"
+        },
+        {
+          "id": "c4",
+          "name": "Puxada alta na polia",
+          "dose": "2 × 10–12",
+          "rest": "75–90 s",
+          "description": "Segure a barra com pegada confortável.\nPuxe para a parte superior do peito, sem inclinar excessivamente o tronco.\nDevolva a barra de forma lenta.",
+          "videoId": "c4"
+        },
+        {
+          "id": "c7",
+          "name": "Tríceps na polia com corda",
+          "dose": "2 × 10–15",
+          "rest": "60 s",
+          "description": "Mantenha os cotovelos ao lado do tronco.\nEstenda os cotovelos para abaixar a corda.\nRetorne lentamente sem movimentar os ombros.",
+          "videoId": "c7"
+        },
+        {
+          "id": "c8",
+          "name": "Prancha com apoio de antebraços",
+          "dose": "3 × 40 s",
+          "rest": "60–90 s",
+          "description": "De bruços, apoie os antebraços e alinhe os cotovelos abaixo dos ombros.\nEleve o tronco mantendo cabeça, quadril e calcanhares em linha, sem afundar a lombar.\nRespire normalmente por até 40 segundos e descanse antes de repetir.\nVerificar histórico de cirurgia abdominal e tolerância ao esforço. Reduzir duração se perder a postura ou causar dor.",
+          "videoId": "c8"
+        },
+        {
+          "id": "cardioC",
+          "name": "Bicicleta ergométrica",
+          "dose": "8–12 min · leve",
+          "rest": "",
+          "description": "Pedalada confortável, selim ajustado e resistência baixa, apenas se não piorar a dor nos joelhos.",
+          "videoId": "cardioC"
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "title": "Posteriores + inferiores + core",
+      "weekday": "Sábado",
+      "description": "Inferiores adaptados, mobilidade e caminhada.",
+      "exercises": [
+        {
+          "id": "mD4",
+          "name": "De joelhos, sentando e levantando",
+          "dose": "1 × 8 movimentos suaves",
+          "rest": "",
+          "description": "Sobre colchonete espesso, inicie ajoelhado com apoio das mãos num banco estável.\nLeve o quadril lentamente em direção aos calcanhares apenas até a amplitude permitida pelos joelhos.\nVolte para a posição alta ajoelhada com apoio, sem impulsos nem dor.",
+          "videoId": "mD4"
+        },
+        {
+          "id": "mD5",
+          "name": "Alongamento de posterior sentado",
+          "dose": "1 × 20–30 s por lado",
+          "rest": "",
+          "description": "Sente-se na ponta de um banco estável com a coluna neutra.\nEstenda uma perna à frente com o calcanhar apoiado e incline suavemente o tronco a partir do quadril.\nMantenha a respiração e volte antes de sentir dor; alterne a perna.",
+          "videoId": "mD5"
+        },
+        {
+          "id": "mD6",
+          "name": "Flexão e extensão suave dos joelhos com bola",
+          "dose": "1 × 10 lentas",
+          "rest": "",
+          "description": "Deite de costas no colchonete com os calcanhares apoiados sobre uma bola suíça firme.\nAproxime a bola dobrando levemente os joelhos e depois afaste até uma amplitude confortável.\nMantenha quadril e lombar apoiados, sem força ou dor.",
+          "videoId": "mD6"
+        },
+        {
+          "id": "d6",
+          "name": "Stiff com barra livre (posterior)",
+          "dose": "3 × 10",
+          "rest": "90–120 s",
+          "description": "Com os pés na largura do quadril, segure a barra próxima às coxas e mantenha os joelhos levemente flexionados.\nLeve o quadril para trás, descendo a barra perto das pernas com coluna neutra e sem forçar joelhos ou lombar.\nEstenda o quadril para voltar à posição alta, sem hiperestender a coluna.\nComece com bastão/barra sem carga; considerar histórico de cirurgia abdominal e técnica antes de adicionar peso.",
+          "videoId": "d6"
+        },
+        {
+          "id": "d7",
+          "name": "Agachamento sentado (sentar e levantar)",
+          "dose": "3 × 10",
+          "rest": "75–90 s",
+          "description": "Posicione-se em frente a um banco alto e estável, com pés apoiados na largura dos ombros.\nFlexione quadris e joelhos dentro da amplitude indolor até tocar ou sentar no banco.\nLevante controladamente, com apoio das mãos se necessário, sem forçar o joelho.\nBanco alto, pouca profundidade. Se o agachamento causar dor, não insistir.",
+          "videoId": "d7"
+        },
+        {
+          "id": "d8",
+          "name": "Abdutora na máquina",
+          "dose": "2 × 12",
+          "rest": "60–90 s",
+          "description": "Sente-se na máquina com tronco apoiado e joelhos confortáveis.\nAfaste as coxas lentamente sem movimentar a pelve.\nVolte com controle, sem deixar o peso bater.",
+          "videoId": "d8"
+        },
+        {
+          "id": "d9",
+          "name": "Panturrilha sentado",
+          "dose": "2 × 15",
+          "rest": "60 s",
+          "description": "Sente-se com os pés apoiados e joelhos confortáveis.\nEleve os calcanhares mantendo a ponta dos pés no chão.\nRetorne lentamente, sem aumentar a dor articular.",
+          "videoId": "d9"
+        },
+        {
+          "id": "d10",
+          "name": "Prancha sobre os antebraços",
+          "dose": "3 × 40 s",
+          "rest": "60–90 s",
+          "description": "Apoie antebraços sob os ombros e alinhe o tronco da cabeça aos pés.\nContraia levemente o abdômen e mantenha respiração contínua, sem baixar a lombar.\nInterrompa se houver dor; faça a versão com joelhos apoiados ou séries mais curtas conforme tolerância.\nConferir restrições após a cirurgia abdominal antes de sustentar 40 segundos.",
+          "videoId": "d10"
+        },
+        {
+          "id": "cardioD",
+          "name": "Caminhada em esteira inclinada",
+          "dose": "15 min · leve",
+          "rest": "",
+          "description": "Começar em baixa velocidade e inclinação mínima. Aumentar inclinação somente se indolor; retornar ao plano ou interromper se piorarem os joelhos. Não correr.",
+          "videoId": "cardioD"
+        }
+      ]
+    }
+  ]
+}
