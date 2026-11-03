@@ -1,8 +1,14 @@
 (function(){
 'use strict';
 const $=id=>document.getElementById(id);
-const defs=[['shoulder','Ombro'],['chest','Peito'],['bicepsLeft','Bíceps esquerdo'],['bicepsRight','Bíceps direito'],['forearmLeft','Antebraço esquerdo'],['forearmRight','Antebraço direito'],['abdomen','Abdômen'],['hip','Quadril'],['thighLeft','Coxa esquerda'],['thighRight','Coxa direita'],['calfLeft','Panturrilha esquerda'],['calfRight','Panturrilha direita']];
-let db,clients=[],selected=null,measure={},plan={days:[]},template={days:[]},tab='measurements',busy=false,onlyPending=false;
+const measurementGroups=[
+  {title:'Dados básicos',fields:[['idade','Idade','anos'],['peso','Peso','kg'],['altura','Altura','cm']]},
+  {title:'Tronco',fields:[['cintura','Cintura','cm'],['abdomen','Abdômen','cm'],['hip','Quadril','cm'],['busto','Busto','cm'],['chest','Peito / tórax','cm'],['shoulder','Ombro','cm']]},
+  {title:'Braços',fields:[['bicepsLeft','Bíceps esquerdo','cm'],['bicepsRight','Bíceps direito','cm'],['forearmLeft','Antebraço esquerdo','cm'],['forearmRight','Antebraço direito','cm']]},
+  {title:'Pernas',fields:[['thighLeft','Coxa esquerda','cm'],['thighRight','Coxa direita','cm'],['calfLeft','Panturrilha esquerda','cm'],['calfRight','Panturrilha direita','cm']]}
+];
+const defs=measurementGroups.flatMap(group=>group.fields);
+let db,clients=[],selected=null,measure={},plan={days:[]},template={days:[]},tab='measurements',onlyPending=false,selectionRevision=0;
 function say(text,error=false){$('status').textContent=text;$('status').className='feedback'+(error?' error':' success');}
 function check(result){if(result.error)throw result.error;return result.data;}
 function setupOk(){const c=window.MEU_TREINO_SUPABASE||{};return /^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(c.url||'')&&typeof c.publishableKey==='string'&&c.publishableKey.length>15;}
@@ -26,7 +32,12 @@ function setTab(name){tab=name;$('measureEditor').hidden=name!=='measurements';$
     b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));
   });
 }
-function clearClient(){selected=null;measure={};plan={days:[]};$('noClient').hidden=false;$('clientArea').hidden=true;listClients();}
+function clearClient(){
+  selectionRevision++;selected=null;measure={};plan={days:[]};
+  $('noClient').querySelector('h2').textContent='Selecione um aluno';
+  $('noClient').querySelector('p').textContent='As medidas e a ficha aparecem aqui para você conferir e editar.';
+  $('noClient').hidden=false;$('clientArea').hidden=true;listClients();
+}
 function listClients(){
   const q=$('clientSearch').value.trim().toLowerCase(),mount=$('clientList');mount.replaceChildren();
   const waiting=clients.filter(c=>c.approval_status!=='approved').length;
@@ -60,32 +71,54 @@ async function loadClients(){
   listClients();
 }
 async function chooseClient(id){
-  selected=clients.find(c=>c.id===id);if(!selected)return;
-  const [a,b]=await Promise.all([
-    db.from('client_measurements').select('measurement_date,values_cm').eq('client_id',id).maybeSingle(),
-    db.from('client_plans').select('plan').eq('client_id',id).maybeSingle()
-  ]);
+  const recipient=clients.find(c=>c.id===id);if(!recipient)return;
+  selected=recipient;
+  const request=++selectionRevision;
+  measure={date:'',values:{}};plan={days:[]};listClients();
+  $('clientArea').hidden=true;$('noClient').hidden=false;
+  $('noClient').querySelector('h2').textContent='Carregando '+recipient.full_name+'…';
+  $('noClient').querySelector('p').textContent='Buscando a avaliação e a ficha vinculadas a este cadastro.';
+  say('Carregando a ficha individual…');
+  let a,b;
+  try{
+    [a,b]=await Promise.all([
+      db.from('client_measurements').select('measurement_date,values_cm').eq('client_id',id).maybeSingle(),
+      db.from('client_plans').select('plan').eq('client_id',id).maybeSingle()
+    ]);
+  }catch(error){
+    if(request!==selectionRevision)return;
+    $('noClient').querySelector('h2').textContent='Não foi possível carregar';
+    $('noClient').querySelector('p').textContent='Confira sua conexão e selecione o aluno novamente.';
+    throw error;
+  }
+  if(request!==selectionRevision||selected?.id!==id)return;
   const mr=check(a),pr=check(b);measure={date:mr?.measurement_date||'',values:copy(mr?.values_cm||{})};
   plan=copy(pr?.plan||{days:[]});if(!Array.isArray(plan.days))plan.days=[];
-  $('selectedName').textContent=selected.full_name;$('selectedEmail').textContent=selected.email;
-  $('planStudentName').textContent='Ficha de '+selected.full_name;
-  const pending=selected.approval_status!=='approved';
-  $('linkedStatus').textContent=pending?(selected.auth_user_id?'Cadastro confirmado — aguardando sua aprovação':'Aguardando confirmação de e-mail'):'✓ Acesso aprovado';
-  $('approvalActions').hidden=!(pending&&selected.auth_user_id);
+  $('selectedName').textContent=recipient.full_name;$('selectedEmail').textContent=recipient.email;
+  $('planStudentName').textContent='Ficha de '+recipient.full_name;
+  const pending=recipient.approval_status!=='approved';
+  $('linkedStatus').textContent=pending?(recipient.auth_user_id?'Cadastro confirmado — aguardando sua aprovação':'Aguardando confirmação de e-mail'):'✓ Acesso aprovado';
+  $('approvalActions').hidden=!(pending&&recipient.auth_user_id);
   $('clientArea').hidden=false;$('noClient').hidden=true;
-  paintMeasures();paintPlans();setTab(tab);listClients();
+  paintMeasures();paintPlans();setTab(tab);listClients();say('Ficha de '+recipient.full_name+' carregada.');
 }
 function paintMeasures(){
   const root=$('measureFields');root.replaceChildren();
   field(root,'Data da medição',measure.date,v=>measure.date=v,{type:'date',full:true});
-  defs.forEach(([id,name])=>{
-    const wrap=document.createElement('div');wrap.className='field-block';
-    const lab=document.createElement('label');lab.textContent=name+' (cm)';
-    const w=document.createElement('div');w.className='unit-wrap';
-    const input=document.createElement('input');input.className='field-input';input.inputMode='decimal';input.maxLength=6;
-    input.placeholder='Ex.: 35,5';input.value=measure.values[id]??'';
-    input.addEventListener('input',()=>measure.values[id]=input.value.trim());
-    const suffix=document.createElement('span');suffix.textContent='cm';w.append(input,suffix);wrap.append(lab,w);root.appendChild(wrap);
+  measurementGroups.forEach(group=>{
+    const section=document.createElement('section');section.className='measurement-group';
+    const heading=document.createElement('h3');heading.textContent=group.title;section.appendChild(heading);
+    const grid=document.createElement('div');grid.className='form-grid';
+    group.fields.forEach(([id,name,unit])=>{
+      const wrap=document.createElement('div');wrap.className='field-block';
+      const lab=document.createElement('label');lab.textContent=name+' ('+unit+')';
+      const w=document.createElement('div');w.className='unit-wrap';
+      const input=document.createElement('input');input.className='field-input';input.inputMode='decimal';input.maxLength=7;
+      input.placeholder=unit==='kg'?'Ex.: 68,5':unit==='anos'?'Ex.: 32':'Ex.: 35,5';input.value=measure.values[id]??'';
+      input.addEventListener('input',()=>measure.values[id]=input.value.trim());
+      const suffix=document.createElement('span');suffix.textContent=unit;w.append(input,suffix);wrap.append(lab,w);grid.appendChild(wrap);
+    });
+    section.appendChild(grid);root.appendChild(section);
   });
 }
 function addDay(){return {id:newId(),title:'Novo treino',weekday:'',description:'',duration:'',recover:'',exercises:[]};}
@@ -236,42 +269,56 @@ document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()
 $('showPending').addEventListener('click',function(){onlyPending=true;listClients();});
 $('showAll').addEventListener('click',function(){onlyPending=false;listClients();});
 $('approveClient').addEventListener('click',async function(){
-  if(!selected||!selected.auth_user_id||selected.approval_status==='approved')return;
-  if(!confirm('Aprovar o acesso de '+selected.full_name+' às próprias medidas e treinos?'))return;
+  const recipient=selected;
+  if(!recipient||!recipient.auth_user_id||recipient.approval_status==='approved')return;
+  if(!confirm('Aprovar o acesso de '+recipient.full_name+' às próprias medidas e treinos?'))return;
   try{
     // Atribui o plano-base a quem ainda não tem um plano, sem apagar planos pessoais.
-    const existing=check(await db.from('client_plans').select('client_id').eq('client_id',selected.id).maybeSingle());
+    const existing=check(await db.from('client_plans').select('client_id').eq('client_id',recipient.id).maybeSingle());
     let initialPlan=false;
     if(!existing&&Array.isArray(template?.days)&&template.days.length){
-      check(await db.from('client_plans').insert({client_id:selected.id,plan:copy(template)}));
+      check(await db.from('client_plans').insert({client_id:recipient.id,plan:copy(template)}));
       initialPlan=true;
     }
     const updated=check(await db.from('clients')
       .update({approval_status:'approved',approved_at:new Date().toISOString()})
-      .eq('id',selected.id)
+      .eq('id',recipient.id)
       .eq('approval_status','pending')
       .not('auth_user_id','is',null)
       .select('id').maybeSingle());
     if(!updated)throw Error('A aprovação não foi aplicada. Atualize a lista.');
-    const id=selected.id;await loadClients();await chooseClient(id);
+    await loadClients();
+    if(selected?.id===recipient.id)await chooseClient(recipient.id);
     say('Aluno aprovado! '+(initialPlan?'Os treinos A, B, C e D foram adicionados. ':'')+'Ele já pode acessar o site principal.');
   }catch(e){fail(e);}
 });
 $('deleteClient').addEventListener('click',async()=>{
-  if(!selected||!confirm('Excluir definitivamente '+selected.full_name+' e todas as suas medições e treinos?'))return;
-  try{check(await db.from('clients').delete().eq('id',selected.id));clearClient();await loadClients();say('Cliente excluído.');}catch(e){fail(e);}
+  const recipient=selected;
+  if(!recipient||!confirm('Excluir definitivamente '+recipient.full_name+' e todas as suas medições e treinos?'))return;
+  try{
+    check(await db.from('clients').delete().eq('id',recipient.id));
+    if(selected?.id===recipient.id)clearClient();
+    await loadClients();say('Cliente excluído.');
+  }catch(e){fail(e);}
 });
 $('saveMeasures').addEventListener('submit',async e=>{
-  e.preventDefault();if(!selected)return;
+  e.preventDefault();
+  const recipient=selected,snapshot=selected?copy(measure):null;
+  if(!recipient||!snapshot)return;
+  const submit=e.currentTarget.querySelector('[type="submit"]');
+  submit.disabled=true;submit.textContent='Salvando…';
   try{
     const values={};
-    for(const [id,label] of defs){const v=String(measure.values[id]??'').trim();
-      if(v&&!/^\d{1,3}(?:[.,]\d{1,2})?$/.test(v))throw Error('Valor inválido: '+label);
-      if(v){const num=Number(v.replace(',','.'));if(num<=0||num>300)throw Error('Verifique '+label);values[id]=num;}
+    for(const [id,label,unit] of defs){const v=String(snapshot.values[id]??'').trim();
+      const valid=unit==='anos'?/^\d{1,3}$/.test(v):/^\d{1,3}(?:[.,]\d{1,2})?$/.test(v);
+      if(v&&!valid)throw Error('Valor inválido: '+label);
+      const limit=unit==='anos'?120:unit==='kg'?400:300;
+      if(v){const num=Number(v.replace(',','.'));if(num<=0||num>limit)throw Error('Verifique '+label);values[id]=num;}
     }
-    check(await db.from('client_measurements').upsert({client_id:selected.id,measurement_date:measure.date||null,values_cm:values,updated_at:new Date().toISOString()}));
-    say('Medidas salvas para '+selected.full_name+'. O portal atualiza automaticamente em até 30 segundos.');
+    check(await db.from('client_measurements').upsert({client_id:recipient.id,measurement_date:snapshot.date||null,values_cm:values,updated_at:new Date().toISOString()}));
+    say('Medidas salvas para '+recipient.full_name+'. O portal atualiza automaticamente em até 15 segundos.');
   }catch(err){fail(err);}
+  finally{submit.disabled=false;submit.textContent='Salvar medidas do aluno';}
 });
 $('addDay').addEventListener('click',()=>{if(plan.days.length>=15){say('Limite de 15 treinos.',true);return;}plan.days.push(addDay());paintPlans();});
 $('useTemplate').addEventListener('click',()=>{
@@ -285,16 +332,17 @@ $('savePlan').addEventListener('click',async()=>{
   try{
     validatePlan();
     check(await db.from('client_plans').upsert({client_id:recipient.id,plan:snapshot,updated_at:new Date().toISOString()}));
-    say('Ficha enviada para '+recipient.full_name+'. O portal atualiza automaticamente em até 30 segundos.');
+    say('Ficha enviada para '+recipient.full_name+'. O portal atualiza automaticamente em até 15 segundos.');
   }catch(err){fail(err);}
   finally{button.disabled=false;button.textContent='Salvar e enviar ao aluno';}
 });
 $('saveAllPlans').addEventListener('click',async()=>{
   if(!selected)return;try{
+    const snapshot=copy(plan);
     validatePlan();if(!clients.length)throw Error('Nenhum cliente cadastrado.');
     if(!confirm('Substituir os treinos de TODOS os '+clients.length+' clientes? As medidas serão preservadas.'))return;
     if(prompt('Para confirmar, digite TODOS:')!=='TODOS')return;
-    const count=check(await db.rpc('admin_apply_plan_to_all',{new_plan:plan}));
+    const count=check(await db.rpc('admin_apply_plan_to_all',{new_plan:snapshot}));
     say('Planos atualizados para '+count+' clientes, sem alterar as medições.');
   }catch(e){fail(e);}
 });

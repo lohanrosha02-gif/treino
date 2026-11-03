@@ -32,16 +32,16 @@ Antes de rodar SQL em um projeto com dados, confira **Database → Migrations** 
 - Cadastre o aluno ou peça para ele criar a conta em `/treino-v2/`. O autocadastro precisa usar um e-mail confirmado; o registro fica pendente até aprovação.
 - Se o e-mail de confirmação não chegar, o aluno pode pedir outro pela tela de entrada. Após muitas solicitações, o Supabase limita temporariamente novos envios; aguarde e confira a caixa de spam.
 - Abra **Pendentes**, escolha o aluno e clique em **Aprovar aluno**. O plano-base A–D só é atribuído quando o aluno ainda não tem um plano.
-- Edite as medidas e os treinos nas abas do painel. O aluno consulta as medidas publicadas pelo professor e registra sua própria avaliação e evolução.
+- Edite as medidas e os treinos nas abas do painel. A avaliação é organizada no ADM por dados básicos, tronco, braços e pernas; no portal, o aluno só consulta os valores e seus cálculos.
 
 ## Dados e permissões
 
-- O cadastro, as medidas do professor, os planos e os comunicados ficam no Supabase. A avaliação pessoal e os registros de treino são salvos em `client_progress`.
+- O cadastro, as medidas oficiais da professora, os planos e os comunicados ficam no Supabase. A tabela `client_measurements` aceita gravação apenas do administrador e mostra cada linha somente ao administrador e ao aluno vinculado. O progresso de treino continua salvo por aluno em `client_progress`.
 - RLS restringe cada aluno aos próprios dados e bloqueia medidas e planos enquanto a conta estiver pendente. Só um UID listado em `admin_users` recebe permissões administrativas.
 - As migrações concedem explicitamente os acessos mínimos usados pelo Data API e habilitam RLS nas tabelas. Ao criar novas tabelas, configure os `GRANT`s e as políticas RLS junto com a estrutura.
 - O código do navegador usa somente a chave publicável. O painel atual autentica pelo Supabase; não pede token pessoal do GitHub.
 - O catálogo `treino-v2/data/site-content.json` deve conter apenas material genérico de exercícios e referências de mídia, nunca dados individuais.
-- Backups anteriores do navegador podem ser importados pelo próprio aluno no menu **Meus dados**. Eles não são associados automaticamente a uma conta.
+- Backups anteriores do navegador podem ser importados pelo próprio aluno no menu **Meus dados** para preservar registros de treino. Valores de avaliação antigos não substituem as medidas oficiais registradas pela professora.
 
 ## E-mails de autenticação
 

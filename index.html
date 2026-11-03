@@ -4,11 +4,11 @@
 <title>Meu Treino · Administração</title><meta name="theme-color" content="#f2f5ef">
 <link rel="stylesheet" href="./admin.css?v=supabase-2">
 <link rel="stylesheet" href="./admin-supabase.css?v=supabase-2">
-<link rel="stylesheet" href="./admin-personal.css?v=20261103-3.3">
+<link rel="stylesheet" href="./admin-personal.css?v=20261103-medidas-professora-3.4">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
 <script src="./supabase-config.js?v=supabase-2" defer></script>
 <script src="./videos.js?v=legacy-3.0" defer></script>
-<script src="./admin-supabase.js?v=20261103-admin-personal-3.3" defer></script>
+<script src="./admin-supabase.js?v=20261103-medidas-professora-3.4" defer></script>
 </head><body>
 <a class="skip-link" href="#main">Ir para o conteúdo</a>
 <header class="topbar"><div class="shell top-inner">
@@ -54,8 +54,8 @@
 <nav class="editor-tabs" role="tablist" aria-label="Editar aluno">
 <button class="editor-tab active" type="button" role="tab" aria-selected="true" aria-controls="measureEditor" data-tab="measurements">Medidas</button>
 <button class="editor-tab" type="button" role="tab" aria-selected="false" aria-controls="planEditor" data-tab="plans">Ficha de treino</button></nav>
-<section class="panel" id="measureEditor" role="tabpanel"><h2>Medidas corporais</h2><p class="muted">Preencha os valores em centímetros. Só este aluno consegue consultar as próprias medidas.</p>
-<form id="saveMeasures"><div class="form-grid" id="measureFields"></div><div class="form-actions"><button class="button primary" type="submit">Salvar medições</button></div></form></section>
+<section class="panel" id="measureEditor" role="tabpanel"><h2>Avaliação corporal</h2><p class="muted">Registre os dados por categoria. Cada ficha fica vinculada somente ao aluno selecionado e aparece para ele em modo de consulta.</p>
+<form id="saveMeasures"><div class="form-grid" id="measureFields"></div><div class="form-actions"><button class="button primary" type="submit">Salvar medidas do aluno</button></div></form></section>
 <section class="panel" id="planEditor" role="tabpanel" hidden><h2>Ficha de treino</h2><p class="muted">Monte as sessões e escolha as demonstrações que o aluno vai ver nos exercícios.</p>
 <div class="plan-recipient-note"><strong id="planStudentName">Ficha individual</strong><span>Ao salvar, a ficha atualiza no portal desse aluno sem alterar os registros de treino dele.</span></div>
 <div class="form-actions"><button id="addDay" class="button primary" type="button">+ Novo treino</button><button id="useTemplate" class="button secondary" type="button">Usar plano-base</button></div>

@@ -6,12 +6,12 @@ Este repositório publica o painel da professora. O portal dos alunos e o catál
 
 - Autentica o administrador pelo Supabase.
 - Cadastra alunos, acompanha inscrições pendentes e aprova o acesso.
-- Registra 12 medidas corporais por aluno e monta treinos personalizados.
+- Registra 17 itens de avaliação por aluno, organizados por região corporal, e monta treinos personalizados.
 - Salvar a ficha envia a atualização apenas para o aluno selecionado; o portal dele busca mudanças automaticamente enquanto estiver aberto.
 - Publica comunicados para alunos aprovados.
 - Pode aplicar um plano a todos os cadastros após duas confirmações; as medidas individuais são preservadas.
 
-As fichas, medidas e progresso ficam no Supabase com Row Level Security (RLS). O portal do aluno mantém a avaliação pessoal com cálculos automáticos, oito semanas de progresso, vídeos e imagens dos exercícios, cronômetro, tema claro/escuro e backup.
+As fichas, medidas oficiais e progresso ficam no Supabase com Row Level Security (RLS). A professora é a única pessoa que insere ou altera a avaliação; o aluno consulta as próprias medidas e os cálculos automáticos no portal.
 
 ## Ativar
 
