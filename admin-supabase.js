@@ -21,13 +21,25 @@ function button(label,cls,onClick){
   const b=document.createElement('button');b.type='button';b.className='button '+cls;b.textContent=label;b.addEventListener('click',onClick);return b;
 }
 function setTab(name){tab=name;$('measureEditor').hidden=name!=='measurements';$('planEditor').hidden=name!=='plans';
-  document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===name));
+  document.querySelectorAll('[data-tab]').forEach(b=>{
+    const active=b.dataset.tab===name;
+    b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));
+  });
 }
 function clearClient(){selected=null;measure={};plan={days:[]};$('noClient').hidden=false;$('clientArea').hidden=true;listClients();}
 function listClients(){
   const q=$('clientSearch').value.trim().toLowerCase(),mount=$('clientList');mount.replaceChildren();
-  $('pendingCount').textContent=clients.filter(c=>c.approval_status!=='approved').length;
-  clients.filter(c=>(!onlyPending||c.approval_status!=='approved')&&(c.full_name+' '+c.email).toLowerCase().includes(q)).forEach(c=>{
+  const waiting=clients.filter(c=>c.approval_status!=='approved').length;
+  $('pendingCount').textContent=waiting;
+  $('totalClientCount').textContent=clients.length;
+  $('approvedClientCount').textContent=clients.length-waiting;
+  $('waitingClientCount').textContent=waiting;
+  $('showPending').setAttribute('aria-pressed',String(onlyPending));
+  $('showAll').setAttribute('aria-pressed',String(!onlyPending));
+  $('showPending').classList.toggle('filter-active',onlyPending);
+  $('showAll').classList.toggle('filter-active',!onlyPending);
+  const matching=clients.filter(c=>(!onlyPending||c.approval_status!=='approved')&&(c.full_name+' '+c.email).toLowerCase().includes(q));
+  matching.forEach(c=>{
     const b=document.createElement('button');b.type='button';b.className='client-row'+(selected&&selected.id===c.id?' active':'');
     const name=document.createElement('strong');name.textContent=c.full_name;
     const email=document.createElement('small');email.textContent=c.email;
@@ -36,6 +48,11 @@ function listClients(){
     b.append(name,email,state);
     b.addEventListener('click',()=>chooseClient(c.id).catch(fail));mount.appendChild(b);
   });
+  if(!matching.length){
+    const empty=document.createElement('p');empty.className='client-list-empty';empty.setAttribute('role','status');
+    empty.textContent=clients.length?'Nenhum aluno encontrado.':'Ainda não há alunos cadastrados.';
+    mount.appendChild(empty);
+  }
 }
 async function loadClients(){
   clients=check(await db.from('clients').select('id,full_name,email,auth_user_id,approval_status').order('full_name'))||[];
@@ -51,6 +68,7 @@ async function chooseClient(id){
   const mr=check(a),pr=check(b);measure={date:mr?.measurement_date||'',values:copy(mr?.values_cm||{})};
   plan=copy(pr?.plan||{days:[]});if(!Array.isArray(plan.days))plan.days=[];
   $('selectedName').textContent=selected.full_name;$('selectedEmail').textContent=selected.email;
+  $('planStudentName').textContent='Ficha de '+selected.full_name;
   const pending=selected.approval_status!=='approved';
   $('linkedStatus').textContent=pending?(selected.auth_user_id?'Cadastro confirmado — aguardando sua aprovação':'Aguardando confirmação de e-mail'):'✓ Acesso aprovado';
   $('approvalActions').hidden=!(pending&&selected.auth_user_id);
@@ -252,7 +270,7 @@ $('saveMeasures').addEventListener('submit',async e=>{
       if(v){const num=Number(v.replace(',','.'));if(num<=0||num>300)throw Error('Verifique '+label);values[id]=num;}
     }
     check(await db.from('client_measurements').upsert({client_id:selected.id,measurement_date:measure.date||null,values_cm:values,updated_at:new Date().toISOString()}));
-    say('Medições salvas para '+selected.full_name+'.');
+    say('Medidas salvas para '+selected.full_name+'. O portal atualiza automaticamente em até 30 segundos.');
   }catch(err){fail(err);}
 });
 $('addDay').addEventListener('click',()=>{if(plan.days.length>=15){say('Limite de 15 treinos.',true);return;}plan.days.push(addDay());paintPlans();});
@@ -261,7 +279,15 @@ $('useTemplate').addEventListener('click',()=>{
   if(confirm('Substituir o rascunho atual pelo plano-base?')){plan=copy(template);paintPlans();}
 });
 $('savePlan').addEventListener('click',async()=>{
-  if(!selected)return;try{validatePlan();check(await db.from('client_plans').upsert({client_id:selected.id,plan:plan,updated_at:new Date().toISOString()}));say('Treinos salvos para '+selected.full_name+'.');}catch(err){fail(err);}
+  if(!selected)return;
+  const recipient=selected,snapshot=copy(plan),button=$('savePlan');
+  button.disabled=true;button.textContent='Enviando…';
+  try{
+    validatePlan();
+    check(await db.from('client_plans').upsert({client_id:recipient.id,plan:snapshot,updated_at:new Date().toISOString()}));
+    say('Ficha enviada para '+recipient.full_name+'. O portal atualiza automaticamente em até 30 segundos.');
+  }catch(err){fail(err);}
+  finally{button.disabled=false;button.textContent='Salvar e enviar ao aluno';}
 });
 $('saveAllPlans').addEventListener('click',async()=>{
   if(!selected)return;try{
