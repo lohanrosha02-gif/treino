@@ -3,7 +3,7 @@
 const $=id=>document.getElementById(id);
 const measurementGroups=[
   {title:'Dados básicos',fields:[['idade','Idade','anos'],['peso','Peso','kg'],['altura','Altura','cm']]},
-  {title:'Tronco',fields:[['cintura','Cintura','cm'],['abdomen','Abdômen','cm'],['hip','Quadril','cm'],['busto','Busto','cm'],['chest','Peito / tórax','cm'],['shoulder','Ombro','cm']]},
+  {title:'Tronco',fields:[['abdomen','Abdômen','cm'],['hip','Quadril','cm'],['chest','Peito / tórax','cm'],['shoulder','Ombro','cm']]},
   {title:'Braços',fields:[['bicepsLeft','Bíceps esquerdo','cm'],['bicepsRight','Bíceps direito','cm'],['armRelaxedLeft','Braço relaxado esquerdo','cm'],['armRelaxedRight','Braço relaxado direito','cm']]},
   {title:'Pernas',fields:[['thighLeft','Coxa esquerda','cm'],['thighRight','Coxa direita','cm'],['calfLeft','Panturrilha esquerda','cm'],['calfRight','Panturrilha direita','cm']]}
 ];
