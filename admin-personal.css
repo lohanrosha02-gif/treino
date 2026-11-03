@@ -79,6 +79,16 @@ body{background:var(--bg);font-family:Inter,ui-sans-serif,-apple-system,BlinkMac
 #savePlan{min-width:220px}
 footer{padding-top:24px}
 
+/* Campos da avaliação organizados por região corporal. */
+#measureFields>.measurement-group{grid-column:1/-1;margin:6px 0 2px;padding:16px;border:1px solid var(--edge);border-radius:13px;background:#fbfaf6}
+.measurement-group h3{margin:0 0 12px;color:var(--green);font-size:13px;font-weight:800;letter-spacing:.02em}
+.measurement-group .form-grid{margin:0}
+.measurement-group .field-block label{font-size:11px}
+.measurement-group .unit-wrap{position:relative;display:flex;align-items:center}
+.measurement-group .unit-wrap .field-input{padding-right:48px}
+.measurement-group .unit-wrap>span{position:absolute;right:12px;color:var(--muted);font-size:11px;pointer-events:none}
+@media(max-width:620px){#measureFields>.measurement-group{padding:13px}}
+
 @media(max-width:840px){
   .dashboard-layout{grid-template-columns:1fr}
   .clients-panel{top:auto}
