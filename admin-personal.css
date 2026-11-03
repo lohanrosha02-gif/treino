@@ -1,14 +1,14 @@
 :root{
-  --bg:#f6f4ee;
-  --paper:#fffefa;
-  --ink:#292d28;
-  --muted:#72796f;
-  --green:#355d43;
-  --green2:#476f53;
-  --pale:#edf3e9;
-  --edge:#e3e4da;
+  --bg:#f5efe6;
+  --paper:#fffaf3;
+  --ink:#302934;
+  --muted:#746b78;
+  --green:#604078;
+  --green2:#79519a;
+  --pale:#efe5f4;
+  --edge:#e6dbe8;
   --radius:15px;
-  --shadow:0 8px 26px rgba(43,52,42,.055);
+  --shadow:0 8px 26px rgba(53,34,61,.06);
 }
 
 body{background:var(--bg);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -193,3 +193,23 @@ footer{padding-top:24px}
 .exercise-library-add{justify-self:start;padding:4px 7px;border-radius:99px;background:#eaf1e6;color:#466447;font-size:8px;font-weight:800}
 .exercise-picker-empty{grid-column:1/-1;padding:22px;border:1px dashed #d8dfd4;border-radius:11px;color:#737d71;font-size:11px;text-align:center}
 @media(max-width:620px){.exercise-editor-item{grid-template-columns:minmax(0,1fr) 72px;gap:5px}.exercise-summary{gap:6px;padding-inline:9px}.exercise-summary-thumb{flex-basis:40px;width:40px;height:40px}.exercise-summary-copy strong{font-size:10px}.exercise-media-badge{font-size:7px;padding:3px 5px}.exercise-picker-dialog{padding:16px}.exercise-picker-heading{gap:8px}.exercise-picker-heading h3{font-size:18px}.exercise-picker-heading p{font-size:10px}.exercise-picker-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-height:calc(88vh - 190px)}}
+
+/* Paleta roxa com fundo bege claro. */
+body{background:var(--bg);color:var(--ink)}
+.topbar{background:rgba(255,250,243,.96)}
+.brand-mark{background:var(--green);color:#f8f0fc}
+.brand .dot,.hero em,.hero .eyebrow,.section-eyebrow{color:var(--green2)}
+.hero-points span,.editor-meta small,.field-block label,.token-field label,.field-label{color:var(--green)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline-color:#9c74b2}
+.field-input:focus,.field-area:focus,.token-field input:focus{border-color:var(--green2)}
+.switch-field input,.checkbox-line input,.unit-wrap input{accent-color:var(--green2)}
+.button.filter-active{background:var(--pale);border-color:#d4c2df;color:var(--green)}
+.client-row:hover{border-color:#c1a9cf}
+.client-row.active{background:var(--pale);border-color:#ad8cc1;box-shadow:inset 3px 0 var(--green2)}
+.activity>summary,.subheading,.connection-pill.connected{color:var(--green)}
+.activity[open]>summary{background:var(--pale);border-bottom-color:var(--edge)}
+.message-note,.measurements-info{background:#f1e9f4;border-color:#e3d6e9;color:#604d6b}
+.exercise-picker-dialog{background:var(--paper);border-color:var(--edge)}
+.exercise-picker-heading h3,.exercise-library-card{color:var(--ink)}
+.exercise-library-card:hover{border-color:#b99cc9}
+.exercise-library-add{background:var(--pale);color:var(--green)}
