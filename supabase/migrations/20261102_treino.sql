@@ -119,8 +119,15 @@ using ((select public.is_treino_admin()) or exists(
   select 1 from public.clients c where c.id=client_id and c.auth_user_id=(select auth.uid())
 ));
 drop policy if exists measures_write on public.client_measurements;
-create policy measures_write on public.client_measurements for all to authenticated
+drop policy if exists measures_insert on public.client_measurements;
+create policy measures_insert on public.client_measurements for insert to authenticated
+with check ((select public.is_treino_admin()));
+drop policy if exists measures_update on public.client_measurements;
+create policy measures_update on public.client_measurements for update to authenticated
 using ((select public.is_treino_admin())) with check ((select public.is_treino_admin()));
+drop policy if exists measures_delete on public.client_measurements;
+create policy measures_delete on public.client_measurements for delete to authenticated
+using ((select public.is_treino_admin()));
 
 drop policy if exists plans_read on public.client_plans;
 create policy plans_read on public.client_plans for select to authenticated
@@ -128,14 +135,28 @@ using ((select public.is_treino_admin()) or exists(
   select 1 from public.clients c where c.id=client_id and c.auth_user_id=(select auth.uid())
 ));
 drop policy if exists plans_write on public.client_plans;
-create policy plans_write on public.client_plans for all to authenticated
+drop policy if exists plans_insert on public.client_plans;
+create policy plans_insert on public.client_plans for insert to authenticated
+with check ((select public.is_treino_admin()));
+drop policy if exists plans_update on public.client_plans;
+create policy plans_update on public.client_plans for update to authenticated
 using ((select public.is_treino_admin())) with check ((select public.is_treino_admin()));
+drop policy if exists plans_delete on public.client_plans;
+create policy plans_delete on public.client_plans for delete to authenticated
+using ((select public.is_treino_admin()));
 
 drop policy if exists announcements_read on public.site_announcements;
 create policy announcements_read on public.site_announcements for select to authenticated using(true);
 drop policy if exists announcements_write on public.site_announcements;
-create policy announcements_write on public.site_announcements for all to authenticated
+drop policy if exists announcements_insert on public.site_announcements;
+create policy announcements_insert on public.site_announcements for insert to authenticated
+with check ((select public.is_treino_admin()));
+drop policy if exists announcements_update on public.site_announcements;
+create policy announcements_update on public.site_announcements for update to authenticated
 using ((select public.is_treino_admin())) with check ((select public.is_treino_admin()));
+drop policy if exists announcements_delete on public.site_announcements;
+create policy announcements_delete on public.site_announcements for delete to authenticated
+using ((select public.is_treino_admin()));
 
 -- Próximo passo MANUAL: após cadastrar sua conta em Authentication → Users,
 -- execute, substituindo o UUID pelo SEU UID (nunca por email sem verificar):

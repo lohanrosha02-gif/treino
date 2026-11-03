@@ -1,26 +1,25 @@
-# Meu Treino · Painel administrativo
+# Meu Treino · painel administrativo
 
-Este repositório (`treino`) hospeda o **painel administrativo** estático do projeto Meu Treino. O site dos usuários está no repositório independente [`treino-v2`](https://github.com/lohanrosha02-gif/treino-v2).
+Este repositório publica o painel do professor. O portal dos alunos e a biblioteca de exercícios ficam em [`treino-v2`](https://github.com/lohanrosha02-gif/treino-v2).
 
-## Como funciona
+## O que o painel faz
 
-1. Abra a página publicada deste repositório (`/treino/`).
-2. No GitHub, crie um **fine-grained personal access token** em Settings → Developer settings → Personal access tokens → Fine-grained tokens.
-3. Restrinja o token a **Only select repositories → treino-v2** e dê somente a permissão **Repository permissions → Contents: Read and write**. Use validade curta.
-4. Cole o token **somente no campo do painel** e clique em Conectar.
-5. Nas abas **Textos e avisos**, **Treinos A–D** e **Medições (cm)**, edite o conteúdo e clique em **Publicar para todos**. As 12 medições são: ombro, peito, bíceps e antebraço esquerdo/direito, abdômen, quadril, coxa e panturrilha esquerda/direita; pode informar uma data opcional.
-6. O painel envia o JSON atualizado para `lohanrosha02-gif/treino-v2` → `data/site-content.json` em `main` via API oficial do GitHub. O site dos usuários busca esse JSON a cada carregamento de página.
+- Autentica o administrador pelo Supabase.
+- Cadastra alunos, acompanha inscrições pendentes e aprova o acesso.
+- Registra 12 medidas corporais por aluno e monta treinos personalizados.
+- Publica comunicados para alunos aprovados.
+- Pode aplicar um plano a todos os cadastros após duas confirmações; as medidas individuais são preservadas.
 
-### Segurança e privacidade
+As fichas, medidas e progresso ficam no Supabase com Row Level Security (RLS). O portal do aluno mantém a avaliação pessoal com cálculos automáticos, oito semanas de progresso, vídeos e imagens dos exercícios, cronômetro, tema claro/escuro e backup.
 
-- **Nunca** coloque o token no código, em arquivos do repositório nem em mensagens de chat.
-- O token digitado fica somente em memória enquanto esta aba está aberta; o painel não o salva no navegador nem o envia a terceiros. Todas as chamadas autenticadas vão para `https://api.github.com`.
-- O painel é uma **página pública com publicação protegida por token do GitHub**, não um backend com login privado. Em uma futura implantação profissional, substitua o token manual por autenticação OAuth/GitHub App com backend seguro.
-- O GitHub Pages é estático: não há banco de dados nem sincronização de dados individuais. Medidas, cargas, semanas e progresso permanecem em `localStorage` do navegador de cada aluno no site `treino-v2`.
-- Não crie avisos com dados pessoais. Qualquer alteração no JSON público fica visível a todos.
-- O painel não altera IDs, vídeos, tipos de exercício nem adiciona/remove exercícios. Isso exige atualização do código do site principal.
-- **Medições públicas:** os valores preenchidos em `site.measurements` são globais, iguais para todos os visitantes do site, e ficam disponíveis para consulta em `treino-v2`. Não os utilize para armazenar dados corporais identificáveis de alunos sem consentimento e infraestrutura segura. Campos vazios aparecem como “Não informado”.
-- O site dos usuários oculta os antigos formulários individuais de avaliação, mas mantém os dados preexistentes em armazenamento local e backups.
-- Se o GitHub Pages não estiver habilitado, configure **Settings → Pages → Deploy from a branch → main → / (root)** em cada repositório.
+## Ativar
 
-Os arquivos do site antigo continuam no histórico e no repositório por compatibilidade, mas a página `index.html` agora abre o painel administrativo.
+Siga [SUPABASE_SETUP.md](SUPABASE_SETUP.md) para configurar o Supabase, o usuário administrador e o GitHub Pages. O navegador usa somente a URL do projeto e a chave publicável; nunca coloque uma `service_role`, chave `sb_secret_` ou token pessoal no código.
+
+## Banco de dados
+
+- `supabase/migrations/20261102_treino.sql` cria a estrutura inicial e as políticas do administrador.
+- `supabase/migrations/20261103032334_student_self_registration_with_admin_approval.sql` cria o autocadastro com aprovação e bloqueia a leitura de medidas e treinos até a aprovação.
+- `supabase/migrations/20261103035754_secure_individual_8_week_workout_progress.sql` salva a avaliação e o progresso por conta, com RLS.
+
+O arquivo `data/site-content.json` no repositório do portal contém o catálogo de exercícios e referências de mídia; não deve conter dados individuais de alunos. Alguns scripts antigos continuam no histórico, mas o painel atual carrega `admin-supabase.js`.
