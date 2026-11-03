@@ -8,7 +8,7 @@ const measurementGroups=[
   {title:'Pernas',fields:[['thighLeft','Coxa esquerda','cm'],['thighRight','Coxa direita','cm'],['calfLeft','Panturrilha esquerda','cm'],['calfRight','Panturrilha direita','cm']]}
 ];
 const defs=measurementGroups.flatMap(group=>group.fields);
-let db,clients=[],selected=null,measure={},plan={days:[]},template={days:[]},tab='measurements',onlyPending=false,selectionRevision=0,previewDayId='',previewExerciseId='',previewMediaKey='',catalogTargetDayId='';
+let db,clients=[],selected=null,measure={},plan={days:[]},template={days:[]},tab='measurements',onlyPending=false,selectionRevision=0,previewDayId='',previewExerciseId='',previewMediaKey='',catalogTargetDayId='',adminUserId='';
 function say(text,error=false){$('status').textContent=text;$('status').className='feedback'+(error?' error':' success');}
 function check(result){if(result.error)throw result.error;return result.data;}
 function setupOk(){const c=window.MEU_TREINO_SUPABASE||{};return /^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(c.url||'')&&typeof c.publishableKey==='string'&&c.publishableKey.length>15;}
@@ -37,6 +37,9 @@ function clearClient(){
   $('noClient').querySelector('h2').textContent='Selecione um aluno';
   $('noClient').querySelector('p').textContent='As medidas e a ficha aparecem aqui para você conferir e editar.';
   $('noClient').hidden=false;$('clientArea').hidden=true;listClients();
+}
+function clearAdminSession(message){
+  adminUserId='';clearClient();$('workspace').hidden=true;$('auth').hidden=false;say(message,true);
 }
 function listClients(){
   const q=$('clientSearch').value.trim().toLowerCase(),mount=$('clientList');mount.replaceChildren();
@@ -366,14 +369,19 @@ async function loadNotice(){
 async function onLogin(user){
   const admin=check(await db.from('admin_users').select('user_id').eq('user_id',user.id).maybeSingle());
   if(!admin){await db.auth.signOut();$('workspace').hidden=true;$('auth').hidden=false;throw Error('Seu usuário não está autorizado. Cadastre o UID em admin_users.');}
-  $('auth').hidden=true;$('workspace').hidden=false;$('adminIdentity').textContent=user.email;
+  adminUserId=user.id;$('auth').hidden=true;$('workspace').hidden=false;$('adminIdentity').textContent=user.email;
   await Promise.all([loadClients(),loadTemplate(),loadNotice()]);say('Conectado ao Supabase como administrador.');
 }
 function fail(e){say(e.message||String(e),true);}
 async function init(){
   const config=window.MEU_TREINO_SUPABASE||{};
   if(!setupOk()||!window.supabase){$('setup').hidden=false;say('Configure o Supabase para ativar o painel.',true);return;}
-  db=window.supabase.createClient(config.url,config.publishableKey);
+  const projectRef=new URL(config.url).hostname.split('.')[0];
+  db=window.supabase.createClient(config.url,config.publishableKey,{auth:{storageKey:'meu-treino-admin-auth-'+projectRef}});
+  db.auth.onAuthStateChange((event,session)=>{
+    if(event==='SIGNED_OUT'&&adminUserId)clearAdminSession('A sessão administrativa foi encerrada. Entre novamente.');
+    else if(event==='SIGNED_IN'&&adminUserId&&session?.user?.id!==adminUserId)clearAdminSession('A conta mudou em outra aba. Entre novamente com a conta da professora.');
+  });
   try{const u=check(await db.auth.getUser());if(u.user)await onLogin(u.user);else{$('auth').hidden=false;say('Entre para administrar os clientes.');}}
   catch(e){$('auth').hidden=false;fail(e);}
 }
@@ -382,7 +390,7 @@ $('loginForm').addEventListener('submit',async e=>{
     $('loginPassword').value='';await onLogin(v.user);
   }catch(err){fail(err);}
 });
-$('signOut').addEventListener('click',async()=>{await db.auth.signOut();clearClient();$('workspace').hidden=true;$('auth').hidden=false;say('Sessão encerrada.');});
+$('signOut').addEventListener('click',async()=>{const result=await db.auth.signOut();if(result.error){fail(result.error);return;}if(adminUserId)clearAdminSession('Sessão encerrada.');});
 $('clientSearch').addEventListener('input',listClients);
 $('refreshClients').addEventListener('click',()=>loadClients().catch(fail));
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));
