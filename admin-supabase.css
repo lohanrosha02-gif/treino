@@ -26,3 +26,9 @@
 .checkbox-line{display:flex;gap:9px;align-items:center}.checkbox-line input{width:18px;height:18px;accent-color:#376d44}
 @media(max-width:840px){.dashboard-layout{grid-template-columns:1fr}.clients-panel{position:static}.client-list{max-height:240px}}
 @media(max-width:540px){.dashboard-heading,.client-title{align-items:flex-start;flex-direction:column}.form-grid,.exercise-fields{grid-template-columns:1fr}.field-block.full{grid-column:1}.form-actions .button{flex:1}}
+
+/* Seletor do acervo original no painel */
+.media-preview{margin-top:10px;border:1px solid var(--edge);border-radius:10px;overflow:hidden;background:#f3f7ef}
+.media-preview:empty{display:none}
+.media-preview video{display:block;width:100%;max-height:230px;object-fit:contain}
+.exercise-fields select{min-width:0;width:100%}

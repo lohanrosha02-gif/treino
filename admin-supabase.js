@@ -70,8 +70,71 @@ function paintMeasures(){
     const suffix=document.createElement('span');suffix.textContent='cm';w.append(input,suffix);wrap.append(lab,w);root.appendChild(wrap);
   });
 }
-function addDay(){return {id:newId(),title:'Novo treino',weekday:'',description:'',exercises:[]};}
-function addExercise(){return {id:newId(),name:'Novo exercício',dose:'3 × 10',rest:'60 s',description:'',videoId:''};}
+function addDay(){return {id:newId(),title:'Novo treino',weekday:'',description:'',duration:'',recover:'',exercises:[]};}
+function addExercise(){return {id:newId(),name:'Novo exercício',dose:'3 × 10',rest:'60 s',description:'',videoId:'',category:'exercise'};}
+function exerciseCategory(ex){
+  if(['exercise','mobility','cardio'].includes(ex.category))return ex.category;
+  const id=String(ex.videoId||ex.id||'');
+  return /^m[A-D]/i.test(id)?'mobility':/^cardio[A-D]/i.test(id)?'cardio':'exercise';
+}
+function exerciseCatalogue(){
+  const all=new Map();
+  for(const day of template?.days||[])for(const ex of day.exercises||[]){
+    if(ex.videoId&&!all.has(ex.videoId))all.set(ex.videoId,ex);
+  }
+  return all;
+}
+function mediaSelector(parent,ex){
+  const catalog=exerciseCatalogue(),clips=window.MeuTreinoVideos?.clips||{};
+  const presetBox=document.createElement('div');presetBox.className='field-block full';
+  const presetLabel=document.createElement('label');presetLabel.textContent='Adicionar / copiar exercício do acervo';
+  const presetSelect=document.createElement('select');presetSelect.className='field-input';
+  presetSelect.append(new Option('Escolha um dos exercícios originais (opcional)',''));
+  for(const [id,item] of catalog)presetSelect.append(new Option(item.name+' · '+id,id));
+  presetSelect.addEventListener('change',()=>{
+    const item=catalog.get(presetSelect.value);
+    if(!item)return;
+    if(ex.name!=='Novo exercício'&&!confirm('Substituir os dados deste exercício pelos do acervo?')){presetSelect.value='';return;}
+    const stableId=ex.id;
+    Object.assign(ex,copy(item),{id:stableId,category:exerciseCategory(item)});
+    paintPlans();
+  });
+  presetBox.append(presetLabel,presetSelect);parent.appendChild(presetBox);
+  const box=document.createElement('div');box.className='field-block full';
+  const label=document.createElement('label');label.textContent='Vídeo ou imagem demonstrativa';
+  const select=document.createElement('select');select.className='field-input';
+  select.appendChild(new Option('Sem vídeo',''));
+  const ids=Object.keys(clips).filter(k=>clips[k]?.url&&k!=='version');
+  if(ex.videoId&&!ids.includes(ex.videoId))select.appendChild(new Option(ex.videoId+' (não encontrado)',ex.videoId));
+  for(const id of ids){
+    const item=catalog.get(id),clip=clips[id];
+    select.appendChild(new Option((item?.name||clip.name||id)+' · '+id,id));
+  }
+  select.value=String(ex.videoId||'');
+  const preview=document.createElement('div');preview.className='media-preview';
+  function render(){
+    preview.replaceChildren();
+    const clip=clips[select.value];
+    if(!clip||!/^\.\/assets\/videos\/[a-z0-9_-]+\.mp4$/i.test(clip.url))return;
+    const video=document.createElement('video');
+    video.controls=true;video.muted=true;video.loop=true;video.playsInline=true;video.preload='none';
+    video.src='https://lohanrosha02-gif.github.io/treino-v2/'+clip.url.replace(/^\.\//,'');
+    if(typeof clip.poster==='string'&&/^\.\/assets\/(?:videos|images)\/[a-z0-9_-]+\.webp$/i.test(clip.poster))
+      video.poster='https://lohanrosha02-gif.github.io/treino-v2/'+clip.poster.replace(/^\.\//,'');
+    preview.appendChild(video);
+  }
+  select.addEventListener('change',()=>{ex.videoId=select.value;render();});
+  box.append(label,select,preview);parent.appendChild(box);render();
+}
+function categorySelector(parent,ex){
+  const wrap=document.createElement('div');wrap.className='field-block';
+  const label=document.createElement('label');label.textContent='Tipo de atividade';
+  const select=document.createElement('select');select.className='field-input';
+  [['exercise','Musculação'],['mobility','Mobilidade / aquecimento'],['cardio','Cardio']].forEach(([v,title])=>select.add(new Option(title,v)));
+  select.value=exerciseCategory(ex);ex.category=select.value;
+  select.addEventListener('change',()=>{ex.category=select.value;});
+  wrap.append(label,select);parent.appendChild(wrap);
+}
 function paintPlans(){
   const root=$('daysList');root.replaceChildren();
   plan.days.forEach((day,di)=>{
@@ -84,6 +147,8 @@ function paintPlans(){
     const info=document.createElement('div');info.className='form-grid';
     field(info,'Nome do treino',day.title,v=>day.title=v);
     field(info,'Dia / frequência',day.weekday,v=>day.weekday=v);
+    field(info,'Duração estimada',day.duration||'',v=>day.duration=v);
+    field(info,'Intervalo até a próxima sessão',day.recover||'',v=>day.recover=v);
     field(info,'Orientações gerais',day.description,v=>day.description=v,{full:true,multi:true,max:2000});
     card.appendChild(info);
     const exercises=document.createElement('div');exercises.className='exercise-list';
@@ -94,8 +159,12 @@ function paintPlans(){
       field(body,'Exercício',ex.name,v=>{ex.name=v;summary.textContent=(ei+1)+'. '+v;},{full:true,max:130});
       field(body,'Séries / repetições',ex.dose,v=>ex.dose=v,{max:100});
       field(body,'Descanso',ex.rest,v=>ex.rest=v,{max:70});
+      categorySelector(body,ex);
+      field(body,'Grupo muscular (opcional)',ex.muscle||'',v=>ex.muscle=v,{max:170});
+      field(body,'Alternativa (opcional)',ex.hotel||'',v=>ex.hotel=v,{full:true,max:350});
       field(body,'Instruções',ex.description,v=>ex.description=v,{full:true,multi:true,max:2000});
-      field(body,'ID de vídeo (opcional)',ex.videoId,v=>ex.videoId=v,{full:true,max:60});
+      field(body,'Aviso / cuidado (opcional)',ex.cue||'',v=>ex.cue=v,{full:true,multi:true,max:450});
+      mediaSelector(body,ex);
       body.appendChild(button('Remover exercício','danger mini',()=>{if(confirm('Excluir '+ex.name+'?')){day.exercises.splice(ei,1);paintPlans();}}));
       details.appendChild(body);exercises.appendChild(details);
     });
