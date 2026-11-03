@@ -59,9 +59,21 @@
 <section class="panel" id="planEditor" role="tabpanel" hidden><h2>Ficha de treino</h2><p class="muted">Monte as sessões e escolha as demonstrações que o aluno vai ver nos exercícios.</p>
 <div class="plan-recipient-note"><strong id="planStudentName">Ficha individual</strong><span>Ao salvar, a ficha atualiza no portal desse aluno sem alterar os registros de treino dele.</span></div>
 <div class="form-actions"><button id="addDay" class="button primary" type="button">+ Novo treino</button><button id="useTemplate" class="button secondary" type="button">Usar plano-base</button></div>
+<div class="plan-workspace"><div class="plan-editor-column">
 <div id="daysList"></div>
 <div class="form-actions plan-save-actions"><button id="savePlan" class="button primary" type="button">Salvar e enviar ao aluno</button></div>
 <details class="bulk-actions"><summary>Aplicar a ficha atual a todos os alunos</summary><p class="muted tiny">Essa ação substitui as fichas individuais de todos. As medidas e os registros de treino permanecem intactos.</p><button id="saveAllPlans" class="button secondary" type="button">Aplicar a todos os alunos</button></details>
+</div><aside class="student-preview" aria-label="Prévia ao vivo do portal do aluno">
+<div class="student-preview-heading"><div><span class="section-eyebrow">PRÉVIA AO VIVO</span><h3>Portal do aluno</h3></div><span class="preview-live"><i></i> Atualiza enquanto você edita</span></div>
+<label class="preview-day-label" for="previewDaySelect">Treino que aparece na prévia</label><select id="previewDaySelect" class="field-input"></select>
+<div class="student-preview-card"><div class="student-preview-top"><span class="preview-avatar" id="previewAvatar">A</span><div><strong id="previewStudentName">Aluno</strong><small>Seu treino</small></div></div>
+<div class="student-preview-content"><span class="preview-kicker" id="previewWeekday">FICHA DE TREINO</span><h4 id="previewDayTitle">Adicione um treino para começar</h4><p class="preview-meta" id="previewMeta">A prévia vai acompanhar as alterações feitas nesta ficha.</p>
+<div class="preview-media" id="previewMedia"><div class="preview-empty-art" aria-hidden="true"><span>＋</span></div><p>Escolha um exercício com demonstração para ver a imagem ou o vídeo aqui.</p></div>
+<div class="preview-focused-exercise"><span class="preview-kicker">DEMONSTRAÇÃO SELECIONADA</span><strong id="previewExerciseName">Nenhum exercício selecionado</strong><small id="previewExerciseDose"></small></div>
+<p class="preview-instructions" id="previewInstructions" hidden></p><div class="preview-section-title"><strong>Exercícios da sessão</strong><span id="previewExerciseCount">0</span></div>
+<div class="preview-exercise-list" id="previewExerciseList"></div><div class="preview-guidance" id="previewGuidance" hidden></div>
+</div></div><p class="preview-footnote">Visualização aproximada. A ficha só será enviada ao aluno ao clicar em “Salvar e enviar”.</p>
+</aside></div>
 </section>
 </div></div></div>
 <details class="panel notice-panel"><summary><span>Comunicado geral</span><small>Uma mensagem aparece no portal de todos os alunos aprovados.</small></summary><div class="notice-content"><h2>Comunicado geral</h2><p class="muted">A mensagem aparece no site de todos os alunos aprovados.</p>
