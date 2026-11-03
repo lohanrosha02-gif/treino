@@ -141,3 +141,29 @@ using ((select public.is_treino_admin())) with check ((select public.is_treino_a
 -- execute, substituindo o UUID pelo SEU UID (nunca por email sem verificar):
 -- insert into public.admin_users(user_id) values ('SEU-UUID-AQUI')
 -- on conflict(user_id) do nothing;
+
+-- Atualização de planos em massa numa única transação (não altera medições).
+create or replace function public.admin_apply_plan_to_all(new_plan jsonb)
+returns integer
+language plpgsql security definer set search_path = ''
+as $$
+declare changed_rows integer;
+begin
+  if not (select public.is_treino_admin()) then
+    raise exception 'Acesso não autorizado';
+  end if;
+  if new_plan is null or jsonb_typeof(new_plan) <> 'object'
+      or jsonb_typeof(new_plan->'days') <> 'array'
+      or jsonb_array_length(new_plan->'days') > 15 then
+    raise exception 'Plano inválido';
+  end if;
+  insert into public.client_plans (client_id,plan,updated_at)
+    select c.id,new_plan,now() from public.clients c
+    on conflict (client_id) do update
+      set plan=excluded.plan,updated_at=excluded.updated_at;
+  get diagnostics changed_rows = row_count;
+  return changed_rows;
+end;
+$$;
+revoke all on function public.admin_apply_plan_to_all(jsonb) from public,anon;
+grant execute on function public.admin_apply_plan_to_all(jsonb) to authenticated;

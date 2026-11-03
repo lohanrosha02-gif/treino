@@ -181,8 +181,8 @@ $('saveAllPlans').addEventListener('click',async()=>{
     validatePlan();if(!clients.length)throw Error('Nenhum cliente cadastrado.');
     if(!confirm('Substituir os treinos de TODOS os '+clients.length+' clientes? As medidas serão preservadas.'))return;
     if(prompt('Para confirmar, digite TODOS:')!=='TODOS')return;
-    let n=0;for(const c of clients){check(await db.from('client_plans').upsert({client_id:c.id,plan:plan,updated_at:new Date().toISOString()}));n++;}
-    say('Planos atualizados para '+n+' clientes.');
+    const count=check(await db.rpc('admin_apply_plan_to_all',{new_plan:plan}));
+    say('Planos atualizados para '+count+' clientes, sem alterar as medições.');
   }catch(e){fail(e);}
 });
 $('noticeForm').addEventListener('submit',async e=>{
