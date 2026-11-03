@@ -4,11 +4,11 @@
 <title>Meu Treino · Administração</title><meta name="theme-color" content="#f2f5ef">
 <link rel="stylesheet" href="./admin.css?v=supabase-2">
 <link rel="stylesheet" href="./admin-supabase.css?v=supabase-2">
-<link rel="stylesheet" href="./admin-personal.css?v=20261103-medidas-professora-3.4">
+<link rel="stylesheet" href="./admin-personal.css?v=20261103-editor-acervo-3.5">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
 <script src="./supabase-config.js?v=supabase-2" defer></script>
 <script src="./videos.js?v=legacy-3.0" defer></script>
-<script src="./admin-supabase.js?v=20261103-medidas-professora-3.4" defer></script>
+<script src="./admin-supabase.js?v=20261103-editor-acervo-3.5" defer></script>
 </head><body>
 <a class="skip-link" href="#main">Ir para o conteúdo</a>
 <header class="topbar"><div class="shell top-inner">
@@ -74,6 +74,11 @@
 <div class="preview-exercise-list" id="previewExerciseList"></div><div class="preview-guidance" id="previewGuidance" hidden></div>
 </div></div><p class="preview-footnote">Visualização aproximada. A ficha só será enviada ao aluno ao clicar em “Salvar e enviar”.</p>
 </aside></div>
+<dialog id="exercisePickerDialog" class="exercise-picker-dialog" aria-labelledby="exercisePickerTitle">
+<div class="exercise-picker-heading"><div><span class="section-eyebrow">ACERVO DE EXERCÍCIOS</span><h3 id="exercisePickerTitle">Escolha pela imagem</h3><p>O exercício entra direto neste treino com as instruções e a demonstração.</p></div><button id="closeExercisePicker" class="button secondary mini" type="button">Fechar</button></div>
+<label class="exercise-picker-search-label" for="exercisePickerSearch">Buscar exercício</label><input id="exercisePickerSearch" class="field-input" type="search" placeholder="Ex.: agachamento, peito, mobilidade">
+<div id="exercisePickerGrid" class="exercise-picker-grid"></div>
+</dialog>
 </section>
 </div></div></div>
 <details class="panel notice-panel"><summary><span>Comunicado geral</span><small>Uma mensagem aparece no portal de todos os alunos aprovados.</small></summary><div class="notice-content"><h2>Comunicado geral</h2><p class="muted">A mensagem aparece no site de todos os alunos aprovados.</p>
