@@ -27,19 +27,22 @@
 <div class="dashboard-layout">
 <aside class="panel clients-panel">
 <div class="section-head"><h3>Clientes</h3><button id="refreshClients" class="button secondary mini" type="button">Atualizar</button></div>
+<p class="muted tiny">O aluno cria a conta e confirma o e-mail. Você aprova o acesso aqui.</p>
+<div class="approval-filters">
+<button id="showPending" class="button secondary mini" type="button">Pendentes (<span id="pendingCount">0</span>)</button>
+<button id="showAll" class="button secondary mini" type="button">Todos os alunos</button>
+</div>
 <input id="clientSearch" class="field-input" placeholder="Buscar por nome ou e-mail" aria-label="Buscar cliente">
 <div class="client-list" id="clientList"></div>
-<details class="create-client" id="createClientDetails"><summary>+ Cadastrar cliente</summary>
-<form id="createClient" class="form-stack">
-<label for="clientName">Nome</label><input id="clientName" class="field-input" maxlength="120" required>
-<label for="clientEmail">E-mail do cliente</label><input id="clientEmail" class="field-input" type="email" maxlength="254" required>
-<small>O cliente deverá entrar no site principal com esse mesmo e-mail, já confirmado no Supabase.</small>
-<button class="button primary" type="submit">Cadastrar</button></form></details>
+
 </aside>
 <div>
 <section class="panel" id="noClient"><h2>Escolha um cliente</h2><p class="muted">Selecione alguém da lista para editar medidas e treinos.</p></section>
 <div id="clientArea" hidden>
-<section class="panel client-title"><div><span class="section-eyebrow">CADASTRO</span><h2 id="selectedName"></h2><p id="selectedEmail" class="muted"></p><small id="linkedStatus"></small></div>
+<section class="panel client-title"><div><span class="section-eyebrow">CADASTRO</span><h2 id="selectedName"></h2><p id="selectedEmail" class="muted"></p><small id="linkedStatus"></small>
+<div class="form-actions" id="approvalActions" hidden>
+<button class="button primary" id="approveClient" type="button">Aprovar aluno</button>
+</div></div>
 <button class="button danger" id="deleteClient" type="button">Excluir cliente</button></section>
 <nav class="editor-tabs" aria-label="Editar cliente">
 <button class="editor-tab active" type="button" data-tab="measurements">Medições</button>
