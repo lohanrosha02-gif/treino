@@ -152,6 +152,13 @@ $('approveClient').addEventListener('click',async function(){
   if(!selected||!selected.auth_user_id||selected.approval_status==='approved')return;
   if(!confirm('Aprovar o acesso de '+selected.full_name+' às próprias medidas e treinos?'))return;
   try{
+    // Atribui o plano-base a quem ainda não tem um plano, sem apagar planos pessoais.
+    const existing=check(await db.from('client_plans').select('client_id').eq('client_id',selected.id).maybeSingle());
+    let initialPlan=false;
+    if(!existing&&Array.isArray(template?.days)&&template.days.length){
+      check(await db.from('client_plans').insert({client_id:selected.id,plan:copy(template)}));
+      initialPlan=true;
+    }
     const updated=check(await db.from('clients')
       .update({approval_status:'approved',approved_at:new Date().toISOString()})
       .eq('id',selected.id)
@@ -160,7 +167,7 @@ $('approveClient').addEventListener('click',async function(){
       .select('id').maybeSingle());
     if(!updated)throw Error('A aprovação não foi aplicada. Atualize a lista.');
     const id=selected.id;await loadClients();await chooseClient(id);
-    say('Aluno aprovado! Ele já pode acessar o site principal.');
+    say('Aluno aprovado! '+(initialPlan?'Os treinos A, B, C e D foram adicionados. ':'')+'Ele já pode acessar o site principal.');
   }catch(e){fail(e);}
 });
 $('deleteClient').addEventListener('click',async()=>{
