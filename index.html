@@ -1,68 +1,63 @@
 <!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f2f5ef">
-  <meta name="description" content="Painel de administração do Meu Treino: publique avisos e atualize textos de treino para todos os visitantes.">
-  <title>Meu Treino · Painel administrativo</title>
-  <link rel="stylesheet" href="./admin.css?v=1.1.0-measurements-20261102">
-  <script src="./admin.js?v=1.1.0-measurements-20261102" defer></script>
-</head>
-<body>
-<a href="#main" class="skip-link">Pular para o conteúdo</a>
-<header class="topbar">
-  <div class="shell top-inner">
-    <a class="brand" href="./" aria-label="Meu Treino Administração">
-      <span class="brand-mark" aria-hidden="true">↗</span>
-      <span><strong>meu treino<span class="dot">.</span></strong><small>PAINEL ADMINISTRATIVO</small></span>
-    </a>
-    <a class="site-link" href="https://lohanrosha02-gif.github.io/treino-v2/" target="_blank" rel="noopener noreferrer">Abrir site dos alunos <span aria-hidden="true">↗</span></a>
-  </div>
-</header>
-
-<main class="shell" id="main">
-  <section class="hero" aria-labelledby="heroHeading">
-    <div class="eyebrow"><span class="signal" aria-hidden="true"></span> GERENCIAMENTO DO CONTEÚDO</div>
-    <h1 id="heroHeading">Uma atualização.<br><em>Para todos os alunos.</em></h1>
-    <p>Registre as 12 medições corporais (cm), edite avisos e mantenha as orientações dos treinos A–D aqui. Quando publicar, o conteúdo é atualizado no repositório <code>treino-v2</code> e fica disponível aos visitantes após a publicação do GitHub Pages.</p>
-    <div class="hero-points"><span>✓ Site dos alunos preservado</span><span>✓ Medições públicas, sem identificação pessoal</span><span>✓ Alterações versionadas no GitHub</span></div>
-  </section>
-
-  <section class="panel auth-panel" aria-labelledby="authHeading">
-    <div class="panel-header">
-      <div><span class="section-eyebrow">ACESSO</span><h2 id="authHeading">Conectar ao GitHub</h2><p>Para publicar, use um token pessoal de acesso restrito ao repositório <code>treino-v2</code>.</p></div>
-      <span class="connection-pill" id="connectionStatus">Não conectado</span>
-    </div>
-    <form id="authForm" class="auth-form">
-      <div class="token-field">
-        <label for="githubToken">Token de acesso do GitHub</label>
-        <input type="password" id="githubToken" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="github_pat_..." required>
-      </div>
-      <button id="connectButton" class="button primary" type="submit">Conectar e carregar</button>
-      <button id="disconnectButton" class="button secondary" type="button" hidden>Desconectar</button>
-    </form>
-    <p class="help">No GitHub: <b>Settings → Developer settings → Personal access tokens → Fine-grained tokens</b>. Selecione somente <code>treino-v2</code> e conceda <b>Contents: Read and write</b>. Prefira prazo curto. O token fica apenas na memória desta aba, não é salvo no site, no GitHub nem no navegador. Não compartilhe o token no chat.</p>
-    <p id="feedback" class="feedback" role="status" aria-live="polite">O conteúdo dos alunos continua acessível normalmente, mesmo sem conectar o painel.</p>
-  </section>
-
-  <section id="editor" class="editor" hidden aria-label="Editor de conteúdo">
-    <div class="panel editor-toolbar">
-      <div class="editor-meta"><strong>Conteúdo do site principal</strong><small id="saveState">Nenhuma alteração pendente.</small></div>
-      <div class="toolbar-actions">
-        <button class="button secondary" id="reloadButton" type="button">Recarregar</button>
-        <button class="button primary" id="publishButton" type="button" disabled>Publicar para todos</button>
-      </div>
-    </div>
-    <nav class="editor-tabs" role="tablist" aria-label="Seções de edição">
-      <button type="button" class="editor-tab active" role="tab" data-tab="site" aria-selected="true">Textos e avisos</button>
-      <button type="button" class="editor-tab" role="tab" data-tab="plans" aria-selected="false">Treinos A–D</button>
-      <button type="button" class="editor-tab" role="tab" data-tab="measurements" aria-selected="false">Medições (cm)</button>
-    </nav>
-    <div id="editorFields" class="editor-fields"></div>
-    <p class="editor-footnote">Alterações em texto e prescrição são compartilhadas, mas as avaliações, cargas e séries de cada aluno continuam salvas apenas no navegador dele. Não cole dados pessoais no conteúdo público. O painel não adiciona ou remove exercícios nem substitui vídeos. As medições publicadas ficam acessíveis a qualquer visitante: não registre medidas pessoais identificáveis sem consentimento e infraestrutura apropriada.</p>
-  </section>
-  <footer>Meu Treino Admin · <a href="https://github.com/lohanrosha02-gif/treino-v2" target="_blank" rel="noopener noreferrer">Repositório público do site</a></footer>
-</main>
-</body>
-</html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meu Treino · Administração</title><meta name="theme-color" content="#f2f5ef">
+<link rel="stylesheet" href="./admin.css?v=supabase-2">
+<link rel="stylesheet" href="./admin-supabase.css?v=supabase-2">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+<script src="./supabase-config.js?v=supabase-2" defer></script>
+<script src="./admin-supabase.js?v=supabase-2" defer></script>
+</head><body>
+<a class="skip-link" href="#main">Ir para o conteúdo</a>
+<header class="topbar"><div class="shell top-inner">
+<a href="./" class="brand"><span class="brand-mark">↗</span><span><strong>meu treino<span class="dot">.</span></strong><small>ADMINISTRAÇÃO</small></span></a>
+<a class="site-link" href="https://lohanrosha02-gif.github.io/treino-v2/" target="_blank" rel="noopener noreferrer">Site do cliente ↗</a>
+</div></header>
+<main id="main" class="shell">
+<section class="hero"><div class="eyebrow">GESTÃO DE TREINOS INDIVIDUAIS</div><h1>Seu painel.<br><em>Todos os treinos.</em></h1><p>Cadastre clientes, preencha medidas corporais e monte os treinos de cada pessoa. As informações ficam no Supabase e cada cliente vê apenas seu próprio plano.</p></section>
+<p class="feedback" role="status" aria-live="polite" id="status">Verificando a configuração...</p>
+<section id="setup" class="panel" hidden><h2>Ativar conexão Supabase</h2><p>É necessário configurar a URL e a chave publicável do projeto, instalar o banco e autorizar seu usuário administrador.</p><a href="https://github.com/lohanrosha02-gif/treino/blob/main/SUPABASE_SETUP.md" target="_blank" rel="noopener noreferrer">Ver como configurar o Supabase</a></section>
+<section id="auth" class="panel" hidden><div class="section-eyebrow">ACESSO RESTRITO</div><h2>Entrar como administrador</h2><p class="muted">Use a conta do Supabase cadastrada como administradora.</p>
+<form id="loginForm" class="form-stack login-form">
+<label for="loginEmail">E-mail</label><input id="loginEmail" class="field-input" type="email" autocomplete="username" required>
+<label for="loginPassword">Senha</label><input id="loginPassword" class="field-input" type="password" autocomplete="current-password" required>
+<button class="button primary" type="submit">Entrar</button></form></section>
+<section id="workspace" hidden>
+<div class="dashboard-heading"><div><div class="section-eyebrow">PAINEL DO PROFESSOR</div><h2>Clientes e treinos</h2></div><div class="top-actions"><span id="adminIdentity"></span><button class="button secondary" id="signOut" type="button">Sair</button></div></div>
+<div class="dashboard-layout">
+<aside class="panel clients-panel">
+<div class="section-head"><h3>Clientes</h3><button id="refreshClients" class="button secondary mini" type="button">Atualizar</button></div>
+<input id="clientSearch" class="field-input" placeholder="Buscar por nome ou e-mail" aria-label="Buscar cliente">
+<div class="client-list" id="clientList"></div>
+<details class="create-client" id="createClientDetails"><summary>+ Cadastrar cliente</summary>
+<form id="createClient" class="form-stack">
+<label for="clientName">Nome</label><input id="clientName" class="field-input" maxlength="120" required>
+<label for="clientEmail">E-mail do cliente</label><input id="clientEmail" class="field-input" type="email" maxlength="254" required>
+<small>O cliente deverá entrar no site principal com esse mesmo e-mail, já confirmado no Supabase.</small>
+<button class="button primary" type="submit">Cadastrar</button></form></details>
+</aside>
+<div>
+<section class="panel" id="noClient"><h2>Escolha um cliente</h2><p class="muted">Selecione alguém da lista para editar medidas e treinos.</p></section>
+<div id="clientArea" hidden>
+<section class="panel client-title"><div><span class="section-eyebrow">CADASTRO</span><h2 id="selectedName"></h2><p id="selectedEmail" class="muted"></p><small id="linkedStatus"></small></div>
+<button class="button danger" id="deleteClient" type="button">Excluir cliente</button></section>
+<nav class="editor-tabs" aria-label="Editar cliente">
+<button class="editor-tab active" type="button" data-tab="measurements">Medições</button>
+<button class="editor-tab" type="button" data-tab="plans">Treinos</button></nav>
+<section class="panel" id="measureEditor"><h2>Medições corporais</h2><p class="muted">Insira os valores em centímetros. Só o cliente vinculado poderá consultar.</p>
+<form id="saveMeasures"><div class="form-grid" id="measureFields"></div><div class="form-actions"><button class="button primary" type="submit">Salvar medições</button></div></form></section>
+<section class="panel" id="planEditor" hidden><h2>Treinos do cliente</h2><p class="muted">Organize sessões, séries, exercícios e orientações com poucos cliques.</p>
+<div class="form-actions"><button id="addDay" class="button primary" type="button">+ Novo treino</button><button id="useTemplate" class="button secondary" type="button">Usar plano-base</button></div>
+<div id="daysList"></div>
+<div class="form-actions"><button id="savePlan" class="button primary" type="button">Salvar treinos</button><button id="saveAllPlans" class="button secondary" type="button">Aplicar a todos os clientes</button></div>
+<p class="muted tiny">Aplicar a todos substitui apenas os planos, nunca as medidas individuais.</p></section>
+</div></div></div>
+<section class="panel notice-panel"><h2>Comunicado geral</h2><p class="muted">A mensagem aparece no site de todos os clientes autenticados.</p>
+<form id="noticeForm" class="form-stack">
+<label class="checkbox-line"><input type="checkbox" id="noticeOn"> Mostrar comunicado</label>
+<label for="noticeTitle">Título</label><input id="noticeTitle" class="field-input" maxlength="120">
+<label for="noticeBody">Mensagem</label><textarea id="noticeBody" class="field-area" maxlength="1000"></textarea>
+<button class="button primary" type="submit">Publicar comunicado</button></form></section>
+</section>
+<footer>Meu Treino · Administração protegida com autenticação e regras de acesso do Supabase.</footer>
+</main></body></html>
