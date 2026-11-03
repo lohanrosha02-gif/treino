@@ -43,3 +43,13 @@ on conflict (user_id) do nothing;
 - Ainda não há upload próprio de vídeos; as mídias já existentes em `treino-v2/assets` podem ser vinculadas pelo ID de vídeo.
 - Não há migração automática de dados que o aluno tenha salvo em `localStorage` anteriormente.
 - O projeto Supabase e as regras SQL precisam ser ativados no dashboard para os sites funcionarem ao vivo.
+
+## Autocadastro e aprovação (atualizado em novembro de 2026)
+
+1. O aluno abre `treino-v2`, clica em **Criar conta**, informa nome, e-mail e senha e confirma o e-mail.
+2. O sistema vincula ou cria o cadastro com status `pending`, sem acesso às medidas ou aos planos.
+3. O administrador abre `treino`, clica em **Pendentes**, seleciona o aluno e usa **Aprovar aluno**.
+4. Só depois da aprovação o aluno consegue consultar seus próprios dados. Ele pode clicar em **Verificar aprovação**.
+5. O banco exige `approval_status = 'approved'` nas regras RLS de leitura das medidas e planos. Um clique ou requisição direta no navegador não contorna essa restrição.
+
+Migração aplicada ao projeto Supabase `treino`: `student_self_registration_with_admin_approval`. Para ambientes novos, aplique a migração original e depois a migração adicional correspondente. Cadastros existentes começam pendentes, por segurança.
